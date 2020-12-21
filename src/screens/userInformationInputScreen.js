@@ -53,7 +53,7 @@ const PersonalInformnationScreen = ({navigation}) =>{
                         <Label>password</Label>
                         <Input />
                     </Item>
-                    <TouchableOpacity onPress={() => navigation.navigate('UserInformation')} style={[styles.GeneralButton, styles.marginVertical, styles.marginHorizantal]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Account')} style={[styles.GeneralButton, styles.marginVertical, styles.marginHorizantal]}>
                         <View>
                             <Text style={styles.GeneralButtonText}>sign up</Text>
                         </View>
