@@ -95,6 +95,12 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginVertical: 5
       },
+      marginVertical:{
+        marginVertical: 20
+      },
+      marginHorizantal:{
+        marginHorizontal: 20
+      },
 
       screenWidth:{
           width:"90%",

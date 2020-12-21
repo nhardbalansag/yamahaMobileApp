@@ -17,9 +17,13 @@ const RegisterScreen = ({navigation}) =>{
                 style={styles.inputForm}
                 placeholder="Email"
             />
+             <TextInput
+                style={styles.inputForm}
+                placeholder="contact number"
+            />
         </View>
         <View style={[ styles.justifyCenter]}>
-            <TouchableOpacity style={styles.GeneralButton}>
+            <TouchableOpacity onPress={() => navigation.navigate('UserInformation')} style={styles.GeneralButton}>
                 <View>
                     <Text style={styles.GeneralButtonText}>Next</Text>
                 </View>
