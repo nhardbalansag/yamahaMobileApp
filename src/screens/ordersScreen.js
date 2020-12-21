@@ -4,7 +4,7 @@ import {styles, colors} from '../styles/style';
 
 import TitleComponent from '../components/title';
 
-const MyAccountLandingScreen = ({navigation}) =>{
+const OrderScreen = ({navigation}) =>{
     return(
         <View style={styles.container}>
             <Text>hello</Text>
@@ -12,4 +12,4 @@ const MyAccountLandingScreen = ({navigation}) =>{
     );
 }
 
-export default MyAccountLandingScreen;
+export default OrderScreen;
