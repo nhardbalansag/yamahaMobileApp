@@ -11,10 +11,18 @@ import {StatusBar} from 'react-native';
 import {Root } from 'native-base';
 
 import SplashScreen from './src/screens/splashScreen';
-import LoginScreen from './src/screens/loginScreen';
-import RegisterScreen from './src/screens/registerScreen';
 import NavigationScreens from './src/utils/navigation';
 import { NavigationContainer } from '@react-navigation/native';
+
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import DataReducer from './store/reducers/dataReducers';
+
+const rootReducer = combineReducers({
+  products:DataReducer
+}); 
+
+const store = createStore(rootReducer); 
 
 const App = () => {
 
@@ -35,9 +43,12 @@ const App = () => {
       <StatusBar backgroundColor="black" barStyle="white-content"/>
       { 
         load ? 
-        <NavigationContainer>
-          <NavigationScreens/>
-        </NavigationContainer>
+        <Provider store={store}>
+          <NavigationContainer>
+            <NavigationScreens/>
+          </NavigationContainer>
+        </Provider>
+          
         : 
         <SplashScreen/> 
       }
