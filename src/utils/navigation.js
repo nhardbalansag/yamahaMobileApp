@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -23,6 +23,8 @@ const Account = () =>{
 }
 
 const Navigation = () => {
+
+  const [login, setlogin] = useState(false);
     
     return (
         <Stack.Navigator>

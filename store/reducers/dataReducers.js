@@ -1,14 +1,18 @@
-import Products from '../../data/productData';
+import Products from '../../model/products';
 
+import { SET_PRODUCTS } from '../actions/dataActions';
 
 const initialState = {
-    allproducts:Products,
+    allproducts:[],
     parts:[]
 };
 
-
-const dataReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
+    switch(action.type){
+        case SET_PRODUCTS:
+            return {
+                allproducts: action.products
+            }
+    }
     return state;
 }
-
-export default dataReducer;

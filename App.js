@@ -14,15 +14,16 @@ import SplashScreen from './src/screens/splashScreen';
 import NavigationScreens from './src/utils/navigation';
 import { NavigationContainer } from '@react-navigation/native';
 
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 import DataReducer from './store/reducers/dataReducers';
 
 const rootReducer = combineReducers({
   products:DataReducer
 }); 
 
-const store = createStore(rootReducer); 
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk)); 
 
 const App = () => {
 
