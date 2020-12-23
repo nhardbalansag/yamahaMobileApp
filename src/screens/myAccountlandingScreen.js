@@ -1,28 +1,38 @@
-import React from 'react';
-import {StatusBar, TextInput, TouchableOpacity, FlatList, View, Text } from 'react-native';
-import {styles, colors} from '../styles/style';
+import React, {useEffect, useState} from 'react';
 
-import TitleComponent from '../components/title';
+import {
+    FlatList, 
+    View, 
+    Text 
+} from 'react-native';
 
-import {useSelector} from 'react-redux';
+import { 
+    useSelector, 
+    useDispatch
+} from 'react-redux';
 
-
-
-const renderProductItem = itemData =>{
-   return (
-        <View>
-            <Text>{itemData.item.title}</Text>
-        </View>
-   );
-};
+import * as PRODUCTS from '../../store/actions/dataActions';
 
 const MyAccountLandingScreen = () =>{
 
     const allproducts = useSelector(state => state.products.allproducts);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(PRODUCTS.viewAllProducts());
+    }, [dispatch]);
 
     return(
-       <FlatList data={allproducts} renderItem={renderProductItem} numColumns={1}/>
+       <FlatList keyExtractor={item => item.id} data={allproducts} renderItem={renderProductItem} />
     );
 }
+
+const renderProductItem = itemData =>{
+    return (
+         <View>
+             <Text>{itemData.item.title}</Text>
+         </View>
+    );
+ };
 
 export default MyAccountLandingScreen;

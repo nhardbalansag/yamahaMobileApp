@@ -17,10 +17,12 @@ const LoginScreen = ({navigation}) =>{
                 <TextInput
                     style={styles.inputForm}
                     placeholder="Email"
+                    keyboardType ="email-address"
                 />
                 <TextInput
                     style={styles.inputForm}
                     placeholder="Password"
+                    keyboardType ="visible-password"
                 />
             </View>
             <View style={[ styles.justifyCenter]}>
