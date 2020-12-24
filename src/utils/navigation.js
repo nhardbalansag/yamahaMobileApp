@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import LoginScreeen from '../screens/loginScreen';
-import RegisterScreeen from '../screens/registerScreen';
 import PersonalInformnationScreen from '../screens/userInformationInputScreen';
 import MyAccountLandingScreen from '../screens/myAccountlandingScreen';
 import OrderScreen from '../screens/ordersScreen';
@@ -29,7 +28,6 @@ const Navigation = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginScreeen} />
-            <Stack.Screen name="Register" component={RegisterScreeen} />
             <Stack.Screen name="UserInformation" component={PersonalInformnationScreen} />
             <Stack.Screen name="Account" component={Account} />
       </Stack.Navigator>
