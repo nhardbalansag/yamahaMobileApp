@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import {
     FlatList, 
@@ -17,7 +17,7 @@ const MyAccountLandingScreen = () =>{
 
     const allproducts = useSelector(state => state.products.allproducts);
     const dispatch = useDispatch();
-
+   
     useEffect(() => {
         dispatch(PRODUCTS.viewAllProducts());
     }, [dispatch]);

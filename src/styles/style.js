@@ -104,7 +104,16 @@ const styles = StyleSheet.create({
 
       screenWidth:{
           width:"90%",
+      },  
+      
+      capitalize:{
+        textTransform: 'capitalize',
+      },
+      errormessage:{
+        color: 'red',
+        marginLeft: 15
       }
+
 
       
 
