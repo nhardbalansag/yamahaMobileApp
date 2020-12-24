@@ -14,14 +14,7 @@ const PersonalInformnationScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
     const registerstatusResponse = useSelector(state => state.products.statusResponse);
-    const [sample, setsample] = useState([]);
     const [booldata, setbooldata] = useState(false);
-
-    const alertMessage = () => {
-        
-        
-       console.log(registerstatusResponse['email']);
-    }
 
     useEffect(()=>{
         dispatch(
