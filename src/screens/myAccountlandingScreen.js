@@ -17,13 +17,30 @@ const MyAccountLandingScreen = () =>{
 
     const allproducts = useSelector(state => state.products.allproducts);
     const dispatch = useDispatch();
+
+    const viewallproducts = async () => {
+        try {
+            await dispatch(PRODUCTS.viewAllProducts());
+        } catch (error) {
+            alertMessage();
+        }
+    }
    
     useEffect(() => {
-        dispatch(PRODUCTS.viewAllProducts());
+        viewallproducts();
     }, [dispatch]);
 
+    const alertMessage = (message) => {
+        Alert.alert(
+            "An error occured",
+            "Unauthorized access to this resource",
+            [ { text: "OKAY"}],
+            { cancelable: false }
+          );
+    }
+
     return(
-       <FlatList keyExtractor={item => item.id} data={allproducts} renderItem={renderProductItem} />
+       <FlatList keyExtractor={item => item.id.toString()} data={allproducts} renderItem={renderProductItem} />
     );
 }
 

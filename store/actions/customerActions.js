@@ -44,7 +44,10 @@ export const registerCustomer = (
         });
 
         const responseData = await response.json();
-        console.log(responseData);
+
+        if(responseData === "Unauthorized"){
+            throw new Error("Unauthorized access please login");
+        }
 
         dispatch({type: REGISTER_CUSTOMER, registerStatus: responseData});
     }
@@ -66,13 +69,23 @@ export const loginCustomer = (email, password) => {
         const errorData = [];
         const tokeninformation = [];
         const responseData = await response.json();
-        
         errorData.push(responseData.status.messsage);
 
-        if(responseData.status.type !== "validation"){
-            throw new Error(responseData.status.messsage);
-        }
+        dispatch(
+            {
+                type: LOGIN_CUSTOMER, 
+                APIError: errorData,
+                APItype: responseData.status.type,
+                APIBool: responseData.status.error,
+                APIToken: responseData.status.token
+            }
+        );
 
+        if(responseData.status.type !== "validation" && responseData.status.error !== false){
+            throw new Error(responseData.status.messsage);
+        }else if(responseData.status.type === "data" && responseData.status.error === false){
+            throw new Error(responseData.status.error);
+        }
         // customerInformation.push(
         //     new Customer(
         //         responseData[0].first_name, 
@@ -93,15 +106,7 @@ export const loginCustomer = (email, password) => {
         // );
 
         // tokeninformation.push( new TokenData(responseData[1].token));
-
-        dispatch(
-            {
-                type: LOGIN_CUSTOMER, 
-                APIError: errorData,
-                APItype: responseData.status.type,
-                APIBool: responseData.status.error
-            }
-        );
+        
     }
 }
 

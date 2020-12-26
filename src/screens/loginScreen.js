@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StatusBar, View, TouchableOpacity,Text, TextInput, Alert} from 'react-native';
+import {StatusBar, View, TouchableOpacity,Text, TextInput, Alert, ActivityIndicator} from 'react-native';
 import {styles, colors} from '../styles/style';
 import { 
     useDispatch,
@@ -15,28 +15,27 @@ const LoginScreen = ({navigation}) =>{
 
     const [email, setemail] = useState();
     const [password, setpassword] = useState();
-    const [booldata, setbooldata] = useState(false);
+    const [loadingstate, setloadingstate] = useState(false);
   
     const errordata = useSelector(state => state.products.errorData);
     const errortype = useSelector(state => state.products.errorType);
     const errorbool = useSelector(state => state.products.errorBool);
-   
-    const login = () =>{
-        setbooldata(updatestate => updatestate = booldata ? false : true);
-    }
-    useEffect(() =>{
+
+    const login = async () =>{
+        setloadingstate(true);
         try {
-            dispatch(Customer.loginCustomer(email, password));
+            await dispatch(Customer.loginCustomer(email, password));
         } catch (error) {
-            alertMessage(error.message);
+            error.message === "false" ? navigation.navigate('Account') : alertMessage(error.message);
         }
-    }, [booldata]);
+        setloadingstate(false);
+    }
 
     const alertMessage = (message) => {
         Alert.alert(
             "Status",
             message,
-            [ { text: "OKAY"}],
+            [ { text: "OKAY", onPress: () => setloadingstate(false)}],
             { cancelable: false }
           );
     }
@@ -65,11 +64,14 @@ const LoginScreen = ({navigation}) =>{
                 {errorbool && <Text style={styles.errormessage}>{errortype == 'validation' ? errordata[0].password : errordata}</Text>}
             </View>
             <View style={[ styles.justifyCenter]}>
-                <TouchableOpacity onPress={()=>login()} style={styles.GeneralButton}>
-                    <View>
-                        <Text style={styles.GeneralButtonText}>Login</Text>
-                    </View>
-                </TouchableOpacity>
+                {
+                    loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
+                    <TouchableOpacity onPress={()=>login()} style={styles.GeneralButton}>
+                        <View>
+                            <Text style={styles.GeneralButtonText}>Login</Text>
+                        </View>
+                    </TouchableOpacity>
+                }
                 <TouchableOpacity onPress={() => navigation.navigate('UserInformation')} style={styles.signupButton}>
                     <View>
                         <Text style={styles.signUpText}>sign up an account</Text>
