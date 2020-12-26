@@ -1,4 +1,4 @@
-import React,  {useState, useEffect} from 'react';
+import React,  {useState} from 'react';
 import {TouchableOpacity, View, Text, Alert, ActivityIndicator} from 'react-native';
 import { Container, Content, Form, Item, Input, Label } from 'native-base';
 import { 
@@ -13,18 +13,13 @@ import * as Customer from '../../store/actions/customerActions';
 const PersonalInformnationScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
-    const [booldata, setbooldata] = useState(false);
     const [loadingstate, setloadingstate] = useState(false);
     const registerstatusResponse = useSelector(state => state.products.statusResponse);
 
-    useEffect(()=>{
-        
-    }, [booldata]);
 
     const registerState = async () =>{
-        setbooldata(currentState => booldata ? false : true);
+        setloadingstate(true);
         try {
-            setloadingstate(true);
             await dispatch(
                     Customer.registerCustomer(
                         first_name, 
@@ -43,9 +38,9 @@ const PersonalInformnationScreen = ({navigation}) =>{
                         password
                     )
             )
-            setloadingstate(false);
+            setloadingstate(false); 
         } catch (error) {
-            alertMessage(error.message);
+            error.message === "false" ? alertMessage("login Success") : alertMessage(error.message);
         }
     };
 
@@ -53,8 +48,7 @@ const PersonalInformnationScreen = ({navigation}) =>{
         Alert.alert(
             "Status",
             message,
-            [ { text: "OKAY", onPress: () => setloadingstate(false)}],
-            { cancelable: false }
+            message == "login Success" [ { text: "OKAY"}]
           );
     }
 

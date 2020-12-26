@@ -7,6 +7,7 @@ import PersonalInformnationScreen from '../screens/userInformationInputScreen';
 import MyAccountLandingScreen from '../screens/myAccountlandingScreen';
 import OrderScreen from '../screens/ordersScreen';
 import AccountScreen from '../screens/accountScreen';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { 
   useSelector
@@ -17,7 +18,20 @@ const Tab = createBottomTabNavigator();
 
 const Account = () =>{
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+      labelStyle: {
+        fontSize: 13,
+      },
+      style: {
+        backgroundColor: '#fff', // Makes Android tab bar white instead of standard blue
+        height: 50,// I didn't use this in my app, so the numbers may be off. 
+        paddingBottom: 20,
+      }
+    }}
+  >
       <Tab.Screen name="Home" component={MyAccountLandingScreen} />
       <Tab.Screen name="Orders" component={OrderScreen} />
       <Tab.Screen name="Account" component={AccountScreen} />
@@ -38,17 +52,10 @@ const Navigation = () => {
 const switchScreen = () => {
 
   const tokenresponse = useSelector(state => state.products.Tokendata);
-  const errorResponse = useSelector(state => state.products.errorBool);
-  const [login, setlogin] = useState(false);
 
-  useEffect(() => {
-    setlogin(errorResponse);
-  },[login])
-
-  if(tokenresponse !== "null" || tokenresponse !== "Undefined"){
+  if(tokenresponse === null){
     return Navigation();
   }else{
-    console.log(tokenresponse);
     return Account();
   }
 

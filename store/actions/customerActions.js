@@ -43,13 +43,34 @@ export const registerCustomer = (
             })
         });
 
-        const responseData = await response.json();
+        
 
+        const responseData = await response.json();
+        
         if(responseData === "Unauthorized"){
             throw new Error("Unauthorized access please login");
         }
+        if(responseData.token === undefined){
+            dispatch(
+                {
+                    type: REGISTER_CUSTOMER, 
+                    registerStatus: responseData,
+                    APIToken: null
+                }
+            );
+        }else{
+            console.log()
+            dispatch(
+                {
+                    type: REGISTER_CUSTOMER, 
+                    registerStatus: responseData,
+                    APIToken: responseData.token
+                }
+            );
 
-        dispatch({type: REGISTER_CUSTOMER, registerStatus: responseData});
+            throw new Error("false");
+        }
+       
     }
 
 }

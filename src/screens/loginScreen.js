@@ -26,7 +26,7 @@ const LoginScreen = ({navigation}) =>{
         try {
             await dispatch(Customer.loginCustomer(email, password));
         } catch (error) {
-            error.message === "false" ? navigation.navigate('Account') : alertMessage(error.message);
+            error.message === "false" ? alertMessage("login Success") : alertMessage(error.message);
         }
         setloadingstate(false);
     }
@@ -35,8 +35,7 @@ const LoginScreen = ({navigation}) =>{
         Alert.alert(
             "Status",
             message,
-            [ { text: "OKAY", onPress: () => setloadingstate(false)}],
-            { cancelable: false }
+            message == "login Success" ? [ { text: "OKAY"}] : [ { text: "OKAY", onPress: () => setloadingstate(false)}]
           );
     }
 

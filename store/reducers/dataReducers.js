@@ -22,7 +22,8 @@ export default (state = initialState, action) => {
         case REGISTER_CUSTOMER :
             return {
                 ...state,
-                statusResponse: action.registerStatus
+                statusResponse: action.registerStatus,
+                Tokendata: action.APIToken
             }
         case LOGIN_CUSTOMER :
             return {
