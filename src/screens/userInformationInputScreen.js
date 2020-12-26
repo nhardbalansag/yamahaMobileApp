@@ -1,12 +1,12 @@
-import React,  {useState, useEffect, useCallback} from 'react';
-import {TouchableOpacity, View, Text, Alert} from 'react-native';
+import React,  {useState, useEffect} from 'react';
+import {TouchableOpacity, View, Text} from 'react-native';
 import { Container, Content, Form, Item, Input, Label } from 'native-base';
 import { 
     useDispatch,
     useSelector
 } from 'react-redux';
 
-import {styles, colors} from '../styles/style';
+import {styles} from '../styles/style';
 import TitleComponent from '../components/title';
 import * as Customer from '../../store/actions/customerActions';
 
@@ -39,7 +39,6 @@ const PersonalInformnationScreen = ({navigation}) =>{
 
     const registerState = () =>{
         setbooldata(currentState => booldata ? false : true);
-        alertMessage();
     };
 
     const [first_name, setfirst_name] = useState('');
