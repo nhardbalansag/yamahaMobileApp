@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -7,6 +7,10 @@ import PersonalInformnationScreen from '../screens/userInformationInputScreen';
 import MyAccountLandingScreen from '../screens/myAccountlandingScreen';
 import OrderScreen from '../screens/ordersScreen';
 import AccountScreen from '../screens/accountScreen';
+
+import { 
+  useSelector
+} from 'react-redux';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,16 +26,32 @@ const Account = () =>{
 }
 
 const Navigation = () => {
-
-  const [login, setlogin] = useState(false);
-    
     return (
         <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginScreeen} />
             <Stack.Screen name="UserInformation" component={PersonalInformnationScreen} />
             <Stack.Screen name="Account" component={Account} />
-      </Stack.Navigator>
+        </Stack.Navigator>
     );
 }
 
-export default Navigation;  
+const switchScreen = () => {
+
+  const tokenresponse = useSelector(state => state.products.Tokendata);
+  const errorResponse = useSelector(state => state.products.errorBool);
+  const [login, setlogin] = useState(false);
+
+  useEffect(() => {
+    setlogin(errorResponse);
+  },[login])
+
+  if(tokenresponse !== "null" || tokenresponse !== "Undefined"){
+    return Navigation();
+  }else{
+    console.log(tokenresponse);
+    return Account();
+  }
+
+}
+
+export default switchScreen;  

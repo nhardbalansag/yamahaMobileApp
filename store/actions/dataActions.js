@@ -6,7 +6,12 @@ export const viewAllProducts = () => {
     return async dispatch => {
 
         const loadedProduct = [];
-        const  response = await fetch('https://www.bbalansag.online/api')
+        const  response = await fetch('https://www.bbalansag.online/api', {
+            headers:{
+                'Content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC'
+            }
+        });
         const responseData = await response.json();
 
         for (const key in responseData){

@@ -1,45 +1,62 @@
 import React,  {useState, useEffect} from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, View, Text, Alert, ActivityIndicator} from 'react-native';
 import { Container, Content, Form, Item, Input, Label } from 'native-base';
 import { 
     useDispatch,
     useSelector
 } from 'react-redux';
 
-import {styles} from '../styles/style';
+import {styles, colors} from '../styles/style';
 import TitleComponent from '../components/title';
 import * as Customer from '../../store/actions/customerActions';
 
 const PersonalInformnationScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
-    const registerstatusResponse = useSelector(state => state.products.statusResponse);
     const [booldata, setbooldata] = useState(false);
+    const [loadingstate, setloadingstate] = useState(false);
+    const registerstatusResponse = useSelector(state => state.products.statusResponse);
 
     useEffect(()=>{
-        dispatch(
-            Customer.registerCustomer(
-                first_name, 
-                last_name, 
-                middle_name, 
-                home_address, 
-                street_address, 
-                country_region, 
-                contact_number, 
-                city, 
-                state_province, 
-                postal, 
-                role, 
-                verified, 
-                email, 
-                password
-            )
-        )
+        
     }, [booldata]);
 
-    const registerState = () =>{
+    const registerState = async () =>{
         setbooldata(currentState => booldata ? false : true);
+        try {
+            setloadingstate(true);
+            await dispatch(
+                    Customer.registerCustomer(
+                        first_name, 
+                        last_name, 
+                        middle_name, 
+                        home_address, 
+                        street_address, 
+                        country_region, 
+                        contact_number, 
+                        city, 
+                        state_province, 
+                        postal, 
+                        role, 
+                        verified, 
+                        email, 
+                        password
+                    )
+            )
+            setloadingstate(false);
+        } catch (error) {
+            alertMessage(error.message);
+        }
     };
+
+    const alertMessage = (message) => {
+        Alert.alert(
+            "Status",
+            message,
+            [ { text: "OKAY", onPress: () => setloadingstate(false)}],
+            { cancelable: false }
+          );
+    }
 
     const [first_name, setfirst_name] = useState('');
     const [last_name, setlast_name] = useState('');
@@ -130,11 +147,15 @@ const PersonalInformnationScreen = ({navigation}) =>{
                         <Input  onChangeText = {text => setpassword(text)}/>
                     </Item>
                     <Text style={styles.errormessage}>{registerstatusResponse['password']}</Text>
-                    <TouchableOpacity onPress={() => registerState()} style={[styles.GeneralButton, styles.marginVertical, styles.marginHorizantal]}>
-                        <View>
-                            <Text style={styles.GeneralButtonText}>sign up</Text>
-                        </View>
-                    </TouchableOpacity>
+
+                    {
+                        loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
+                        <TouchableOpacity onPress={() => registerState()} style={[styles.GeneralButton, styles.marginVertical, styles.marginHorizantal]}>
+                            <View>
+                                <Text style={styles.GeneralButtonText}>sign up</Text>
+                            </View>
+                        </TouchableOpacity>
+                    }
                     <TouchableOpacity onPress={() => navigation.navigate('PersonalInformation')} style={[styles.signupButton, styles.marginVertical]}>
                         <View>
                             <Text onPress={() => navigation.popToTop()} style={styles.signUpText}>already have an account</Text>
