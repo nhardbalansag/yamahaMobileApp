@@ -1,8 +1,8 @@
-import Products from '../../model/products';
-import Customer from '../../model/customer';
-
 import { SET_PRODUCTS } from '../actions/dataActions';
-import { REGISTER_CUSTOMER } from '../actions/customerActions';
+import { 
+    REGISTER_CUSTOMER,
+    LOGIN_CUSTOMER
+} from '../actions/customerActions';
 
 const initialState = {
     allproducts:[],
@@ -21,6 +21,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 statusResponse: action.registerStatus
+            }
+        case LOGIN_CUSTOMER :
+            return {
+                ...state,
+                errorData: action.APIError,
+                errorType: action.APItype,
+                errorBool: action.APIBool
             }
     }
     return state;
