@@ -2,14 +2,16 @@ import React, {useEffect} from 'react';
 
 import {
     FlatList, 
-    View, 
-    Text 
+    Image,
+    View
 } from 'react-native';
 
 import { 
     useSelector, 
     useDispatch
 } from 'react-redux';
+
+import {styles, colors} from '../styles/style';
 
 import * as PRODUCTS from '../../store/actions/dataActions';
 
@@ -46,9 +48,16 @@ const MyAccountLandingScreen = () =>{
 
 const renderProductItem = itemData =>{
     return (
-         <View>
-             <Text>{itemData.item.title}</Text>
-         </View>
+            <View>
+                <View>
+                    <Image 
+                        style={{width: "100%", height: 300}}
+                        source={{uri: 'https://bbalansag.online/storage/' + itemData.item.photo_path}}
+                        resizeMode={'contain'} // cover or contain its upto you view look
+                    />
+                </View>
+            </View>
+         
     );
  };
 
