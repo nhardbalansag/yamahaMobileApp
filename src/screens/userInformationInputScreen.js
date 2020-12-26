@@ -48,7 +48,7 @@ const PersonalInformnationScreen = ({navigation}) =>{
         Alert.alert(
             "Status",
             message,
-            message == "login Success" [ { text: "OKAY"}]
+            message == "login Success" ? [ { text: "OKAY"}] : [ { text: "OKAY", onPress: () => setloadingstate(false)}]
           );
     }
 
