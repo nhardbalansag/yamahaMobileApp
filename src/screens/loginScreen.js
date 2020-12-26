@@ -25,10 +25,11 @@ const LoginScreen = ({navigation}) =>{
         setloadingstate(true);
         try {
             await dispatch(Customer.loginCustomer(email, password));
+            setloadingstate(false);
         } catch (error) {
             error.message === "false" ? alertMessage("login Success") : alertMessage(error.message);
         }
-        setloadingstate(false);
+        
     }
 
     const alertMessage = (message) => {
