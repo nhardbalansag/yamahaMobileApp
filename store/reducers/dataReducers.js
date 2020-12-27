@@ -16,7 +16,9 @@ export default (state = initialState, action) => {
     switch(action.type){
         case SET_PRODUCTS:
             return {
-                allproducts: action.products
+                ...state,
+                allproducts: action.products,
+                Tokendata: action.APIToken
             }
 
         case REGISTER_CUSTOMER :
