@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -7,7 +7,8 @@ import PersonalInformnationScreen from '../screens/userInformationInputScreen';
 import MyAccountLandingScreen from '../screens/myAccountlandingScreen';
 import OrderScreen from '../screens/ordersScreen';
 import AccountScreen from '../screens/accountScreen';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { 
   useSelector
@@ -19,18 +20,35 @@ const Tab = createBottomTabNavigator();
 const Account = () =>{
   return (
     <Tab.Navigator
-      tabBarOptions={{
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
-      labelStyle: {
-        fontSize: 13,
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === 'Home') {
+          iconName = 'home';
+        } else if (route.name === 'Orders') {
+          iconName = 'shopping-bag';
+        }else if (route.name === 'Account') {
+          iconName = 'account-circle';
+        }
+
+        // You can return any component that you like here!
+        return <Icon name={iconName} size={size} color={color} />;
       },
-      style: {
-        backgroundColor: '#fff', // Makes Android tab bar white instead of standard blue
-        height: 50,// I didn't use this in my app, so the numbers may be off. 
-        paddingBottom: 20,
-      }
-    }}
+    })}
+      tabBarOptions={{
+        showIcon: true ,
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+        labelStyle: {
+          fontSize: 13,
+        },
+        style: {
+          backgroundColor: '#fff', // Makes Android tab bar white instead of standard blue
+          height: 60,// I didn't use this in my app, so the numbers may be off. 
+          paddingBottom: 5,
+        }
+      }}
   >
       <Tab.Screen name="Home" component={MyAccountLandingScreen} />
       <Tab.Screen name="Orders" component={OrderScreen} />

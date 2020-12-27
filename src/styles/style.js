@@ -3,10 +3,11 @@ import { StyleSheet } from 'react-native';
 // colors
 const lightColor = 'white';
 const darkColor = 'black';
-const primaryColor = '#1b3295';
+const primaryColor = '#007bff';
 const dangerColor = '#bf1e2e';
 const warningColor = '#fcbe68';
 const disableColor = '#898787';
+const starColor = '#ffbf00';
 
 const colors = {
 lightColor: lightColor,
@@ -14,7 +15,8 @@ primaryColor: primaryColor,
 darkColor: darkColor,
 dangerColor: dangerColor,
 warningColor: warningColor,
-disableColor: disableColor
+disableColor: disableColor,
+starColor: starColor
 };
 
 const styles = StyleSheet.create({
@@ -112,7 +114,54 @@ const styles = StyleSheet.create({
       errormessage:{
         color: 'red',
         marginLeft: 15
-      }
+      },
+      productTitle:{
+        color: colors.primaryColor,
+        fontWeight:'bold',
+      },
+      productDescription:{
+          fontSize: 10,
+          color: colors.disableColor
+      },
+      productPrice:{
+          fontWeight: 'bold'
+      },
+      productlistContainer:{
+          flex: 1, 
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginVertical:5,
+          paddingHorizontal:5,
+          borderBottomWidth:1,
+          borderBottomColor: 'rgba(52, 52, 52, 0.4)'
+      },
+      productContainer:{
+          flex:1,
+          backgroundColor: 'white',
+          marginBottom:20
+      },
+      productViewImage:{
+        width:"30%"
+      },
+      productViewTitle:{
+        width:"60%",
+        flex: 1, 
+        paddingHorizontal:"5%",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      productTitleLeft:{
+        width: "70%"
+      },
+      productTitleRight:{
+        width: "30%",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+      },
+      
 
 
       

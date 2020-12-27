@@ -21,9 +21,9 @@ export const viewAllProducts = () => {
                     responseData[key].photo_path,
                     responseData[key].title,
                     responseData[key].description,
-                    responseData[key].status,
-                    responseData[key].update_count,
-                    responseData[key].product_category_id
+                    responseData[key].price,
+                    responseData[key].product_category_id,
+                    responseData[key].created_at
                 )
             )
         }
