@@ -36,7 +36,7 @@ const MyAccountLandingScreen = () =>{
         try {
             await dispatch(PRODUCTS.viewAllProducts());
         } catch (error) {
-            alertMessage();
+            alertMessage(error.message);
         }
     }
    
@@ -47,7 +47,7 @@ const MyAccountLandingScreen = () =>{
     const alertMessage = (message) => {
         Alert.alert(
             "An error occured",
-            "Unauthorized access to this resource",
+            message,
             [ { text: "OKAY"}],
             { cancelable: false }
           );
