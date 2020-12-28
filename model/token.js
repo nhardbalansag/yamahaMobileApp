@@ -1,7 +1,7 @@
-class tokendata {
+class Tokendata {
     constructor(tokendata){
         this.tokendata = tokendata
     }
 }
 
-export default tokendata;
+export default Tokendata;

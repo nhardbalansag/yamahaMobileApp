@@ -7,12 +7,16 @@ import PersonalInformnationScreen from '../screens/userInformationInputScreen';
 import MyAccountLandingScreen from '../screens/myAccountlandingScreen';
 import OrderScreen from '../screens/ordersScreen';
 import AccountScreen from '../screens/accountScreen';
+import ViewOneProductInformation from '../screens/viewOneProductScreen';
+
+import ScreenAccess from '../screenAccess/screenAccess';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { 
   useSelector
 } from 'react-redux';
+import {colors} from '../styles/style';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,24 +61,57 @@ const Account = () =>{
   );
 }
 
-const Navigation = () => {
+const EnterCredentialNavigation = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Login" component={LoginScreeen} />
-            <Stack.Screen name="UserInformation" component={PersonalInformnationScreen} />
-            <Stack.Screen name="Account" component={Account} />
+            <Stack.Screen name="Login" component={LoginScreeen} options={{ title: 'Login' }}/>
+            <Stack.Screen name="UserInformation" component={PersonalInformnationScreen} options={{ title: 'User Information' }}/>
         </Stack.Navigator>
     );
+}
+
+const ProductsViewNavigation = () => {
+  return (
+      <Stack.Navigator>
+          <Stack.Screen 
+            name="Product" 
+            component={ViewOneProductInformation} 
+            options={
+              { 
+                title: 'Product Information',
+                headerStyle: {
+                  backgroundColor: colors.dangerColor,
+                },
+                headerTintColor: colors.lightColor,
+              }
+            }
+          />
+      </Stack.Navigator>
+  );
 }
 
 const switchScreen = () => {
 
   const tokenresponse = useSelector(state => state.products.Tokendata);
-
-  if(tokenresponse === null){
-    return Navigation();
+  const screenresponse = useSelector(state => state.products.screenAccess);
+  
+  if(tokenresponse !== null){
+    switch (screenresponse) {
+      case ScreenAccess.homeScreenLandingTab:
+        return Account();
+        break;
+      case ScreenAccess.loginScreen:
+        return EnterCredentialNavigation();
+        break;
+      case ScreenAccess.homeScreenProductStack:
+          return ProductsViewNavigation();
+          break;
+      default:
+        return EnterCredentialNavigation();
+        break;
+    }
   }else{
-    return Account();
+    return EnterCredentialNavigation();
   }
 
 }

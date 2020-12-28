@@ -1,6 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {StatusBar, View, TouchableOpacity,Text, TextInput, Alert, ActivityIndicator} from 'react-native';
-import {styles, colors} from '../styles/style';
+import React, {useState} from 'react';
+import {
+    StatusBar, 
+    View, 
+    TouchableOpacity,
+    Text, 
+    TextInput, 
+    Alert, 
+    ActivityIndicator
+} from 'react-native';
+
+import {
+    styles, 
+    colors
+} from '../styles/style';
+
 import { 
     useDispatch,
     useSelector
@@ -42,7 +55,7 @@ const LoginScreen = ({navigation}) =>{
 
     return(
         <View style={styles.container}>
-            <StatusBar backgroundColor={colors.primaryColor} barStyle="white-content"/>
+            <StatusBar backgroundColor={colors.dangerColor} barStyle="white-content"/>
             <View style={styles.screenWidth}>
             <View style={styles.inputGap}>
                 <TitleComponent subtext="login your credentials"/>

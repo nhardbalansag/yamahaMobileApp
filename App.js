@@ -19,6 +19,7 @@ import {Provider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import DataReducer from './store/reducers/dataReducers';
 
+
 const rootReducer = combineReducers({
   products:DataReducer
 }); 
@@ -41,7 +42,7 @@ const App = () => {
 
   return (
     <Root>
-      <StatusBar backgroundColor="black" barStyle="white-content"/>
+      <StatusBar backgroundColor="tomato" barStyle="white-content"/>
       { 
         load ? 
         <Provider store={store}>
