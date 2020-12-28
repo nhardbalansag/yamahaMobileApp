@@ -1,4 +1,11 @@
-import { SET_PRODUCTS } from '../actions/dataActions';
+import ScreenAccess from '../../src/screenAccess/screenAccess';
+
+import { 
+    SET_PRODUCTS,
+    VIEW_ONE_PRODUCT,
+    LANDING
+ } from '../actions/dataActions';
+
 import { 
     REGISTER_CUSTOMER,
     LOGIN_CUSTOMER
@@ -9,7 +16,12 @@ const initialState = {
     parts:[],
     statusResponse: [],
     Tokendata: null,
-    errorBool: true
+    errorBool: true,
+    screenAccess: ScreenAccess.loginScreen,
+    ProductInformation:[],
+    ProductSpecification:[],
+    ProductinquiriesCount:null,
+    ProductPercentage:null
 };
 
 export default (state = initialState, action) => {
@@ -18,14 +30,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 allproducts: action.products,
-                Tokendata: action.APIToken
+                Tokendata: action.APIToken,
+                screenAccess: action.screen_access
             }
 
         case REGISTER_CUSTOMER :
             return {
                 ...state,
                 statusResponse: action.registerStatus,
-                Tokendata: action.APIToken
+                Tokendata: action.APIToken,
+                screenAccess: action.screen_access
             }
         case LOGIN_CUSTOMER :
             return {
@@ -33,7 +47,24 @@ export default (state = initialState, action) => {
                 errorData: action.APIError,
                 errorType: action.APItype,
                 errorBool: action.APIBool,
-                Tokendata: action.APIToken
+                Tokendata: action.APIToken,
+                screenAccess: action.screen_access
+            }
+        case VIEW_ONE_PRODUCT :
+            return{
+                ...state,
+                screenAccess: action.screen_access,
+                ProductInformation: action.ProductInformation,
+                ProductSpecification: action.ProductSpecification,
+                ProductinquiriesCount: action.ProductinquiriesCount,
+                ProductPercentage: action.ProductPercentage,
+                ProductSpecification:action.ProductSpecification,
+                Tokendata: action.APIToken,
+            }
+        case LANDING :
+            return{
+                ...state,
+                screenAccess: action.screen_access
             }
     }
     return state;

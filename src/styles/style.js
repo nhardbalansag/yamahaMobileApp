@@ -4,10 +4,11 @@ import { StyleSheet } from 'react-native';
 const lightColor = 'white';
 const darkColor = 'black';
 const primaryColor = '#007bff';
-const dangerColor = '#bf1e2e';
+const dangerColor = 'tomato';
 const warningColor = '#fcbe68';
 const disableColor = '#898787';
 const starColor = '#ffbf00';
+const successColor = '#4A7023';
 
 const colors = {
 lightColor: lightColor,
@@ -16,7 +17,8 @@ darkColor: darkColor,
 dangerColor: dangerColor,
 warningColor: warningColor,
 disableColor: disableColor,
-starColor: starColor
+starColor: starColor,
+successColor: successColor
 };
 
 const styles = StyleSheet.create({
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
         textAlign:'center'
       },
       GeneralButton:{
-        backgroundColor: colors.primaryColor,
+        backgroundColor: colors.dangerColor,
         padding: 12
       },
       GeneralButtonText:{
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
         paddingVertical: '10%',
       },
       signUpText:{
-        color: colors.primaryColor,
+        color: colors.dangerColor,
         textAlign:'center',
         textTransform: 'capitalize',
         fontSize: 15,
@@ -142,18 +144,16 @@ const styles = StyleSheet.create({
           marginBottom:20
       },
       productViewImage:{
-        width:"30%"
+        width:"30%",
+        justifyContent:'flex-end'
       },
       productViewTitle:{
         width:"60%",
         flex: 1, 
         paddingHorizontal:"5%",
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-      },
-      productTitleLeft:{
-        width: "70%"
       },
       productTitleRight:{
         width: "30%",

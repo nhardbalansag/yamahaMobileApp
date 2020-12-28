@@ -1,9 +1,16 @@
 import Products from '../../model/products';
+import Specification from '../../model/specification';
+
+
+import ScreenAccess from '../../src/screenAccess/screenAccess';
 
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const VIEW_ONE_PRODUCT = 'VIEW_ONE_PRODUCT';
+export const LANDING = 'LANDING';
 
 export const viewAllProducts = () => {
     return async (dispatch, getState) => {
+        
         const loadedProduct = [];
         const  response = await fetch('https://www.bbalansag.online/api', {
             headers:{
@@ -13,13 +20,12 @@ export const viewAllProducts = () => {
             }
         });
         const responseData = await response.json();
-        console.log(responseData);
-        console.log(getState().products.Tokendata);
         if(responseData === "Unauthorized"){
             dispatch(
                 {
                     type: SET_PRODUCTS, 
-                    APIToken: null
+                    APIToken: null,
+                    screen_access:ScreenAccess.loginScreen
                 }
             );
         }else{
@@ -36,8 +42,68 @@ export const viewAllProducts = () => {
                     )
                 )
             }
-            dispatch({type:SET_PRODUCTS, products: loadedProduct });
+            dispatch(
+                {
+                    type:SET_PRODUCTS, 
+                    products: loadedProduct,
+                    screen_access:ScreenAccess.homeScreenLandingTab 
+                }
+            );
         }
-        
     };
 };
+
+export const ViewOneProductInformation = (id, token) =>{
+    return async (dispatch, getState) => {
+        // console.log(getState().products.allproducts[0])
+        const  response = await fetch('https://www.bbalansag.online/api/view/product', {
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + token, 
+            },
+            body: JSON.stringify({
+                id:id
+            })
+        });
+        const responseData = await response.json();
+        const loadedSpecification = [];
+
+        for(const key in responseData.data.specification){
+            loadedSpecification.push(
+                new Specification( 
+                    responseData.data.specification[key].id, 
+                    responseData.data.specification[key].title, 
+                    responseData.data.specification[key].description
+                ))
+        }
+
+        dispatch(
+            {
+                type:VIEW_ONE_PRODUCT, 
+                screen_access:ScreenAccess.homeScreenProductStack,
+                ProductInformation:responseData.data.product[0],
+                ProductSpecification:loadedSpecification,
+                ProductinquiriesCount:responseData.data.inquiriesCount,
+                ProductPercentage:responseData.data.Percentage,
+                APIToken:token
+            }
+        );
+    }
+}
+
+
+export const backtoLanding = () =>{
+    return async (dispatch, getState) => {
+        console.log(getState());
+        dispatch(
+            {
+                type:LANDING, 
+                screen_access:ScreenAccess.homeScreenLandingTab
+            }
+        );
+    }
+}
+
+

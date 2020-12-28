@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
     FlatList, 
@@ -7,11 +7,9 @@ import {
     Text,
     SafeAreaView,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
-
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 
 import { 
     useSelector, 
@@ -21,16 +19,14 @@ import {
 import {styles, colors} from '../styles/style';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import ViewProductScreen from '../screens/viewOneProductScreen';
-
 import * as PRODUCTS from '../../store/actions/dataActions';
-
-const Stack = createStackNavigator();
 
 const MyAccountLandingScreen = () =>{
 
     const allproducts = useSelector(state => state.products.allproducts);
+    const Tokendata = useSelector(state => state.products.Tokendata);
     const dispatch = useDispatch();
+    const [tokendataState, settokendataState] = useState(null);
 
     const viewallproducts = async () => {
         try {
@@ -39,10 +35,19 @@ const MyAccountLandingScreen = () =>{
             alertMessage(error.message);
         }
     }
+
+    const viewProductInformation = async (id) => {
+        try {
+            await dispatch(PRODUCTS.ViewOneProductInformation(id, tokendataState));
+        } catch (error) {
+            alertMessage(error.message);
+        }
+    }
    
     useEffect(() => {
         viewallproducts();
-    }, [dispatch]);
+        settokendataState(Tokendata);
+    }, [dispatch]); 
 
     const alertMessage = (message) => {
         Alert.alert(
@@ -53,6 +58,32 @@ const MyAccountLandingScreen = () =>{
           );
     }
 
+    const renderProductItem = ({item}) =>{
+            return(
+                <TouchableOpacity onPress={() => viewProductInformation(item.id)}>
+                    <View style={[styles.productlistContainer]}>
+                        <View style={styles.productViewImage}>
+                            <Image 
+                                style={{width:"100%", height: 100, borderRadius: 20}}
+                                source={{uri: 'https://bbalansag.online/storage/' + item.photo_path}}
+                                resizeMode={'contain'} // cover or contain its upto you view look
+                            />
+                        </View>
+                        <View style={styles.productViewTitle}>
+                            <View style={styles.productTitleLeft}>
+                                <Text style={styles.productTitle} numberOfLines={1}>{item.title}</Text>
+                                <Text style={styles.productDescription} numberOfLines={3}>{item.description}</Text>
+                                <View style={{flexDirection:'row' }}>
+                                    <Text style={styles.productPrice} >Price: ₱{item.price}</Text>
+                                    <Icon name="local-offer" size={20} color={colors.starColor} />
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            );
+     };
+
     return(
         
         <SafeAreaView style={styles.productContainer}>
@@ -62,63 +93,13 @@ const MyAccountLandingScreen = () =>{
                 </View>
             </ImageBackground>
             <View>
-                <Text style={{color:'tomato', padding:5, fontWeight:'bold'  }}>20 Items</Text>
+                <Text style={{color:'tomato', padding:5, fontWeight:'bold'  }}>{Object.keys(allproducts).length} Items</Text>
                 <FlatList keyExtractor={item => item.id.toString()} data={allproducts} renderItem={renderProductItem} />
             </View>
         </SafeAreaView>
        
     );
 }
-
-const renderProductItem = itemData =>{
-    return (
-        <TouchableOpacity onPress={() => setScreen(true)}>
-            <View style={[styles.productlistContainer]}>
-                <View style={styles.productViewImage}>
-                    <Image 
-                        style={{width:"100%", height: 100, borderRadius: 20}}
-                        source={{uri: 'https://bbalansag.online/storage/' + itemData.item.photo_path}}
-                        resizeMode={'contain'} // cover or contain its upto you view look
-                    />
-                </View>
-                <View style={styles.productViewTitle}>
-                    <View style={styles.productTitleLeft}>
-                        <Text style={styles.productTitle} numberOfLines={1}>{itemData.item.title}</Text>
-                        <Text style={styles.productDescription} numberOfLines={3}>{itemData.item.description}</Text>
-                        <View style={{flexDirection:'row' }}>
-                            <Icon name="local-offer" size={20} color={colors.starColor} />
-                            <Text style={styles.productPrice} >Price: {itemData.item.price}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.productTitleRight}>
-                        <View>
-                            <Icon name="star-rate" size={20} color={colors.starColor} />
-                        </View>
-                        <View>
-                            <Text>80%</Text>
-                        </View>
-                    </View>
-                </View>
-            </View>
-        </TouchableOpacity>
-    );
- };
-
-//  const ViewProduct = () => {
-//     return (
-//         <ViewProductScreen/>
-//     );
-//   }
-
-// const switchScreen = () =>{
-    
-//     const [screen, setScreen] = useState(false);
-
-//     return(
-//         screen ? ViewProduct() : MyAccountLandingScreen()
-//     );
-// }
-
 
 export default MyAccountLandingScreen;
 

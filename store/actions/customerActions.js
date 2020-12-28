@@ -1,5 +1,6 @@
 import Customer from '../../model/customer';
 import TokenData from '../../model/token';
+import ScreenAccess from '../../src/screenAccess/screenAccess';
 export const REGISTER_CUSTOMER = 'REGISTER_CUSTOMER';
 export const LOGIN_CUSTOMER = 'LOGIN_CUSTOMER';
 
@@ -43,8 +44,6 @@ export const registerCustomer = (
             })
         });
 
-        
-
         const responseData = await response.json();
         
         if(responseData === "Unauthorized"){
@@ -55,16 +54,17 @@ export const registerCustomer = (
                 {
                     type: REGISTER_CUSTOMER, 
                     registerStatus: responseData,
-                    APIToken: null
+                    APIToken: null,
+                    screen_access:ScreenAccess.loginScreen
                 }
             );
         }else{
-            console.log()
             dispatch(
                 {
                     type: REGISTER_CUSTOMER, 
                     registerStatus: responseData,
-                    APIToken: responseData.token
+                    APIToken: responseData.token,
+                    screen_access:ScreenAccess.homeScreenLandingTab
                 }
             );
 
@@ -92,19 +92,29 @@ export const loginCustomer = (email, password) => {
         const responseData = await response.json();
         errorData.push(responseData.status.messsage);
 
-        dispatch(
-            {
-                type: LOGIN_CUSTOMER, 
-                APIError: errorData,
-                APItype: responseData.status.type,
-                APIBool: responseData.status.error,
-                APIToken: responseData.status.token
-            }
-        );
-
         if(responseData.status.type !== "validation" && responseData.status.error !== false){
+            dispatch(
+                {
+                    type: LOGIN_CUSTOMER, 
+                    APIError: errorData,
+                    APItype: responseData.status.type,
+                    APIBool: responseData.status.error,
+                    APIToken: responseData.status.token,
+                    screen_access:ScreenAccess.loginScreen
+                }
+            );
             throw new Error(responseData.status.messsage);
         }else if(responseData.status.type === "data" && responseData.status.error === false){
+            dispatch(
+                {
+                    type: LOGIN_CUSTOMER, 
+                    APIError: errorData,
+                    APItype: responseData.status.type,
+                    APIBool: responseData.status.error,
+                    APIToken: responseData.status.token,
+                    screen_access:ScreenAccess.homeScreenLandingTab
+                }
+            );
             throw new Error(responseData.status.error);
         }
         // customerInformation.push(
