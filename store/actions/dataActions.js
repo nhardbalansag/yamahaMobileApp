@@ -10,7 +10,6 @@ export const LANDING = 'LANDING';
 
 export const viewAllProducts = () => {
     return async (dispatch, getState) => {
-        
         const loadedProduct = [];
         const  response = await fetch('https://www.bbalansag.online/api', {
             headers:{
@@ -96,7 +95,6 @@ export const ViewOneProductInformation = (id, token) =>{
 
 export const backtoLanding = () =>{
     return async (dispatch, getState) => {
-        console.log(getState());
         dispatch(
             {
                 type:LANDING, 

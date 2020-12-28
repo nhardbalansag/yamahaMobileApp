@@ -1,8 +1,13 @@
 import Customer from '../../model/customer';
+// import {AsyncStorage} from ' @react-native-async-storage/async-storage'
 import ScreenAccess from '../../src/screenAccess/screenAccess';
 export const REGISTER_CUSTOMER = 'REGISTER_CUSTOMER';
 export const LOGIN_CUSTOMER = 'LOGIN_CUSTOMER';
 export const SEND_INQUIRY = 'SEND_INQUIRY';
+
+// const saveLogin = (tokenToStore, emailToStore, Password) =>{
+//     AsyncStorage.setItem('userData', JSON.stringify({token: }))
+// }
 
 export const registerCustomer = (
     first_name, 
@@ -138,8 +143,6 @@ export const loginCustomer = (email, password) => {
             );
             throw new Error(responseData.status.error);
         }
-        
-        
     }
 }
 

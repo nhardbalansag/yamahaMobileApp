@@ -12,7 +12,12 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, Content, List, ListItem, Left, Body, Right, Thumbnail } from 'native-base';
+import {
+    List, 
+    ListItem, 
+    Left, 
+    Body 
+} from 'native-base';
 
 import {
     styles, 
@@ -26,7 +31,6 @@ import {
 
 import * as PRODUCTS from '../../store/actions/dataActions';
 import * as Customer from '../../store/actions/customerActions'; 
-import {Item} from 'native-base';
 
 const ViewOneProductInformation = () => {
 
