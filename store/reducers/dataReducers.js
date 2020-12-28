@@ -21,7 +21,9 @@ const initialState = {
     ProductInformation:[],
     ProductSpecification:[],
     ProductinquiriesCount:null,
-    ProductPercentage:null
+    ProductPercentage:null,
+    inquiryResponse:null,
+    CustomerInformation:[]
 };
 
 export default (state = initialState, action) => {
@@ -48,7 +50,8 @@ export default (state = initialState, action) => {
                 errorType: action.APItype,
                 errorBool: action.APIBool,
                 Tokendata: action.APIToken,
-                screenAccess: action.screen_access
+                screenAccess: action.screen_access,
+                CustomerInformation: action.CustomerInformation
             }
         case VIEW_ONE_PRODUCT :
             return{
