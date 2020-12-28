@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useState} from 'react';
 
 import {
     View, 
@@ -8,7 +8,7 @@ import {
     FlatList,
     TouchableOpacity,
     SafeAreaView,
-    ScrollView
+    Alert
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -25,6 +25,7 @@ import {
 } from 'react-redux';
 
 import * as PRODUCTS from '../../store/actions/dataActions';
+import * as Customer from '../../store/actions/customerActions'; 
 import {Item} from 'native-base';
 
 const ViewOneProductInformation = () => {
@@ -33,7 +34,9 @@ const ViewOneProductInformation = () => {
     const ProductSpecification = useSelector(state => state.products.ProductSpecification);
     const ProductinquiriesCount = useSelector(state => state.products.ProductinquiriesCount);
     const ProductPercentage = useSelector(state => state.products.ProductPercentage);
+    const CustomerInformation = useSelector(state => state.products.CustomerInformation);
     const dispatch = useDispatch();
+    const [sample, setsample] = useState();
 
     const backtoLanding = async () =>{
         try {
@@ -41,6 +44,37 @@ const ViewOneProductInformation = () => {
         } catch (error) {
             console.log(error.message);
         }
+    }
+
+    const sendInquiry = async (id) =>{
+        try {
+            await dispatch(Customer.sendInquiry(id));
+        } catch (error) {
+            statusInquiryMessage(error.message);
+        }
+    }
+
+    const statusInquiryMessage = (message) => {
+        Alert.alert(
+            "Inquiry Status",
+            message,
+            [
+              { text: "OK" }
+            ],
+            { cancelable: false }
+          );
+    }
+
+    const alertMessage = (id) => {
+        Alert.alert(
+            "Send Inquiry",
+            "Do you want to send and Inquiry?",
+            [
+              { text: "Cancel", style: "cancel" },
+              { text: "OK", onPress: () => sendInquiry(id) }
+            ],
+            { cancelable: false }
+          );
     }
 
     const renderProductItem = ({item}) =>{
@@ -78,7 +112,7 @@ const ViewOneProductInformation = () => {
                         <Icon name="local-offer" size={20} color={colors.starColor} />
                     </View>
                     <View style={{ flexDirection:'row', justifyContent: 'space-around'}}>
-                        <TouchableOpacity style={{ padding:10 }}>
+                        <TouchableOpacity onPress={() => alertMessage(ProductInformation.id)} style={{ padding:10 }}>
                             <Icon name="forward-to-inbox" size={30} color={colors.dangerColor} />
                         </TouchableOpacity>
                         <TouchableOpacity style={{ padding:10 }}>
