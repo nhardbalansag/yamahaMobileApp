@@ -23,7 +23,8 @@ const initialState = {
     ProductinquiriesCount:null,
     ProductPercentage:null,
     inquiryResponse:null,
-    CustomerInformation:[]
+    CustomerInformation:[],
+    ProductCount:null
 };
 
 export default (state = initialState, action) => {
@@ -33,7 +34,8 @@ export default (state = initialState, action) => {
                 ...state,
                 allproducts: action.products,
                 Tokendata: action.APIToken,
-                screenAccess: action.screen_access
+                screenAccess: action.screen_access,
+                ProductCount: action.ProductCount
             }
 
         case REGISTER_CUSTOMER :

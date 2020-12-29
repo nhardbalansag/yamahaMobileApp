@@ -1,14 +1,511 @@
-import React from 'react';
-import {StatusBar, TextInput, TouchableOpacity, View, Text } from 'react-native';
+import React, {useState} from 'react';
+import { 
+    Form, 
+    Left, 
+    Right, 
+    List, 
+    ListItem,
+    Item,
+    Label,
+    Input
+} from 'native-base';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import {
+    View,
+    Text,
+    SafeAreaView,
+    ScrollView,
+    TouchableOpacity,
+    Alert,
+    ActivityIndicator
+} from 'react-native';
+
+import { 
+    useDispatch,
+    useSelector
+} from 'react-redux';
+
 import {styles, colors} from '../styles/style';
 
-import TitleComponent from '../components/title';
+import * as Customer from '../../store/actions/customerActions'; 
 
-const AccountScreen = ({navigation}) =>{
+const AccountScreen = () =>{
+    
+    const CustomerInformation = useSelector(state => state.products.CustomerInformation);
+    const Tokendata = useSelector(state => state.products.Tokendata);
+    const [isEdit, setisEdit] = useState('');
+    const [editText, setEditText] = useState('');
+    const [loadingstate, setloadingstate] = useState(false);
+    const dispatch = useDispatch();
+
+    const dataname = {
+        first_name: "first_name",
+        last_name: "last_name", 
+        middle_name: "middle_name", 
+        home_address: "home_address", 
+        street_address: "street_address", 
+        country_region: "country_region", 
+        contact_number: "contact_number", 
+        city: "city", 
+        state_province: "state_province", 
+        postal: "postal", 
+        email: "email", 
+        password: "password"
+    }; 
+
+    const alertMessage = (id, token, type) => {
+        Alert.alert(
+            "Warning",
+            "Do you want to submit this edit?",
+            [
+              { text: "Cancel", style: "cancel", onPress: () => setisEdit('')},
+              { text: "OK", onPress: () => getTextEdit(editText, id, token, type) }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    const warningEdit = (data) => {
+        Alert.alert(
+            "Warning",
+            "Edit this file?",
+            [
+              { text: "No", style: "cancel", onPress: () => setisEdit('')},
+              { text: "Yes", onPress: () => setdataValue(data)}
+            ],
+            { cancelable: false }
+        );
+    }
+
+    const setdataValue = (data) =>{
+        setisEdit(data);
+    }
+
+    const alertmessageResponse = (message) =>{
+        Alert.alert(
+            "Status",
+            message,
+            [
+              { text: "OKAY", onPress: () => setisEdit('')}
+            ],
+            { cancelable: false }
+        );
+    }
+
+    const getTextEdit = async (data, id, token, type) =>{
+        setisEdit(type);
+        try {
+            await dispatch(Customer.editCustomerInformation(data, id, token, type));
+        } catch (error) {
+            alertmessageResponse(error.message);
+        }
+    }
+
+    const customerInformationToEdit = () =>{
+        return(
+            <View style={{ backgroundColor: colors.lightColor }}>
+                <List>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].first_name ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>First Name:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)} />
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].first_name}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].first_name ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.first_name)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.first_name ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].first_name)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                        
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].middle_name ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Middle Name:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].middle_name}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].middle_name ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.middle_name)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.middle_name ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].middle_name)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit  == CustomerInformation[0].last_name ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Last Name:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].last_name}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit  == CustomerInformation[0].last_name ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.last_name)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.last_name ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].last_name)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].email ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Email:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].email}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].email ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.email)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.email ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].email)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].contact_number ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Contact Number:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].contact_number}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].contact_number ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.contact_number)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.contact_number ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].contact_number)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].home_address ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Home Address:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].home_address}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].home_address ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.home_address)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.home_address ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].home_address)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].city ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>City :</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].city}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].city ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.city)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.city ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].city)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].country_region ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Country Region:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].country_region}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].country_region ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.country_region)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.country_region ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].country_region)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].postal ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Zip Code:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].postal}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].postal ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.postal)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.postal ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].postal)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].state_province ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Province:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].state_province}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].state_province ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.state_province)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.state_province ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].state_province)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].street_address ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Street Address:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].street_address}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].street_address ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.street_address)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.street_address ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].street_address)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                    <ListItem selected>
+                            {
+                                isEdit == CustomerInformation[0].password ?
+                                    <Left>
+                                        <Item fixedLabel>
+                                            <Label style={{ fontSize:13, color:colors.disableColor }}>Password:</Label>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                        </Item>
+                                    </Left>
+                                :
+                                    <Left>
+                                        <Text style={{ color: colors.disableColor }}>{CustomerInformation[0].password}</Text>
+                                    </Left>
+                            }
+                        <Right>
+                            {
+                                isEdit == CustomerInformation[0].password ?
+                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.password)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                isEdit == dataname.password ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].password)} style={{ paddingHorizontal:20 }}>
+                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                            }
+                        </Right>
+                    </ListItem>
+                </List>
+            </View>
+        );
+    }
+
+    const CustomerInformationtop = () =>{
+        return(
+            <View style={{ backgroundColor:colors.lightColor }}>
+                <View  style={{ marginTop:50 }}>
+                    <View style={{ marginHorizontal:'5%' }}>
+                        <View style={{ flexDirection:'row', justifyContent: 'center', alignItems:'center'}}>
+                            <View style={{ justifyContent: 'center', alignItems:'center'}}>
+                                <Text style={{ color:colors.dangerColor, textTransform: 'capitalize', fontSize:20}}>
+                                    {CustomerInformation[0].first_name} {CustomerInformation[0].last_name}
+                                </Text>
+                                <Text style={{ color:colors.primaryColor, fontSize:15 }}>{CustomerInformation[0].email}</Text>
+                                <Text style={{ color:colors.disableColor, fontSize:15 }}>12 Orders</Text>
+                                
+                                <View>
+                                    <View style={{ flexDirection:'row', justifyContent: 'center', alignItems:'center'}}>
+                                        <Text style={{ color:colors.disableColor, fontSize:15 }}>application status</Text>
+                                    </View>
+                                    <View style={{ flexDirection:'row', justifyContent: 'center', alignItems:'center'}}>
+                                        <Icon name="star-rate" size={20} color={colors.starColor} />
+                                        <Text style={{ color:colors.successColor, fontWeight:'bold', fontSize:16 }}>80%</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{ marginVertical:10 }}>
+                            <View style={{ flexDirection:'row', justifyContent: 'flex-start', alignItems:'center', marginBottom:5}}>
+                                <Icon name="mail-outline" size={20} color={colors.dangerColor} />
+                                <Text style={{ color:colors.disableColor, marginLeft: 5 }}>{CustomerInformation[0].email}</Text>
+                            </View>
+                            <View style={{ flexDirection:'row', justifyContent: 'flex-start', alignItems:'center', marginBottom:5}}>
+                                <Icon name="smartphone" size={20} color={colors.dangerColor} />
+                                <Text style={{ color:colors.disableColor, marginLeft: 5 }}>{CustomerInformation[0].contact_number}</Text>
+                            </View>
+                            <View style={{ flexDirection:'row', justifyContent: 'flex-start', alignItems:'center', marginBottom:5}}>
+                                <Icon name="location-on" size={20} color={colors.dangerColor} />
+                                <Text style={{ color:colors.disableColor, marginLeft: 5 }}>
+                                    {CustomerInformation[0].home_address} , 
+                                    {CustomerInformation[0].city} , 
+                                    {CustomerInformation[0].postal} , 
+                                    {CustomerInformation[0].country_region} , 
+                                    {CustomerInformation[0].state_province}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
     return(
-        <View style={styles.container}>
-            <Text>hello</Text>
-        </View>
+        <SafeAreaView>
+            <ScrollView>
+                {CustomerInformationtop()}
+                {customerInformationToEdit()}
+            </ScrollView>
+      </SafeAreaView>
     );
 }
 
