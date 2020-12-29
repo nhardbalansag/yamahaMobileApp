@@ -38,9 +38,7 @@ const ViewOneProductInformation = () => {
     const ProductSpecification = useSelector(state => state.products.ProductSpecification);
     const ProductinquiriesCount = useSelector(state => state.products.ProductinquiriesCount);
     const ProductPercentage = useSelector(state => state.products.ProductPercentage);
-    const CustomerInformation = useSelector(state => state.products.CustomerInformation);
     const dispatch = useDispatch();
-    const [sample, setsample] = useState();
 
     const backtoLanding = async () =>{
         try {
