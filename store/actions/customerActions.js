@@ -113,6 +113,7 @@ export const loginCustomer = (email, password) => {
 
             customerInformation.push(
                 new Customer(
+                    responseData.information[0].id, 
                     responseData.information[0].first_name, 
                     responseData.information[0].last_name, 
                     responseData.information[0].middle_name, 
@@ -199,4 +200,28 @@ export const sendInquiry = (id) =>{
         }
     }
 }
+
+export const editCustomerInformation = (data, id, token, type) => {
+    return async (dispatch) =>{
+        const response = await fetch('https://www.bbalansag.online/api/credentials/edit', {
+            method:'POST',
+            headers:{
+                'Content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ id, data, type })
+        });
+
+        const responseData = await response.json();
+
+        if(responseData){
+            throw new Error("Edited Succesfully");
+        }else{
+            throw new Error("Edit Failed");
+        }
+    }
+}
+
+
 

@@ -45,7 +45,9 @@ export const viewAllProducts = () => {
                 {
                     type:SET_PRODUCTS, 
                     products: loadedProduct,
-                    screen_access:ScreenAccess.homeScreenLandingTab 
+                    screen_access:ScreenAccess.homeScreenLandingTab, 
+                    ProductCount:Object.keys(responseData).length,
+                    APIToken: getState().products.Tokendata
                 }
             );
         }
@@ -54,7 +56,7 @@ export const viewAllProducts = () => {
 
 export const ViewOneProductInformation = (id, token) =>{
     return async (dispatch, getState) => {
-        // console.log(getState().products.allproducts[0])
+        
         const  response = await fetch('https://www.bbalansag.online/api/view/product', {
             method: 'POST',
             headers:{

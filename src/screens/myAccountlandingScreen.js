@@ -25,6 +25,7 @@ const MyAccountLandingScreen = () =>{
 
     const allproducts = useSelector(state => state.products.allproducts);
     const Tokendata = useSelector(state => state.products.Tokendata);
+    const ProductCount = useSelector(state => state.products.ProductCount);
     const dispatch = useDispatch();
     const [tokendataState, settokendataState] = useState(null);
 
@@ -93,7 +94,7 @@ const MyAccountLandingScreen = () =>{
                 </View>
             </ImageBackground>
             <View>
-                <Text style={{color:'tomato', padding:5, fontWeight:'bold'  }}>{Object.keys(allproducts).length} Items</Text>
+                <Text style={{color:'tomato', padding:5, fontWeight:'bold'  }}>{ProductCount} Items</Text>
                 <FlatList keyExtractor={item => item.id.toString()} data={allproducts} renderItem={renderProductItem} />
             </View>
         </SafeAreaView>
