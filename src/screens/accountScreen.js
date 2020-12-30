@@ -36,6 +36,8 @@ const AccountScreen = () =>{
     const CustomerLoginEmail = useSelector(state => state.products.CustomerLoginEmail);
     const CustomerLoginPassword = useSelector(state => state.products.CustomerLoginPassword);
     const Tokendata = useSelector(state => state.products.Tokendata);
+    const approval_result_percent = useSelector(state => state.products.approval_result_percent);
+    const transactionCount = useSelector(state => state.products.transactionCount);
     const [isEdit, setisEdit] = useState('');
     const [editText, setEditText] = useState('');
     const dispatch = useDispatch();
@@ -213,7 +215,7 @@ const AccountScreen = () =>{
                                     <Left>
                                         <Item fixedLabel>
                                             <Label style={{ fontSize:13, color:colors.disableColor }}>Email:</Label>
-                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                            <Input style={{ fontSize:13 }} placeholder="Type here" keyboardType ="email-address" onChangeText = {text => setEditText(text)}/>
                                         </Item>
                                     </Left>
                                 :
@@ -241,7 +243,7 @@ const AccountScreen = () =>{
                                     <Left>
                                         <Item fixedLabel>
                                             <Label style={{ fontSize:13, color:colors.disableColor }}>Contact Number:</Label>
-                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                            <Input style={{ fontSize:13 }} keyboardType ="numeric" placeholder="Type here" onChangeText = {text => setEditText(text)}/>
                                         </Item>
                                     </Left>
                                 :
@@ -353,7 +355,7 @@ const AccountScreen = () =>{
                                     <Left>
                                         <Item fixedLabel>
                                             <Label style={{ fontSize:13, color:colors.disableColor }}>Zip Code:</Label>
-                                            <Input style={{ fontSize:13 }} placeholder="Type here" onChangeText = {text => setEditText(text)}/>
+                                            <Input style={{ fontSize:13 }} keyboardType ="numeric" placeholder="Type here" onChangeText = {text => setEditText(text)}/>
                                         </Item>
                                     </Left>
                                 :
@@ -475,7 +477,7 @@ const AccountScreen = () =>{
                                     {CustomerInformation[0].first_name} {CustomerInformation[0].last_name}
                                 </Text>
                                 <Text style={{ color:colors.primaryColor, fontSize:15 }}>{CustomerInformation[0].email}</Text>
-                                <Text style={{ color:colors.disableColor, fontSize:15 }}>12 Orders</Text>
+                                <Text style={{ color:colors.disableColor, fontSize:15 }}>{transactionCount} Orders</Text>
                                 
                                 <View>
                                     <View style={{ flexDirection:'row', justifyContent: 'center', alignItems:'center'}}>
@@ -483,7 +485,7 @@ const AccountScreen = () =>{
                                     </View>
                                     <View style={{ flexDirection:'row', justifyContent: 'center', alignItems:'center'}}>
                                         <Icon name="star-rate" size={20} color={colors.starColor} />
-                                        <Text style={{ color:colors.successColor, fontWeight:'bold', fontSize:16 }}>80%</Text>
+                                        <Text style={{ color:colors.successColor, fontWeight:'bold', fontSize:16 }}>{approval_result_percent}%</Text>
                                     </View>
                                 </View>
                             </View>

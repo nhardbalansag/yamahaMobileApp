@@ -8,7 +8,8 @@ import {
 
 import { 
     REGISTER_CUSTOMER,
-    LOGIN_CUSTOMER
+    LOGIN_CUSTOMER,
+    GET_TRANSACTION_DATA
 } from '../actions/customerActions';
 
 const initialState = {
@@ -26,7 +27,10 @@ const initialState = {
     CustomerInformation:[],
     ProductCount:null,
     CustomerLoginEmail: null,
-    CustomerLoginPassword: null
+    CustomerLoginPassword: null,
+    approval_result_percent: null,
+    transactionCount: null,
+    transactionData: []
 };
 
 export default (state = initialState, action) => {
@@ -74,6 +78,13 @@ export default (state = initialState, action) => {
             return{
                 ...state,
                 screenAccess: action.screen_access
+            }
+        case GET_TRANSACTION_DATA :
+            return{
+                ...state,
+                approval_result_percent: action.approval_result_percent,
+                transactionCount: action.transactionCount,
+                transactionData: action.transactionData
             }
     }
     return state;

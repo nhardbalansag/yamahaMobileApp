@@ -20,6 +20,7 @@ import {styles, colors} from '../styles/style';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import * as PRODUCTS from '../../store/actions/dataActions';
+import * as Customer from '../../store/actions/customerActions'; 
 
 const MyAccountLandingScreen = () =>{
 
@@ -44,10 +45,19 @@ const MyAccountLandingScreen = () =>{
             alertMessage(error.message);
         }
     }
+
+    const getCountData = async () => {
+        try {
+            await dispatch(Customer.getCount());
+        } catch (error) {
+            alertMessage(error.message);
+        }
+    }
    
     useEffect(() => {
         viewallproducts();
         settokendataState(Tokendata);
+        getCountData();
     }, [dispatch]); 
 
     const alertMessage = (message) => {

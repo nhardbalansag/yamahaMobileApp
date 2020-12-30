@@ -1,9 +1,12 @@
 import Customer from '../../model/customer';
+import TransactionDataInformation from '../../model/transactiondataInfomation';
+
 // import {AsyncStorage} from ' @react-native-async-storage/async-storage'
 import ScreenAccess from '../../src/screenAccess/screenAccess';
 export const REGISTER_CUSTOMER = 'REGISTER_CUSTOMER';
 export const LOGIN_CUSTOMER = 'LOGIN_CUSTOMER';
 export const SEND_INQUIRY = 'SEND_INQUIRY';
+export const GET_TRANSACTION_DATA = 'GET_TRANSACTION_DATA';
 
 // const saveLogin = (tokenToStore, emailToStore, Password) =>{
 //     AsyncStorage.setItem('userData', JSON.stringify({token: }))
@@ -152,11 +155,10 @@ export const loginCustomer = (email, password) => {
 
 export const sendInquiry = (id) =>{
     return async (dispatch, getState) => {
-
         const first_name = getState().products.CustomerInformation[0].first_name;
         const last_name = getState().products.CustomerInformation[0].last_name;
         const middle_name = getState().products.CustomerInformation[0].middle_name;
-        const email_address = getState().products.CustomerInformation[0].email_address;
+        const email_address = getState().products.CustomerInformation[0].email;
         const home_address = getState().products.CustomerInformation[0].home_address;
         const street_address = getState().products.CustomerInformation[0].street_address;
         const country_region = getState().products.CustomerInformation[0].country_region;
@@ -179,8 +181,8 @@ export const sendInquiry = (id) =>{
                     first_name,
                     last_name,
                     middle_name,
-                    email_address,
                     home_address,
+                    email_address,
                     street_address,
                     country_region,
                     contact_number,
@@ -191,6 +193,7 @@ export const sendInquiry = (id) =>{
                 }
             )
         }); 
+        
         if(verified != 1){
             throw new Error("Email not verified");
         }else{
@@ -225,6 +228,50 @@ export const editCustomerInformation = (data, id, token, type) => {
         }
     }
 }
+
+export const getCount = () => {
+    
+    return async (dispatch, getState) =>{
+        const token = getState().products.Tokendata;
+        const id = getState().products.CustomerInformation[0].id;
+
+        const response =  await fetch('https://www.bbalansag.online/api/getCount', {
+            method:'POST',
+            headers:{
+                'content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ id })
+        });
+        const responseData = await response.json();
+        const transactionData = [];
+
+        for (const key in responseData.transactionData){
+            transactionData.push(
+                new TransactionDataInformation(
+                    responseData[key].id, 
+                    responseData[key].purchaseAmount,
+                    responseData[key].photo_path,
+                    responseData[key].title,
+                    responseData[key].description,
+                    responseData[key].price,
+                    responseData[key].transactionStatus
+                )
+            )
+        }
+
+        dispatch(
+            {
+                type: GET_TRANSACTION_DATA, 
+                approval_result_percent: responseData.approval_result_percent,
+                transactionCount: responseData.transactionCount[0].transactionCount,
+                transactionData: transactionData
+            }
+        );
+
+    }
+} 
 
 
 
