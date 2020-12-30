@@ -26,8 +26,8 @@ const LoginScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
 
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
+    const [email, setemail] = useState('admin@gmail.com');
+    const [password, setpassword] = useState('helloworld');
     const [loadingstate, setloadingstate] = useState(false);
   
     const errordata = useSelector(state => state.products.errorData);
@@ -54,7 +54,7 @@ const LoginScreen = ({navigation}) =>{
     }
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container,  {backgroundColor:colors.lightColor}]}>
             <StatusBar backgroundColor={colors.dangerColor} barStyle="white-content"/>
             <View style={styles.screenWidth}>
             <View style={styles.inputGap}>
