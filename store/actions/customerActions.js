@@ -139,7 +139,10 @@ export const loginCustomer = (email, password) => {
                     APIBool: responseData.status.error,
                     APIToken: responseData.status.token,
                     screen_access:ScreenAccess.homeScreenLandingTab,
-                    CustomerInformation:customerInformation
+                    CustomerInformation:customerInformation,
+                    CustomerLoginEmail:email,
+                    CustomerLoginPassword:password
+                    
                 }
             );
             throw new Error(responseData.status.error);

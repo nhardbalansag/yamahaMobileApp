@@ -24,7 +24,9 @@ const initialState = {
     ProductPercentage:null,
     inquiryResponse:null,
     CustomerInformation:[],
-    ProductCount:null
+    ProductCount:null,
+    CustomerLoginEmail: null,
+    CustomerLoginPassword: null
 };
 
 export default (state = initialState, action) => {
@@ -53,7 +55,9 @@ export default (state = initialState, action) => {
                 errorBool: action.APIBool,
                 Tokendata: action.APIToken,
                 screenAccess: action.screen_access,
-                CustomerInformation: action.CustomerInformation
+                CustomerInformation: action.CustomerInformation,
+                CustomerLoginEmail:action.CustomerLoginEmail,
+                CustomerLoginPassword:action.CustomerLoginPassword
             }
         case VIEW_ONE_PRODUCT :
             return{

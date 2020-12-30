@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { 
-    Form, 
     Left, 
     Right, 
     List, 
@@ -34,10 +33,11 @@ import * as Customer from '../../store/actions/customerActions';
 const AccountScreen = () =>{
     
     const CustomerInformation = useSelector(state => state.products.CustomerInformation);
+    const CustomerLoginEmail = useSelector(state => state.products.CustomerLoginEmail);
+    const CustomerLoginPassword = useSelector(state => state.products.CustomerLoginPassword);
     const Tokendata = useSelector(state => state.products.Tokendata);
     const [isEdit, setisEdit] = useState('');
     const [editText, setEditText] = useState('');
-    const [loadingstate, setloadingstate] = useState(false);
     const dispatch = useDispatch();
 
     const dataname = {
@@ -83,12 +83,17 @@ const AccountScreen = () =>{
         setisEdit(data);
     }
 
+    const setresponse = () => {
+        refreshEdit(CustomerLoginEmail, CustomerLoginPassword);
+        setisEdit('')
+    }
+
     const alertmessageResponse = (message) =>{
         Alert.alert(
             "Status",
             message,
             [
-              { text: "OKAY", onPress: () => setisEdit('')}
+              { text: "OKAY", onPress: () => setresponse()}
             ],
             { cancelable: false }
         );
@@ -100,6 +105,16 @@ const AccountScreen = () =>{
             await dispatch(Customer.editCustomerInformation(data, id, token, type));
         } catch (error) {
             alertmessageResponse(error.message);
+        }
+    }
+
+    const refreshEdit = async (email, password) =>{
+        try {
+            await dispatch(Customer.loginCustomer(email, password));
+        } catch (error) {
+            if(error.message === "true"){
+                alertmessageResponse("edit failed!");
+            }
         }
     }
 
