@@ -8,7 +8,8 @@ import {
     FlatList,
     TouchableOpacity,
     SafeAreaView,
-    Alert
+    Alert,
+    ActivityIndicator
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -38,7 +39,18 @@ const ViewOneProductInformation = () => {
     const ProductSpecification = useSelector(state => state.products.ProductSpecification);
     const ProductinquiriesCount = useSelector(state => state.products.ProductinquiriesCount);
     const ProductPercentage = useSelector(state => state.products.ProductPercentage);
+    const Tokendata = useSelector(state => state.products.Tokendata);
+    const CustomerInformation = useSelector(state => state.products.CustomerInformation);
     const dispatch = useDispatch();
+    const [loadingstate, setloadingstate] = useState(false);
+
+    const refreshInquiryCount  = async (id, token) =>{
+        try {
+            await dispatch(PRODUCTS.ViewOneProductInformation(id, token));
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     const backtoLanding = async () =>{
         try {
@@ -52,16 +64,16 @@ const ViewOneProductInformation = () => {
         try {
             await dispatch(Customer.sendInquiry(id));
         } catch (error) {
-            statusInquiryMessage(error.message);
+            statusInquiryMessage(id, Tokendata, error.message);
         }
     }
 
-    const statusInquiryMessage = (message) => {
+    const statusInquiryMessage = (id, token, message) => {
         Alert.alert(
             "Inquiry Status",
             message,
             [
-              { text: "OK" }
+              { text: "OK" , onPress: () => refreshInquiryCount(id, token)}
             ],
             { cancelable: false }
           );
@@ -94,6 +106,68 @@ const ViewOneProductInformation = () => {
             </List>
         );
     };
+
+    const gotoconfirmEmailScreen = async () =>{
+        setloadingstate(false);
+        try {
+            await dispatch(Customer.gotoCofirmEmailScreen());
+        } catch (error) {
+            Alert.alert(
+                "An Error Occured!",
+                error.message,
+                [
+                  { text: "OKAY", onPress: () => setloadingstate(false)}
+                ],
+                { cancelable: false }
+            );
+        }
+    }
+
+    const gotoConfirmEmail = async (email, id, token, first_name, last_name, middle_name) =>{
+        try {
+            setloadingstate(true);
+            await dispatch(Customer.confirmEmail(email, id, token, first_name, last_name, middle_name));
+            setloadingstate(false);
+        } catch (error) {
+            if(error.message === "true" ){
+                Alert.alert(
+                    "An Error Occured!",
+                    error.message,
+                    [
+                      { text: "OKAY", onPress: () => setloadingstate(false)}
+                    ],
+                    { cancelable: false }
+                );
+            }else if(error.message === "false"){
+                Alert.alert(
+                    "Status",
+                    "Succesfully sent, Please Confirm",
+                    [
+                      { text: "Cancel", onPress: () => setloadingstate(false)},
+                      { text: "OKAY", onPress: () => gotoconfirmEmailScreen()}
+                    ],
+                    { cancelable: false }
+                );
+            }
+        }
+    }
+
+    const checkemail = (verificationStatus, email, id, token, first_name, last_name, middle_name) =>{
+        if(verificationStatus === 1){
+            // if verified go to place order screen
+        }else{
+            Alert.alert(
+                "Notice",
+                "Please Confirm your email",
+                [
+                  { text: "Not now", style: "cancel" },
+                  { text: "OKAY", onPress: () => gotoConfirmEmail(email, id, token, first_name, last_name, middle_name) }
+                ],
+                { cancelable: false }
+            );
+        }
+    }
+
     const rederProductInformation = () =>{
         return (
             <View>
@@ -117,9 +191,25 @@ const ViewOneProductInformation = () => {
                         <TouchableOpacity onPress={() => alertMessage(ProductInformation.id)} style={{ padding:10 }}>
                             <Icon name="forward-to-inbox" size={30} color={colors.dangerColor} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ padding:10 }}>
-                            <Icon name="add-shopping-cart" size={30} color={colors.dangerColor} />
-                        </TouchableOpacity>
+                        {
+                            loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
+                            <TouchableOpacity 
+                                onPress={
+                                    () => checkemail(
+                                        CustomerInformation[0].verified, 
+                                        CustomerInformation[0].email,
+                                        CustomerInformation[0].id,
+                                        Tokendata,
+                                        CustomerInformation[0].first_name,
+                                        CustomerInformation[0].last_name,
+                                        CustomerInformation[0].middle_name
+                                    )
+                                } 
+                                style={{ padding:10 }}>
+                                <Icon name="add-shopping-cart" size={30} color={colors.dangerColor} />
+                            </TouchableOpacity>
+                        }
+                        
                         <TouchableOpacity onPress={() => backtoLanding()} style={{ padding:10 }}>
                             <Icon name="arrow-back" size={30} color={colors.dangerColor} />
                         </TouchableOpacity>

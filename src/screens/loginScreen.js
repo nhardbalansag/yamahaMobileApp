@@ -26,8 +26,8 @@ const LoginScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
 
-    const [email, setemail] = useState('admin@gmail.com');
-    const [password, setpassword] = useState('helloworld');
+    const [email, setemail] = useState('bernardbalansag01@gmail.com');
+    const [password, setpassword] = useState('capstone');
     const [loadingstate, setloadingstate] = useState(false);
   
     const errordata = useSelector(state => state.products.errorData);

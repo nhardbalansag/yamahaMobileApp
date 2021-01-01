@@ -9,7 +9,9 @@ import {
 import { 
     REGISTER_CUSTOMER,
     LOGIN_CUSTOMER,
-    GET_TRANSACTION_DATA
+    GET_TRANSACTION_DATA,
+    PROCESSING_ORDER_SCREEN,
+    CONFIRM_EMAIL
 } from '../actions/customerActions';
 
 const initialState = {
@@ -30,7 +32,9 @@ const initialState = {
     CustomerLoginPassword: null,
     approval_result_percent: null,
     transactionCount: null,
-    transactionData: []
+    transactionData: [],
+    orderDataByStatus: [],
+    transactionCountByStatus:null
 };
 
 export default (state = initialState, action) => {
@@ -49,7 +53,8 @@ export default (state = initialState, action) => {
                 ...state,
                 statusResponse: action.registerStatus,
                 Tokendata: action.APIToken,
-                screenAccess: action.screen_access
+                screenAccess: action.screen_access,
+                CustomerInformation: action.CustomerInformation
             }
         case LOGIN_CUSTOMER :
             return {
@@ -85,6 +90,18 @@ export default (state = initialState, action) => {
                 approval_result_percent: action.approval_result_percent,
                 transactionCount: action.transactionCount,
                 transactionData: action.transactionData
+            }
+        case PROCESSING_ORDER_SCREEN :
+            return{
+                ...state,
+                screenAccess: action.screen_access,
+                orderDataByStatus: action.transactionData,
+                transactionCountByStatus: action.transactionCountByStatus
+            }
+        case CONFIRM_EMAIL :
+            return{
+                ...state,
+                screenAccess: action.screen_access,
             }
     }
     return state;

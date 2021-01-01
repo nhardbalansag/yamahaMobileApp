@@ -1,5 +1,6 @@
 import Customer from '../../model/customer';
 import TransactionDataInformation from '../../model/transactiondataInfomation';
+import OrderDataByStatus from '../../model/orderDataByStatus';
 
 // import {AsyncStorage} from ' @react-native-async-storage/async-storage'
 import ScreenAccess from '../../src/screenAccess/screenAccess';
@@ -7,10 +8,113 @@ export const REGISTER_CUSTOMER = 'REGISTER_CUSTOMER';
 export const LOGIN_CUSTOMER = 'LOGIN_CUSTOMER';
 export const SEND_INQUIRY = 'SEND_INQUIRY';
 export const GET_TRANSACTION_DATA = 'GET_TRANSACTION_DATA';
-
+export const PROCESSING_ORDER_SCREEN = 'PROCESSING_ORDER_SCREEN';
+export const CONFIRM_EMAIL = 'CONFIRM_EMAIL';
 // const saveLogin = (tokenToStore, emailToStore, Password) =>{
 //     AsyncStorage.setItem('userData', JSON.stringify({token: }))
 // }
+
+export const confirmVerification = (verification, token, id) =>{
+    return async (dispatch, getState) => {
+        const response = await fetch('https://www.bbalansag.online/api/confirmVerification', {
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                id,
+                verification
+            })
+        });
+
+        const responseData = await response.json();
+        if(responseData === true){
+            throw new Error("Verirified successfully")
+        }else if(responseData === false){
+            throw new Error("Unable to verify your email")
+        }else{
+            throw new Error("Verification failed")
+        }
+    }
+}
+
+export const gotoCofirmEmailScreen = () =>{
+    return async (dispatch, getState) => {
+        dispatch(
+            {
+                type:CONFIRM_EMAIL, 
+                screen_access:ScreenAccess.confirmEmailScreen
+            }
+        );
+    }
+}
+
+export const confirmEmail =(email, id, token, first_name, last_name, middle_name) =>{
+    return async (dispatch) =>{
+        const response = await fetch('https://www.bbalansag.online/api/confirmEmail', {
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                id,
+                email,
+                first_name,
+                last_name,
+                middle_name
+            })
+        });
+
+        const responseData = await response.json();
+        throw new Error(responseData);
+    }
+}
+
+export const processingOrderScreen = (orderstatus, id, token) =>{
+    return async (dispatch, getState) => {
+        const response = await fetch('https://www.bbalansag.online/api/getOrder', {
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                id,
+                orderstatus
+            })
+        });
+
+        const responseData = await response.json();
+        const transactionData = [];
+
+        for (const key in responseData.transactionData){
+            transactionData.push(
+                new OrderDataByStatus(
+                    responseData.transactionData[key].id, 
+                    responseData.transactionData[key].purchaseAmount,
+                    responseData.transactionData[key].photo_path,
+                    responseData.transactionData[key].title,
+                    responseData.transactionData[key].description,
+                    responseData.transactionData[key].price,
+                    responseData.transactionData[key].transactionStatus
+                )
+            )
+        }
+        dispatch(
+            {
+                type:PROCESSING_ORDER_SCREEN, 
+                screen_access:ScreenAccess.processingOrderScreen,
+                transactionData:transactionData,
+                transactionCountByStatus:responseData.transactionCount[0].transactionCount
+            }
+        );
+    }
+}
 
 export const registerCustomer = (
     first_name, 
@@ -53,7 +157,7 @@ export const registerCustomer = (
         });
 
         const responseData = await response.json();
-        
+        const customerInformation = [];
         if(responseData === "Unauthorized"){
             throw new Error("Unauthorized access please login");
         }
@@ -67,12 +171,32 @@ export const registerCustomer = (
                 }
             );
         }else{
+            customerInformation.push(
+                new Customer(
+                    responseData.information.id, 
+                    responseData.information.first_name, 
+                    responseData.information.last_name, 
+                    responseData.information.middle_name, 
+                    responseData.information.home_address, 
+                    responseData.information.street_address, 
+                    responseData.information.country_region, 
+                    responseData.information.contact_number, 
+                    responseData.information.city, 
+                    responseData.information.state_province, 
+                    responseData.information.postal, 
+                    responseData.information.role, 
+                    responseData.information.verified, 
+                    responseData.information.email, 
+                    responseData.information.password
+                )
+            );
             dispatch(
                 {
                     type: REGISTER_CUSTOMER, 
                     registerStatus: responseData,
                     APIToken: responseData.token,
-                    screen_access:ScreenAccess.homeScreenLandingTab
+                    screen_access:ScreenAccess.homeScreenLandingTab,
+                    CustomerInformation:customerInformation
                 }
             );
           
@@ -250,17 +374,16 @@ export const getCount = () => {
         for (const key in responseData.transactionData){
             transactionData.push(
                 new TransactionDataInformation(
-                    responseData[key].id, 
-                    responseData[key].purchaseAmount,
-                    responseData[key].photo_path,
-                    responseData[key].title,
-                    responseData[key].description,
-                    responseData[key].price,
-                    responseData[key].transactionStatus
+                    responseData.transactionData[key].id, 
+                    responseData.transactionData[key].purchaseAmount,
+                    responseData.transactionData[key].photo_path,
+                    responseData.transactionData[key].title,
+                    responseData.transactionData[key].description,
+                    responseData.transactionData[key].price,
+                    responseData.transactionData[key].transactionStatus
                 )
             )
         }
-
         dispatch(
             {
                 type: GET_TRANSACTION_DATA, 
@@ -269,9 +392,11 @@ export const getCount = () => {
                 transactionData: transactionData
             }
         );
-
     }
 } 
+
+
+
 
 
 
