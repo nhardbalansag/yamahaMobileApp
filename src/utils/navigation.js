@@ -8,6 +8,9 @@ import MyAccountLandingScreen from '../screens/myAccountlandingScreen';
 import OrderScreen from '../screens/ordersScreen';
 import AccountScreen from '../screens/accountScreen';
 import ViewOneProductInformation from '../screens/viewOneProductScreen';
+import ProcessingOrderScreen from '../screens/processingOrderScreen';
+import ConfirmEmailScreen from '../screens/confirmEmailScreen';
+import ToDeliverScreen from '../screens/toDeliverOrderScreen';
 
 import ScreenAccess from '../screenAccess/screenAccess';
 
@@ -70,6 +73,24 @@ const EnterCredentialNavigation = () => {
     );
 }
 
+const getProcessing = () => {
+  return(
+    <ProcessingOrderScreen/>
+  );
+}
+
+const getToDeliverScreen = () => {
+  return(
+    <ToDeliverScreen/>
+  );
+}
+
+const gotoConfirmEmailScreen = () => {
+  return(
+    <ConfirmEmailScreen/>
+  );
+}
+
 const ProductsViewNavigation = () => {
   return (
       <Stack.Navigator>
@@ -106,9 +127,15 @@ const switchScreen = () => {
       case ScreenAccess.homeScreenProductStack:
           return ProductsViewNavigation();
           break;
-      default:
-        return EnterCredentialNavigation();
+      case ScreenAccess.processingOrderScreen:
+          return getProcessing();
+          break;
+      case ScreenAccess.confirmEmailScreen:
+        return gotoConfirmEmailScreen();
         break;
+      default:
+          return EnterCredentialNavigation();
+          break;
     }
   }else{
     return EnterCredentialNavigation();
