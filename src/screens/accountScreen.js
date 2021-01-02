@@ -225,15 +225,18 @@ const AccountScreen = () =>{
                             }
                         <Right>
                             {
-                                isEdit == CustomerInformation[0].email ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.email)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
-                                    </TouchableOpacity>
+                                CustomerInformation[0].verified != 1 ?
+                                    isEdit == CustomerInformation[0].email ?
+                                        <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.email)} style={{ paddingHorizontal:20 }}>
+                                            <Icon name="check" size={20} color={colors.dangerColor} />
+                                        </TouchableOpacity>
+                                    :
+                                    isEdit == dataname.email ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                        <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].email)} style={{ paddingHorizontal:20 }}>
+                                            <Icon name="create" size={20}  color={colors.dangerColor} />
+                                        </TouchableOpacity>
                                 :
-                                isEdit == dataname.email ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
-                                    <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].email)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
-                                    </TouchableOpacity>
+                                    <Icon name="verified-user" size={20} style={{ paddingHorizontal:20 }} color={colors.successColor} />
                             }
                         </Right>
                     </ListItem>

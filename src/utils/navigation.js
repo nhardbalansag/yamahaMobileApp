@@ -11,6 +11,10 @@ import ViewOneProductInformation from '../screens/viewOneProductScreen';
 import ProcessingOrderScreen from '../screens/processingOrderScreen';
 import ConfirmEmailScreen from '../screens/confirmEmailScreen';
 import ToDeliverScreen from '../screens/toDeliverOrderScreen';
+import ApplyScreenStart from '../screens/applyScreen';
+import StepNoteToVerify from '../screens/stepNoteToverify';
+import DocumentList from '../screens/documentList';
+import SendDocument from '../screens/sendDocument';
 
 import ScreenAccess from '../screenAccess/screenAccess';
 
@@ -107,6 +111,10 @@ const ProductsViewNavigation = () => {
               }
             }
           />
+          <Stack.Screen name="ApplyScreenStart" component={ApplyScreenStart} options={{ title: 'Upgrade my Account' }}/>
+          <Stack.Screen name="StepNoteToVerify" component={StepNoteToVerify} options={{ title: 'Upgrade my Account' }}/>
+          <Stack.Screen name="DocumentList" component={DocumentList} options={{ title: 'Document list' }}/>
+          <Stack.Screen name="SendDocument" component={SendDocument} options={{ title: 'Send Document' }}/>
       </Stack.Navigator>
   );
 }
