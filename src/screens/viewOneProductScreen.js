@@ -32,8 +32,9 @@ import {
 
 import * as PRODUCTS from '../../store/actions/dataActions';
 import * as Customer from '../../store/actions/customerActions'; 
+import * as Document from '../../store/actions/documentActions'; 
 
-const ViewOneProductInformation = () => {
+const ViewOneProductInformation = ({navigation}) => {
 
     const ProductInformation = useSelector(state => state.products.ProductInformation);
     const ProductSpecification = useSelector(state => state.products.ProductSpecification);
@@ -152,9 +153,20 @@ const ViewOneProductInformation = () => {
         }
     }
 
-    const checkemail = (verificationStatus, email, id, token, first_name, last_name, middle_name) =>{
+    const errorAlert = (message) =>{
+        Alert.alert(
+            "Status",
+            message,
+            [
+              { text: "OK"}
+            ],
+            { cancelable: false }
+          );
+    }
+
+    const checkemail = (verificationStatus, email, id, token, first_name, last_name, middle_name, productCategoryId) =>{
         if(verificationStatus === 1){
-            // if verified go to place order screen
+            productCategoryId  == 3 ? console.warn("order here") : navigation.navigate('ApplyScreenStart');
         }else{
             Alert.alert(
                 "Notice",
@@ -193,23 +205,41 @@ const ViewOneProductInformation = () => {
                         </TouchableOpacity>
                         {
                             loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
-                            <TouchableOpacity 
-                                onPress={
-                                    () => checkemail(
-                                        CustomerInformation[0].verified, 
-                                        CustomerInformation[0].email,
-                                        CustomerInformation[0].id,
-                                        Tokendata,
-                                        CustomerInformation[0].first_name,
-                                        CustomerInformation[0].last_name,
-                                        CustomerInformation[0].middle_name
-                                    )
-                                } 
-                                style={{ padding:10 }}>
-                                <Icon name="add-shopping-cart" size={30} color={colors.dangerColor} />
-                            </TouchableOpacity>
+                                ProductInformation.product_category_id == 1 ?
+                                    <TouchableOpacity 
+                                        onPress={
+                                            () => checkemail(
+                                                CustomerInformation[0].verified, 
+                                                CustomerInformation[0].email,
+                                                CustomerInformation[0].id,
+                                                Tokendata,
+                                                CustomerInformation[0].first_name,
+                                                CustomerInformation[0].last_name,
+                                                CustomerInformation[0].middle_name,
+                                                ProductInformation.product_category_id
+                                            )
+                                        } 
+                                        style={{ padding:10 }}>
+                                        <Icon name="folder-shared" size={30} color={colors.dangerColor} />
+                                    </TouchableOpacity>
+                                :
+                                    <TouchableOpacity 
+                                        onPress={
+                                            () => checkemail(
+                                                CustomerInformation[0].verified, 
+                                                CustomerInformation[0].email,
+                                                CustomerInformation[0].id,
+                                                Tokendata,
+                                                CustomerInformation[0].first_name,
+                                                CustomerInformation[0].last_name,
+                                                CustomerInformation[0].middle_name,
+                                                ProductInformation.product_category_id
+                                            )
+                                        } 
+                                        style={{ padding:10 }}>
+                                        <Icon name="add-shopping-cart" size={30} color={colors.dangerColor} />
+                                    </TouchableOpacity>
                         }
-                        
                         <TouchableOpacity onPress={() => backtoLanding()} style={{ padding:10 }}>
                             <Icon name="arrow-back" size={30} color={colors.dangerColor} />
                         </TouchableOpacity>
@@ -233,7 +263,7 @@ const ViewOneProductInformation = () => {
                     <Text style={{ fontSize:18 }}>Specifications:</Text>
                 </View>
             </View>
-        );
+        );  
     }
 
     return(

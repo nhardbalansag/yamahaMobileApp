@@ -18,10 +18,12 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import DataReducer from './store/reducers/dataReducers';
+import DocumentDataReducer from './store/reducers/documentReducer';
 
 
 const rootReducer = combineReducers({
-  products:DataReducer
+  products:DataReducer,
+  documents:DocumentDataReducer
 }); 
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk)); 
