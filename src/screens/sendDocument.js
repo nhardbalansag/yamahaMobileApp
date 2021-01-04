@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const SendDocument = ({navigation}) =>{
 
-    const openCamera = async () =>{
+    const openDeviceCamera = async () =>{
         try {
             await ImagePicker.openCamera({
                 width: 300,
@@ -31,12 +31,26 @@ const SendDocument = ({navigation}) =>{
     }
 
     return(
-        <View style={[{flex:1, flexDirection:'column', justifyContent:'space-between', backgroundColor:colors.lightColor}]}>
-            <TouchableOpacity onPress={() =>openCamera()} style={styles.GeneralButton}>
+        <View style={[{flex:1, flexDirection:'column', justifyContent:'space-around', backgroundColor:colors.lightColor}]}>
+            <View style={{ marginHorizontal:20}}>
                 <View>
-                    <Text>open camera</Text>
+                    <Text style={{ fontSize:15 }}>Upload Document</Text>
+                    <View>
+                        <Text style={{ color:colors.disableColor }}>
+                            <Text style={{ fontWeight:'bold' }}>Note: </Text>
+                            <Text>Make sure the photo is clear and the whole document is seen in the shot. Don't forget to check its expiry date!</Text>
+                        </Text>
+                    </View>
                 </View>
-            </TouchableOpacity>
+                <View>
+                    <TouchableOpacity onPress={() =>openDeviceCamera()} style={[{backgroundColor:colors.disableColor}]}>
+                        <View style={{ flexDirection:'row', justifyContent:'center', alignItems:'center', paddingVertical:10 }}>
+                            <Icon name="photo-camera" size={30} color={'black'}/>
+                            <Text style={{ color:colors.lightColor }}>Tap to take Document photo</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
     );
 }
