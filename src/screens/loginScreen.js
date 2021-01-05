@@ -55,7 +55,7 @@ const LoginScreen = ({navigation}) =>{
 
     return(
         <View style={[styles.container,  {backgroundColor:colors.lightColor}]}>
-            <StatusBar backgroundColor={colors.dangerColor} barStyle="white-content"/>
+            {/* <StatusBar backgroundColor={colors.dangerColor} barStyle="white-content"/> */}
             <View style={styles.screenWidth}>
             <View style={styles.inputGap}>
                 <TitleComponent subtext="login your credentials"/>

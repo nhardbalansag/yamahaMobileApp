@@ -105,9 +105,9 @@ const ProductsViewNavigation = () => {
               { 
                 title: 'Product Information',
                 headerStyle: {
-                  backgroundColor: colors.dangerColor,
+                  backgroundColor: colors.lightColor,
                 },
-                headerTintColor: colors.lightColor,
+                headerTintColor: colors.darkColor,
               }
             }
           />
