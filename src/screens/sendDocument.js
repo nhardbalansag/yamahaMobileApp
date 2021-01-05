@@ -30,6 +30,20 @@ const SendDocument = ({navigation}) =>{
         }
     }
 
+    const openFile = async () =>{
+        try {
+            await ImagePicker.openPicker({
+                width: 300,
+                height: 400,
+                cropping: true
+              }).then(image => {
+                console.log(image);
+              });
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     return(
         <View style={[{flex:1, flexDirection:'column', justifyContent:'space-around', backgroundColor:colors.lightColor}]}>
             <View style={{ marginHorizontal:20}}>
@@ -47,6 +61,15 @@ const SendDocument = ({navigation}) =>{
                         <View style={{ flexDirection:'row', justifyContent:'center', alignItems:'center', paddingVertical:10 }}>
                             <Icon name="photo-camera" size={30} color={'black'}/>
                             <Text style={{ color:colors.lightColor }}>Tap to take Document photo</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <View style={[{paddingVertical:10}]}> 
+                        <Text style={[{textAlign:'center'}]}>OR</Text>
+                    </View>
+                    <TouchableOpacity onPress={() =>openFile()} style={[{backgroundColor:colors.disableColor}]}>
+                        <View style={{ flexDirection:'row', justifyContent:'center', alignItems:'center', paddingVertical:10 }}>
+                            <Icon name="image" size={30} color={'black'}/>
+                            <Text style={{ color:colors.lightColor }}>Tap to choose photo</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

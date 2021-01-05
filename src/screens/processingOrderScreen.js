@@ -19,7 +19,7 @@ import {styles, colors} from '../styles/style';
 import * as PRODUCTS from '../../store/actions/dataActions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const ProcessingOrderScreen = () =>{
+const ProcessingOrderScreen = ({navigation}) =>{
     
     const orderDataByStatus = useSelector(state => state.products.orderDataByStatus);
     const transactionCountByStatus = useSelector(state => state.products.transactionCountByStatus);

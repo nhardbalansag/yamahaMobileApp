@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 // colors
 const lightColor = 'white';
 const darkColor = 'black';
-const primaryColor = '#007bff';
+const primaryColor = '#3F51B5';
 const dangerColor = 'tomato';
 const warningColor = '#fcbe68';
 const disableColor = '#898787';
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         textAlign:'center'
       },
       GeneralButton:{
-        backgroundColor: colors.dangerColor,
+        backgroundColor: colors.primaryColor,
         padding: 12
       },
       GeneralButtonText:{
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         paddingVertical: '10%',
       },
       signUpText:{
-        color: colors.dangerColor,
+        color: colors.primaryColor,
         textAlign:'center',
         textTransform: 'capitalize',
         fontSize: 15,

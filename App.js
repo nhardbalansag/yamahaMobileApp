@@ -44,7 +44,7 @@ const App = () => {
 
   return (
     <Root>
-      <StatusBar backgroundColor="tomato" barStyle="white-content"/>
+      <StatusBar backgroundColor="#3F51B5" barStyle="white-content"/>
       { 
         load ? 
         <Provider store={store}>
