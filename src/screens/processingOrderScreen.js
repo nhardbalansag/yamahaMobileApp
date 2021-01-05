@@ -70,7 +70,7 @@ const ProcessingOrderScreen = ({navigation}) =>{
      };
 
     return(
-        <SafeAreaView style={[styles.productContainer, {backgroundColor:colors.lightColor}]}>
+        <SafeAreaView style={[styles.productContainerViewOne, {backgroundColor:colors.lightColor}]}>
                 <View style={{ flexDirection:'row', justifyContent: 'space-between'}}>
                     <Text style={{color:'tomato', padding:5, fontWeight:'bold'  }}>{transactionCountByStatus} Items</Text>
                     <TouchableOpacity onPress={() => backtoLanding()} style={{ padding:10 }}>

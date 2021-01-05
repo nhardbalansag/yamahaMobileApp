@@ -267,7 +267,7 @@ const ViewOneProductInformation = ({navigation}) => {
     }
 
     return(
-        <SafeAreaView style={styles.productContainer}>
+        <SafeAreaView style={styles.productContainerViewOne}>
             <FlatList keyExtractor={item => item.id.toString()} data={ProductSpecification} ListHeaderComponent={rederProductInformation()} renderItem={renderProductItem} />
         </SafeAreaView>
     );

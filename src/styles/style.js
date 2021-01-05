@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
       },
       productDescription:{
-          fontSize: 10,
+          fontSize: 13,
           color: colors.disableColor
       },
       productPrice:{
@@ -140,9 +140,13 @@ const styles = StyleSheet.create({
       },
       productContainer:{
           flex:1,
-          backgroundColor: 'white',
-          marginBottom:20
+          justifyContent:'center',
+          alignItems:'center'
       },
+      productContainerViewOne:{
+        flex:1,
+        marginBottom:20
+    },
       productViewImage:{
         width:"30%",
         justifyContent:'flex-end'
