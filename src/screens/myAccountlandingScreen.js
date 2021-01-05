@@ -74,7 +74,7 @@ const MyAccountLandingScreen = () =>{
     const renderProductItem = ({item}) =>{
             return(
                 <TouchableOpacity onPress={() => viewProductInformation(item.id)}>
-                    <View style={{ width:170, flex:1, borderWidth:1, borderColor:'lightgray', margin:3, padding:5, borderRadius:5, backgroundColor:'white'}}>
+                    <View style={{ width:170, flex:1, marginHorizontal:3, marginVertical:10, padding:5, borderRadius:5, backgroundColor:'white'}}>
                         <View>
                             <Image 
                                 style={{width:"100%", height: 100, borderRadius: 20}}
@@ -82,7 +82,7 @@ const MyAccountLandingScreen = () =>{
                                 resizeMode={'contain'} // cover or contain its upto you view look
                             />
                         </View>
-                        <View>
+                        <View style={[{flexDirection:'column', justifyContent:'space-around', alignItems:'center', height:120}]}>
                             <Text style={styles.productTitle} numberOfLines={1}>{item.title}</Text>
                             <Text style={styles.productDescription} numberOfLines={3}>{item.description}</Text>
                             <View style={{flexDirection:'row' }}>
@@ -118,7 +118,7 @@ const MyAccountLandingScreen = () =>{
                         <Text style={{ color:'white', fontSize:20, padding:10, width:'100%', backgroundColor: 'rgba( 255, 255, 255, 0.3 )'}}>All Products</Text>
                     </View>
                 </ImageBackground>
-                <Text style={{color:'tomato', padding:5, fontWeight:'bold'  }}>{ProductCount} Items</Text>
+                <Text style={{color:colors.dangerColor, padding:5, fontWeight:'bold'  }}>{ProductCount} Items</Text>
              </View>
          );
      }
