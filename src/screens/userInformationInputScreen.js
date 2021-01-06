@@ -52,20 +52,20 @@ const PersonalInformnationScreen = ({navigation}) =>{
           );
     }
 
-    const [first_name, setfirst_name] = useState('ssdsdsdsd');
-    const [last_name, setlast_name] = useState('sdsdsdsds');
-    const [middle_name, setmiddle_name] = useState('sdsdsdsdsd');
-    const [home_address, sethome_address] = useState('sdsdsdsdsd');
-    const [street_address, setstreet_address] = useState('sdsdsdsdsd');
-    const [country_region, setcountry_region] = useState('sdsdsdsdsd');
-    const [contact_number, setcontact_number] = useState('09214408767');
-    const [city, setcity] = useState('sdsdsdsdsd');
-    const [state_province, setstate_province] = useState('sdsdsdsdsd');
-    const [postal, setpostal] = useState('1226');
+    const [first_name, setfirst_name] = useState('');
+    const [last_name, setlast_name] = useState('');
+    const [middle_name, setmiddle_name] = useState('');
+    const [home_address, sethome_address] = useState('');
+    const [street_address, setstreet_address] = useState('');
+    const [country_region, setcountry_region] = useState('');
+    const [contact_number, setcontact_number] = useState('');
+    const [city, setcity] = useState('');
+    const [state_province, setstate_province] = useState('');
+    const [postal, setpostal] = useState('');
     const [role, setrole] = useState('customer');
     const [verified, setverified] = useState(0);
-    const [email, setemail] = useState('sdfsfsfdd@email.com');
-    const [password, setpassword] = useState('capstone');
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
 
     return(
         <Container>
