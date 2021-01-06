@@ -1,7 +1,11 @@
-import { SET_DOCUMENT_CATEGORY } from '../actions/documentActions';
+import { 
+    SET_DOCUMENT_CATEGORY,
+    GET_DOCUMENT_CHOICE
+} from '../actions/documentActions';
 
 const initialState = {
-    documentCategory:[]
+    documentCategory:[],
+    documentId:null
 };
 
 export default (state = initialState, action) => {
@@ -10,6 +14,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 documentCategory: action.documentCategory
+            }
+
+        case GET_DOCUMENT_CHOICE :
+            return {
+                ...state,
+                documentId: action.documentId
             }
     }
     return state;

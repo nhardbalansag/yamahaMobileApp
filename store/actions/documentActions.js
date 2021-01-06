@@ -1,6 +1,8 @@
 import DocumentCategory from '../../model/documentCategory';
 
 export const SET_DOCUMENT_CATEGORY = 'SET_DOCUMENT_CATEGORY';
+export const GET_DOCUMENT_CHOICE = 'GET_DOCUMENT_CHOICE';
+export const SUBMIT_DOCUMENT = 'SUBMIT_DOCUMENT';
 
 export const viewAllDocumentCategory = () =>{
     return async (dispatch) => {
@@ -33,3 +35,36 @@ export const viewAllDocumentCategory = () =>{
     }
 }
 
+
+export const sendDocument = (wholeDataImage, id, documentId, token) => {
+    
+    return async (dispatch, getState) =>{
+        const response =  await fetch('https://www.bbalansag.online/api/submitDocument', {
+            method:'POST',
+            headers:{
+                'content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(
+                { 
+                    id, 
+                    documentId,
+                    wholeDataImage 
+                }
+            )
+        });
+    }
+} 
+
+
+export const setChoiceDocument = (documentId) =>{
+    return async (dispatch) =>{
+        dispatch(
+            {
+                type: GET_DOCUMENT_CHOICE, 
+                documentId: documentId
+            }
+        );
+    }
+}

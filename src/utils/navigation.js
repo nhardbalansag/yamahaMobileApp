@@ -15,6 +15,7 @@ import ApplyScreenStart from '../screens/applyScreen';
 import StepNoteToVerify from '../screens/stepNoteToverify';
 import DocumentList from '../screens/documentList';
 import SendDocument from '../screens/sendDocument';
+import DocumentListChoices from '../screens/documentListChoices';
 
 import ScreenAccess from '../screenAccess/screenAccess';
 
@@ -115,6 +116,7 @@ const ProductsViewNavigation = () => {
           <Stack.Screen name="StepNoteToVerify" component={StepNoteToVerify} options={{ title: 'Upgrade my Account' }}/>
           <Stack.Screen name="DocumentList" component={DocumentList} options={{ title: 'Document list' }}/>
           <Stack.Screen name="SendDocument" component={SendDocument} options={{ title: 'Send Document' }}/>
+          <Stack.Screen name="DocumentListChoices" component={DocumentListChoices} options={{ title: 'Select Document' }}/>
       </Stack.Navigator>
   );
 }
