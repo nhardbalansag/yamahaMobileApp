@@ -77,7 +77,7 @@ export default (state = initialState, action) => {
                 ProductinquiriesCount: action.ProductinquiriesCount,
                 ProductPercentage: action.ProductPercentage,
                 ProductSpecification:action.ProductSpecification,
-                Tokendata: action.APIToken,
+                Tokendata: action.APIToken
             }
         case LANDING :
             return{
@@ -101,7 +101,7 @@ export default (state = initialState, action) => {
         case CONFIRM_EMAIL :
             return{
                 ...state,
-                screenAccess: action.screen_access,
+                screenAccess: action.screen_access
             }
     }
     return state;

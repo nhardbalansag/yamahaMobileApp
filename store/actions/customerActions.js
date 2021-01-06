@@ -223,8 +223,8 @@ export const loginCustomer = (email, password) => {
         const tokeninformation = [];
         const responseData = await response.json();
         errorData.push(responseData.status.messsage);
-
-        if(responseData.status.type !== "validation" && responseData.status.error !== false){
+        console.log(responseData.status.messsage)
+        if(responseData.status.type === "validation" && responseData.status.error === true){
             dispatch(
                 {
                     type: LOGIN_CUSTOMER, 

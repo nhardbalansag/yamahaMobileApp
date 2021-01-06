@@ -26,8 +26,8 @@ const LoginScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
 
-    const [email, setemail] = useState('nhardbalansag@gmail.com');
-    const [password, setpassword] = useState('capstone');
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
     const [loadingstate, setloadingstate] = useState(false);
   
     const errordata = useSelector(state => state.products.errorData);
@@ -48,7 +48,7 @@ const LoginScreen = ({navigation}) =>{
     const alertMessage = (message) => {
         Alert.alert(
             "Status",
-            message,
+            message == "login Success" ? "login Success" : "Login failed",
             message == "login Success" ? [ { text: "OKAY"}] : [ { text: "OKAY", onPress: () => setloadingstate(false)}]
           );
     }

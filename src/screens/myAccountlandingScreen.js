@@ -124,11 +124,9 @@ const MyAccountLandingScreen = () =>{
      }
 
     return(
-        
         <SafeAreaView style={styles.productContainer}>
                 <FlatList keyExtractor={item => item.id.toString()} data={allproducts} ListHeaderComponent={headerHome()}  renderItem={renderProductItem} numColumns={2}/>
         </SafeAreaView>
-       
     );
 }
 
