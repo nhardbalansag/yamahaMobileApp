@@ -44,7 +44,7 @@ const ViewOneProductInformation = ({navigation}) => {
     const CustomerInformation = useSelector(state => state.products.CustomerInformation);
     const dispatch = useDispatch();
     const [loadingstate, setloadingstate] = useState(false);
-
+    
     const refreshInquiryCount  = async (id, token) =>{
         try {
             await dispatch(PRODUCTS.ViewOneProductInformation(id, token));
@@ -165,7 +165,7 @@ const ViewOneProductInformation = ({navigation}) => {
     }
 
     const checkemail = (token, productCategoryId) =>{
-        if(verificationStatus === 1){
+        if(CustomerInformation[0].verified === 1){
             productCategoryId  == 3 ? console.warn("order here") : navigation.navigate('ApplyScreenStart');
         }else{
             Alert.alert(

@@ -50,7 +50,7 @@ const Account = () =>{
     })}
       tabBarOptions={{
         showIcon: true ,
-        activeTintColor: 'tomato',
+        activeTintColor: colors.primaryColor,
         inactiveTintColor: 'gray',
         labelStyle: {
           fontSize: 13,

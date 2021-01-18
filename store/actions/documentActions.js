@@ -5,18 +5,18 @@ export const GET_DOCUMENT_CHOICE = 'GET_DOCUMENT_CHOICE';
 export const SUBMIT_DOCUMENT = 'SUBMIT_DOCUMENT';
 
 export const viewAllDocumentCategory = () =>{
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         
         const  response = await fetch('https://www.bbalansag.online/api/viewAllDocumentCategory', {
             method: 'GET',
             headers:{
                 'Content-type': 'application/json',
-                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC'
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + getState().products.Tokendata, 
             }
         });
         const responseData = await response.json();
         const loadedDocumentCategory = [];
-
         for(const key in responseData){
             loadedDocumentCategory.push(
                 new DocumentCategory( 

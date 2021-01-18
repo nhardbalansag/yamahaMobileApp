@@ -83,7 +83,6 @@ const SendDocument = ({navigation}) =>{
     }
 
     return(
-        <ScrollView >
             <View style={[{paddingVertical:20, flex:1, flexDirection:'column', justifyContent:'space-around', backgroundColor:colors.lightColor}]}>
                 {
                 hasImage 
@@ -105,7 +104,7 @@ const SendDocument = ({navigation}) =>{
                                             <TouchableOpacity onPress={() =>navigation.navigate('DocumentListChoices')} style={[{backgroundColor:colors.primaryColor}]}>
                                                 <View style={{ flexDirection:'row', justifyContent:'center', alignItems:'center', paddingVertical:10 }}>
                                                     <Icon name="rule" size={30} color={'white'}/>
-                                                    <Text style={{ color:colors.lightColor }}>Tap to choose photo</Text>
+                                                    <Text style={{ color:colors.lightColor }}>Tap to choose file category</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
@@ -157,7 +156,6 @@ const SendDocument = ({navigation}) =>{
                     </View>
                 }
             </View>
-        </ScrollView>
     );
 }
 

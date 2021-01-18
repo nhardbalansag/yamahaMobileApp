@@ -30,7 +30,6 @@ const DocumentListChoices = ({navigation}) =>{
 
     const documentCategory = useSelector(state => state.documents.documentCategory);
     const dispatch = useDispatch();
-    
     const renderDocumentCategory = async () =>{
         try {
             await dispatch(Documents.viewAllDocumentCategory());
@@ -70,10 +69,10 @@ const DocumentListChoices = ({navigation}) =>{
 
     const renderProductItem = ({item}) =>{
         return(
-            <View style={[{paddingVertical:10, borderBottomWidth:1, borderBottomColor:colors.disableColor}]}>
+            <View style={[{paddingVertical:20, borderBottomWidth:1, borderBottomColor:colors.disableColor}]}>
                 <TouchableOpacity onPress={() => choice(item.id)}>
                     <View>
-                        <Text style={{ textTransform:'capitalize', fontSize:18, color:colors.darkColor, textAlign:'center' }}>{item.title}</Text>
+                        <Text style={{ textTransform:'capitalize',fontWeight:'bold', fontSize:18, color:colors.darkColor, textAlign:'center' }}>{item.title}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -81,7 +80,7 @@ const DocumentListChoices = ({navigation}) =>{
     }; 
 
     return(
-        <SafeAreaView style={[styles.productContainer, {backgroundColor:colors.lightColor}]}>
+        <SafeAreaView style={[{backgroundColor:colors.lightColor}]}>
             <FlatList keyExtractor={item => item.id.toString()} data={documentCategory} renderItem={renderProductItem} />
         </SafeAreaView>
     );
