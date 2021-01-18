@@ -36,7 +36,7 @@ export const viewAllDocumentCategory = () =>{
 }
 
 
-export const sendDocument = (wholeDataImage, id, documentId, token) => {
+export const sendDocument = (wholeDataImage, documentId, token) => {
     
     return async (dispatch, getState) =>{
         const response =  await fetch('https://www.bbalansag.online/api/submitDocument', {
@@ -48,7 +48,6 @@ export const sendDocument = (wholeDataImage, id, documentId, token) => {
             },
             body: JSON.stringify(
                 { 
-                    id, 
                     documentId,
                     wholeDataImage 
                 }

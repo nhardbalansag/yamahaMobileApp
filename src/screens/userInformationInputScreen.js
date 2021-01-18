@@ -10,6 +10,9 @@ import {styles, colors} from '../styles/style';
 import TitleComponent from '../components/title';
 import * as Customer from '../../store/actions/customerActions';
 
+import PasswordInputText from 'react-native-hide-show-password-input';
+
+
 const PersonalInformnationScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
@@ -138,7 +141,10 @@ const PersonalInformnationScreen = ({navigation}) =>{
                     <TitleComponent subtext="security credential"/>
                     <Item stackedLabel>
                         <Label style={styles.capitalize}>password</Label>
-                        <Input  onChangeText = {text => setpassword(text)}/>
+                        <PasswordInputText
+                            value={password}
+                            onChangeText={(password) => setpassword(password)}
+                        />
                     </Item>
                     <Text style={styles.errormessage}>{registerstatusResponse['password']}</Text>
 

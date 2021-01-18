@@ -9,7 +9,8 @@ import {
     ImageBackground,
     TouchableOpacity,
     Alert,
-    StatusBar
+    ActivityIndicator,
+    RefreshControl
 } from 'react-native';
 
 import { 
@@ -17,7 +18,7 @@ import {
     useDispatch
 } from 'react-redux';
 
-import { Container, Header, Left, Body, Right, Button, Title } from 'native-base';
+import { Container, Header, Left, Body, Right, Button } from 'native-base';
 import {styles, colors} from '../styles/style';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -31,13 +32,18 @@ const MyAccountLandingScreen = () =>{
     const ProductCount = useSelector(state => state.products.ProductCount);
     const dispatch = useDispatch();
     const [tokendataState, settokendataState] = useState(null);
+    const [refreshing, setRefreshing] = useState(false);
+    const [Startrefreshing, setStartRefreshing] = useState(true);
 
     const viewallproducts = async () => {
+        setRefreshing(true)
         try {
             await dispatch(PRODUCTS.viewAllProducts());
         } catch (error) {
             alertMessage(error.message);
         }
+        setRefreshing(false)
+        setStartRefreshing(false)
     }
 
     const viewProductInformation = async (id) => {
@@ -74,7 +80,7 @@ const MyAccountLandingScreen = () =>{
     const renderProductItem = ({item}) =>{
             return(
                 <TouchableOpacity onPress={() => viewProductInformation(item.id)}>
-                    <View style={{ width:170, flex:1, marginHorizontal:3, marginVertical:10, padding:5, borderRadius:5, backgroundColor:'white'}}>
+                    <View style={{ width:200, flexDirection:"column",  marginHorizontal:3, marginVertical:10, padding:5, borderRadius:5, backgroundColor:'white'}}>
                         <View>
                             <Image 
                                 style={{width:"100%", height: 100, borderRadius: 20}}
@@ -95,24 +101,9 @@ const MyAccountLandingScreen = () =>{
             );
      };
 
-
      const headerHome = () =>{
          return(
              <View>
-                <Header style={{ backgroundColor:'white' }}>
-                    <Body>
-                    <Image
-                    resizeMode={'contain'}
-                    style={{ width:100 }}
-                    source={require('../assets/images/Yamaha-logo.png')}
-                    />
-                    </Body>
-                    <Right>
-                        <Button transparent>
-                            <Icon name="filter-alt" size={20} color={colors.darkColor} />
-                        </Button>
-                    </Right>
-                </Header>
                 <ImageBackground source={require('../assets/images/unsplash1.jpg')} style={{width:"100%", height: 120 }} resizeMode={'cover'}>
                     <View style={{ backgroundColor: 'rgba(52, 52, 52, 0.4)', height:"100%", flex:1, alignItems:'center', textAlign:'center', justifyContent:'center' }}>
                         <Text style={{ color:'white', fontSize:20, padding:10, width:'100%', backgroundColor: 'rgba( 255, 255, 255, 0.3 )'}}>All Products</Text>
@@ -125,7 +116,27 @@ const MyAccountLandingScreen = () =>{
 
     return(
         <SafeAreaView style={styles.productContainer}>
-                <FlatList keyExtractor={item => item.id.toString()} data={allproducts} ListHeaderComponent={headerHome()}  renderItem={renderProductItem} numColumns={2}/>
+            {
+                !Startrefreshing
+                    ?
+                        <>
+                            <FlatList 
+                                keyExtractor={item => item.id.toString()} 
+                                data={allproducts} 
+                                ListHeaderComponent={headerHome()}  
+                                renderItem={renderProductItem} 
+                                numColumns={2}
+                                refreshControl={
+                                    <RefreshControl refreshing={refreshing} onRefresh={viewallproducts} />
+                                }
+                            />
+                        </>
+                    :
+                        <>
+                            <ActivityIndicator size="large" color={colors.dangerColor}/> 
+                        </>
+            }
+            
         </SafeAreaView>
     );
 }
