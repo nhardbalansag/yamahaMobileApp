@@ -47,28 +47,28 @@ const OrderScreen = () =>{
     }
 
     return(
-        <SafeAreaView style={[styles.container, {  backgroundColor:colors.lightColor }]}>
+        <SafeAreaView style={[styles.container, {  backgroundColor:colors.primaryColor }]}>
                 <View>
                     <TouchableOpacity 
                         onPress={() => gotoProcesingScreen(orderStatus.toProcess, Tokendata)} 
                         style={[styles.border, {borderRadius:10, paddingHorizontal:'10%', paddingBottom:10, marginVertical:10}]}
                     >
-                        <Icon name="update" size={100} color={colors.dangerColor} />
-                        <Text style={{ textAlign:'center', color:colors.disableColor, fontWeight:'bold',  }}>Processing</Text>
+                        <Icon name="update" size={100} color={colors.lightColor} />
+                        <Text style={{ textAlign:'center', color:colors.lightColor, fontWeight:'bold',  }}>Processing</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         onPress={() => gotoProcesingScreen(orderStatus.toDeliver,  Tokendata)} 
                         style={[styles.border, {borderRadius:10, paddingHorizontal:'10%', paddingBottom:10, marginVertical:10}]}
                     >
-                        <Icon name="local-shipping" size={100} color={colors.dangerColor} />
-                        <Text style={{ textAlign:'center', color:colors.disableColor, fontWeight:'bold' }}>To Deliver</Text>
+                        <Icon name="local-shipping" size={100} color={colors.lightColor} />
+                        <Text style={{ textAlign:'center', color:colors.lightColor, fontWeight:'bold' }}>To Deliver</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => gotoProcesingScreen(orderStatus.complete, Tokendata)} 
                         style={[styles.border, {borderRadius:10, paddingHorizontal:'10%', paddingBottom:10, marginVertical:10}]}
                     >
-                        <Icon name="check-circle-outline" size={100} color={colors.dangerColor} />
-                        <Text style={{ textAlign:'center', color:colors.disableColor, fontWeight:'bold' }}>Completed</Text>
+                        <Icon name="check-circle-outline" size={100} color={colors.lightColor} />
+                        <Text style={{ textAlign:'center', color:colors.lightColor, fontWeight:'bold' }}>Completed</Text>
                     </TouchableOpacity>
                 </View>
         </SafeAreaView>

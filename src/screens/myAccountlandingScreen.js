@@ -20,10 +20,14 @@ import {
 
 import { Container, Header, Left, Body, Right, Button } from 'native-base';
 import {styles, colors} from '../styles/style';
+import {stylescopy, colorscopy} from '../styles/copyStyle';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import * as PRODUCTS from '../../store/actions/dataActions';
 import * as Customer from '../../store/actions/customerActions'; 
+
+import SearchBar from "react-native-dynamic-search-bar";
+import Carousel from 'react-native-snap-carousel';
 
 const MyAccountLandingScreen = () =>{
 
@@ -79,7 +83,7 @@ const MyAccountLandingScreen = () =>{
 
     const renderProductItem = ({item}) =>{
             return(
-                <TouchableOpacity onPress={() => viewProductInformation(item.id)}>
+                <TouchableOpacity key={item.id} onPress={() => viewProductInformation(item.id)}>
                     <View style={{ width:200, flexDirection:"column",  marginHorizontal:3, marginVertical:10, padding:5, borderRadius:5, backgroundColor:'white'}}>
                         <View>
                             <Image 
@@ -104,12 +108,12 @@ const MyAccountLandingScreen = () =>{
      const headerHome = () =>{
          return(
              <View>
-                <ImageBackground source={require('../assets/images/unsplash1.jpg')} style={{width:"100%", height: 120 }} resizeMode={'cover'}>
+                <ImageBackground source={require('../assets/images/unsplash1.jpg')} style={{width:"100%", height: 150 }} resizeMode={'cover'}>
                     <View style={{ backgroundColor: 'rgba(52, 52, 52, 0.4)', height:"100%", flex:1, alignItems:'center', textAlign:'center', justifyContent:'center' }}>
                         <Text style={{ color:'white', fontSize:20, padding:10, width:'100%', backgroundColor: 'rgba( 255, 255, 255, 0.3 )'}}>All Products</Text>
                     </View>
                 </ImageBackground>
-                <Text style={{color:colors.dangerColor, padding:5, fontWeight:'bold'  }}>{ProductCount} Items</Text>
+                <Text style={{color:colors.darkColor, padding:5, fontWeight:'bold'  }}>{ProductCount} Items</Text>
              </View>
          );
      }
@@ -120,6 +124,20 @@ const MyAccountLandingScreen = () =>{
                 !Startrefreshing
                     ?
                         <>
+                            <View style={[stylescopy.mY1]}>
+                                <SearchBar
+                                fontColor="#c6c6c6"
+                                iconColor="#c6c6c6"
+                                shadowColor="#282828"
+                                cancelIconColor="#c6c6c6"
+                                backgroundColor="white"
+                                placeholder="Search here"
+                                // onChangeText={(text) => this.filterList(text)}
+                                onSearchPress={() => console.log("Search Icon is pressed")}
+                                // onClearPress={() => this.filterList("")}
+                                onPress={() => alert("onPress")}
+                                />
+                            </View>
                             <FlatList 
                                 keyExtractor={item => item.id.toString()} 
                                 data={allproducts} 
@@ -133,10 +151,9 @@ const MyAccountLandingScreen = () =>{
                         </>
                     :
                         <>
-                            <ActivityIndicator size="large" color={colors.dangerColor}/> 
+                            <ActivityIndicator size="large" color={colors.primaryColor}/> 
                         </>
             }
-            
         </SafeAreaView>
     );
 }

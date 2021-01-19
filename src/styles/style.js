@@ -21,6 +21,7 @@ starColor: starColor,
 successColor: successColor
 };
 
+
 const styles = StyleSheet.create({
 
     splashlogo:{
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
       }, 
       border:{
         borderWidth: 1,
-        borderColor: 'red'
+        borderColor: 'white'
       },
       splashTitle:{
         width: '90%',
