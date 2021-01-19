@@ -94,8 +94,6 @@ const styles = StyleSheet.create({
           marginBottom: 20
       },
       inputForm:{
-        borderBottomColor: colors.disableColor, 
-        borderBottomWidth: 1, 
         fontSize: 15,
         marginVertical: 5
       },
@@ -141,7 +139,8 @@ const styles = StyleSheet.create({
       productContainer:{
           flex:1,
           justifyContent:'center',
-          alignItems:'center'
+          alignItems:'center',
+          width:"99%"
       },
       productContainerViewOne:{
         flex:1,

@@ -164,7 +164,7 @@ const ViewOneProductInformation = ({navigation}) => {
           );
     }
 
-    const checkemail = (verificationStatus, email, id, token, first_name, last_name, middle_name, productCategoryId) =>{
+    const checkemail = (token, productCategoryId) =>{
         if(verificationStatus === 1){
             productCategoryId  == 3 ? console.warn("order here") : navigation.navigate('ApplyScreenStart');
         }else{
@@ -173,7 +173,7 @@ const ViewOneProductInformation = ({navigation}) => {
                 "Please Confirm your email",
                 [
                   { text: "Not now", style: "cancel" },
-                  { text: "OKAY", onPress: () => gotoConfirmEmail(email, id, token, first_name, last_name, middle_name) }
+                  { text: "OKAY", onPress: () => gotoConfirmEmail(token) }
                 ],
                 { cancelable: false }
             );
@@ -209,13 +209,7 @@ const ViewOneProductInformation = ({navigation}) => {
                                     <TouchableOpacity 
                                         onPress={
                                             () => checkemail(
-                                                CustomerInformation[0].verified, 
-                                                CustomerInformation[0].email,
-                                                CustomerInformation[0].id,
                                                 Tokendata,
-                                                CustomerInformation[0].first_name,
-                                                CustomerInformation[0].last_name,
-                                                CustomerInformation[0].middle_name,
                                                 ProductInformation.product_category_id
                                             )
                                         } 
@@ -226,13 +220,7 @@ const ViewOneProductInformation = ({navigation}) => {
                                     <TouchableOpacity 
                                         onPress={
                                             () => checkemail(
-                                                CustomerInformation[0].verified, 
-                                                CustomerInformation[0].email,
-                                                CustomerInformation[0].id,
                                                 Tokendata,
-                                                CustomerInformation[0].first_name,
-                                                CustomerInformation[0].last_name,
-                                                CustomerInformation[0].middle_name,
                                                 ProductInformation.product_category_id
                                             )
                                         } 

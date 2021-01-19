@@ -31,7 +31,6 @@ const SendDocument = ({navigation}) =>{
     const [wholeDataImage, setwholeDataImage] = useState([]);
 
     const Tokendata = useSelector(state => state.products.Tokendata);
-    const CustomerInformation = useSelector(state => state.products.CustomerInformation);
     const DocumentId = useSelector(state => state.documents.documentId);
 
     const openDeviceCamera = async () =>{
@@ -68,7 +67,7 @@ const SendDocument = ({navigation}) =>{
 
     const submitPhoto = async () =>{
         try {
-            await dispatch(Document.sendDocument(wholeDataImage, CustomerInformation[0].id, DocumentId, Tokendata))
+            await dispatch(Document.sendDocument(wholeDataImage, DocumentId, Tokendata))
         } catch (error) {
             alertMessage(error.message);
         }

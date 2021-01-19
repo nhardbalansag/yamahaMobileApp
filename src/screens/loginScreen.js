@@ -22,12 +22,14 @@ import {
 import TitleComponent from '../components/title';
 import * as Customer from '../../store/actions/customerActions'; 
 
+import PasswordInputText from 'react-native-hide-show-password-input';
+
 const LoginScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
 
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
+    const [email, setemail] = useState('nhardbalansag@gmail.com');
+    const [password, setpassword] = useState('capstone');
     const [loadingstate, setloadingstate] = useState(false);
   
     const errordata = useSelector(state => state.products.errorData);
@@ -42,7 +44,6 @@ const LoginScreen = ({navigation}) =>{
         } catch (error) {
             error.message === "false" ? alertMessage("login Success") : alertMessage(error.message);
         }
-        
     }
 
     const alertMessage = (message) => {
@@ -68,11 +69,10 @@ const LoginScreen = ({navigation}) =>{
                     onChangeText = {text => setemail(text)}
                 />
                 {errorbool && <Text style={styles.errormessage}>{errortype == 'validation' ? errordata[0].email : errordata}</Text>}
-                <TextInput
+                <PasswordInputText
                     style={styles.inputForm}
-                    placeholder="Password"
-                    keyboardType ="visible-password"
-                    onChangeText = {text => setpassword(text)}
+                    value={password}
+                    onChangeText={(password) => setpassword(password)}
                 />
                 {errorbool && <Text style={styles.errormessage}>{errortype == 'validation' ? errordata[0].password : errordata}</Text>}
             </View>
@@ -97,3 +97,4 @@ const LoginScreen = ({navigation}) =>{
 }
 
 export default LoginScreen;
+

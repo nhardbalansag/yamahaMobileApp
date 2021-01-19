@@ -57,13 +57,13 @@ const AccountScreen = () =>{
         password: "password"
     }; 
 
-    const alertMessage = (id, token, type) => {
+    const alertMessage = (token, type) => {
         Alert.alert(
             "Warning",
             "Do you want to submit this edit?",
             [
               { text: "Cancel", style: "cancel", onPress: () => setisEdit('')},
-              { text: "OK", onPress: () => getTextEdit(editText, id, token, type) }
+              { text: "OK", onPress: () => getTextEdit(editText, token, type) }
             ],
             { cancelable: false }
         );
@@ -101,10 +101,10 @@ const AccountScreen = () =>{
         );
     }
 
-    const getTextEdit = async (data, id, token, type) =>{
+    const getTextEdit = async (data, token, type) =>{
         setisEdit(type);
         try {
-            await dispatch(Customer.editCustomerInformation(data, id, token, type));
+            await dispatch(Customer.editCustomerInformation(data, token, type));
         } catch (error) {
             alertmessageResponse(error.message);
         }
@@ -141,7 +141,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].first_name ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.first_name)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.first_name)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -170,7 +170,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].middle_name ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.middle_name)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.middle_name)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -198,7 +198,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit  == CustomerInformation[0].last_name ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.last_name)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.last_name)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -227,7 +227,7 @@ const AccountScreen = () =>{
                             {
                                 CustomerInformation[0].verified != 1 ?
                                     isEdit == CustomerInformation[0].email ?
-                                        <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.email)} style={{ paddingHorizontal:20 }}>
+                                        <TouchableOpacity onPress={()=> alertMessage( Tokendata, dataname.email)} style={{ paddingHorizontal:20 }}>
                                             <Icon name="check" size={20} color={colors.dangerColor} />
                                         </TouchableOpacity>
                                     :
@@ -257,7 +257,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].contact_number ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.contact_number)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.contact_number)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -285,7 +285,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].home_address ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.home_address)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.home_address)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -313,7 +313,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].city ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.city)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.city)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -341,7 +341,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].country_region ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.country_region)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.country_region)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -369,7 +369,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].postal ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.postal)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.postal)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -397,7 +397,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].state_province ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.state_province)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.state_province)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -425,7 +425,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].street_address ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.street_address)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.street_address)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :
@@ -453,7 +453,7 @@ const AccountScreen = () =>{
                         <Right>
                             {
                                 isEdit == CustomerInformation[0].password ?
-                                    <TouchableOpacity onPress={()=> alertMessage(CustomerInformation[0].id, Tokendata, dataname.password)} style={{ paddingHorizontal:20 }}>
+                                    <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.password)} style={{ paddingHorizontal:20 }}>
                                         <Icon name="check" size={20} color={colors.dangerColor} />
                                     </TouchableOpacity>
                                 :

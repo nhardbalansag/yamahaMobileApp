@@ -14,7 +14,7 @@ export const CONFIRM_EMAIL = 'CONFIRM_EMAIL';
 //     AsyncStorage.setItem('userData', JSON.stringify({token: }))
 // }
 
-export const confirmVerification = (verification, token, id) =>{
+export const confirmVerification = (verification, token) =>{
     return async (dispatch, getState) => {
         const response = await fetch('https://www.bbalansag.online/api/confirmVerification', {
             method: 'POST',
@@ -24,7 +24,6 @@ export const confirmVerification = (verification, token, id) =>{
                 'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({
-                id,
                 verification
             })
         });
@@ -51,7 +50,7 @@ export const gotoCofirmEmailScreen = () =>{
     }
 }
 
-export const confirmEmail =(email, id, token, first_name, last_name, middle_name) =>{
+export const confirmEmail =(token) =>{
     return async (dispatch) =>{
         const response = await fetch('https://www.bbalansag.online/api/confirmEmail', {
             method: 'POST',
@@ -59,14 +58,7 @@ export const confirmEmail =(email, id, token, first_name, last_name, middle_name
                 'Content-type': 'application/json',
                 'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
                 'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({
-                id,
-                email,
-                first_name,
-                last_name,
-                middle_name
-            })
+            }
         });
 
         const responseData = await response.json();
@@ -74,7 +66,7 @@ export const confirmEmail =(email, id, token, first_name, last_name, middle_name
     }
 }
 
-export const processingOrderScreen = (orderstatus, id, token) =>{
+export const processingOrderScreen = (orderstatus, token) =>{
     return async (dispatch, getState) => {
         const response = await fetch('https://www.bbalansag.online/api/getOrder', {
             method: 'POST',
@@ -84,7 +76,6 @@ export const processingOrderScreen = (orderstatus, id, token) =>{
                 'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({
-                id,
                 orderstatus
             })
         });
@@ -223,7 +214,7 @@ export const loginCustomer = (email, password) => {
         const tokeninformation = [];
         const responseData = await response.json();
         errorData.push(responseData.status.messsage);
-        console.log(responseData.status.messsage)
+
         if(responseData.status.type === "validation" && responseData.status.error === true){
             dispatch(
                 {
@@ -279,20 +270,8 @@ export const loginCustomer = (email, password) => {
 
 export const sendInquiry = (id) =>{
     return async (dispatch, getState) => {
-        const first_name = getState().products.CustomerInformation[0].first_name;
-        const last_name = getState().products.CustomerInformation[0].last_name;
-        const middle_name = getState().products.CustomerInformation[0].middle_name;
-        const email_address = getState().products.CustomerInformation[0].email;
-        const home_address = getState().products.CustomerInformation[0].home_address;
-        const street_address = getState().products.CustomerInformation[0].street_address;
-        const country_region = getState().products.CustomerInformation[0].country_region;
-        const contact_number = getState().products.CustomerInformation[0].contact_number;
-        const city = getState().products.CustomerInformation[0].city;
-        const state_province = getState().products.CustomerInformation[0].state_province;
-        const postal = getState().products.CustomerInformation[0].postal;
-        const verified = getState().products.CustomerInformation[0].verified;
+        let verified = getState().products.CustomerInformation[0].verified;
         const productId = id;
-
         const response = await fetch('https://www.bbalansag.online/api/sendMessage/inquiry', {
             method:'POST',
             headers:{
@@ -302,26 +281,15 @@ export const sendInquiry = (id) =>{
             },
             body: JSON.stringify(
                 {
-                    first_name,
-                    last_name,
-                    middle_name,
-                    home_address,
-                    email_address,
-                    street_address,
-                    country_region,
-                    contact_number,
-                    city,
-                    state_province,
-                    postal,
                     productId
                 }
             )
         }); 
-        
+        const responseData = await response.json();
         if(verified != 1){
             throw new Error("Email not verified");
         }else{
-            const responseData = await response.json();
+           
             if(responseData){
                 throw new Error("Inquiry Sent");
             }else{
@@ -331,7 +299,7 @@ export const sendInquiry = (id) =>{
     }
 }
 
-export const editCustomerInformation = (data, id, token, type) => {
+export const editCustomerInformation = (data, token, type) => {
     return async (dispatch) =>{
         const response = await fetch('https://www.bbalansag.online/api/credentials/edit', {
             method:'POST',
@@ -340,7 +308,7 @@ export const editCustomerInformation = (data, id, token, type) => {
                 'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({ id, data, type })
+            body: JSON.stringify({ data, type })
         });
 
         const responseData = await response.json();
@@ -357,7 +325,6 @@ export const getCount = () => {
     
     return async (dispatch, getState) =>{
         const token = getState().products.Tokendata;
-        const id = getState().products.CustomerInformation[0].id;
 
         const response =  await fetch('https://www.bbalansag.online/api/getCount', {
             method:'POST',
@@ -365,8 +332,7 @@ export const getCount = () => {
                 'content-type': 'application/json',
                 'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
                 'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({ id })
+            }
         });
         const responseData = await response.json();
         const transactionData = [];

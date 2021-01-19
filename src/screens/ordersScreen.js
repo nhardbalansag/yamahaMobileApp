@@ -26,13 +26,12 @@ const orderStatus = {
 
 const OrderScreen = () =>{
     
-    const CustomerInformation = useSelector(state => state.products.CustomerInformation);
     const Tokendata = useSelector(state => state.products.Tokendata);
     const dispatch = useDispatch();
 
-    const gotoProcesingScreen = async (orderstatusdata, id, token) =>{
+    const gotoProcesingScreen = async (orderstatusdata, token) =>{
         try {
-            await dispatch(Customer.processingOrderScreen(orderstatusdata, id, token));
+            await dispatch(Customer.processingOrderScreen(orderstatusdata, token));
         } catch (error) {
             alertMessage(error.message)
         }
@@ -51,21 +50,21 @@ const OrderScreen = () =>{
         <SafeAreaView style={[styles.container, {  backgroundColor:colors.lightColor }]}>
                 <View>
                     <TouchableOpacity 
-                        onPress={() => gotoProcesingScreen(orderStatus.toProcess, CustomerInformation[0].id, Tokendata)} 
+                        onPress={() => gotoProcesingScreen(orderStatus.toProcess, Tokendata)} 
                         style={[styles.border, {borderRadius:10, paddingHorizontal:'10%', paddingBottom:10, marginVertical:10}]}
                     >
                         <Icon name="update" size={100} color={colors.dangerColor} />
                         <Text style={{ textAlign:'center', color:colors.disableColor, fontWeight:'bold',  }}>Processing</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        onPress={() => gotoProcesingScreen(orderStatus.toDeliver, CustomerInformation[0].id, Tokendata)} 
+                        onPress={() => gotoProcesingScreen(orderStatus.toDeliver,  Tokendata)} 
                         style={[styles.border, {borderRadius:10, paddingHorizontal:'10%', paddingBottom:10, marginVertical:10}]}
                     >
                         <Icon name="local-shipping" size={100} color={colors.dangerColor} />
                         <Text style={{ textAlign:'center', color:colors.disableColor, fontWeight:'bold' }}>To Deliver</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => gotoProcesingScreen(orderStatus.complete, CustomerInformation[0].id, Tokendata)} 
+                        onPress={() => gotoProcesingScreen(orderStatus.complete, Tokendata)} 
                         style={[styles.border, {borderRadius:10, paddingHorizontal:'10%', paddingBottom:10, marginVertical:10}]}
                     >
                         <Icon name="check-circle-outline" size={100} color={colors.dangerColor} />

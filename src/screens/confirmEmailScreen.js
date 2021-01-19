@@ -32,10 +32,10 @@ const confirmEmaiScreen = () =>{
     const [verification, setVerification] = useState('');
     const [loadingstate, setloadingstate] = useState(false);
 
-    const comnfirmVerification = async (verification, token, id) =>{
+    const comnfirmVerification = async (verification, token) =>{
         setloadingstate(true);
         try {
-            await dispatch(Customer.confirmVerification(verification, token, id));
+            await dispatch(Customer.confirmVerification(verification, token));
         } catch (error) {
             alertMessage(error.message);
         }
@@ -75,7 +75,7 @@ const confirmEmaiScreen = () =>{
                         <Text style={{ textAlign:'center', color:colors.disableColor, fontSize:20, marginBottom:10 }}>Verification code</Text>
                         {
                             loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
-                            <TouchableOpacity onPress={()=>comnfirmVerification(verification, Tokendata, CustomerInformation[0].id)} style={styles.GeneralButton}>
+                            <TouchableOpacity onPress={()=>comnfirmVerification(verification, Tokendata)} style={styles.GeneralButton}>
                                 <View>
                                     <Text style={styles.GeneralButtonText}>Confirm</Text>
                                 </View>
