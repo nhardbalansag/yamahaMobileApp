@@ -36,23 +36,30 @@ export const viewAllDocumentCategory = () =>{
 }
 
 
-export const sendDocument = (wholeDataImage, documentId, token) => {
+export const sendDocument = (file, documentId, token) => {
     
     return async (dispatch, getState) =>{
-        const response =  await fetch('https://www.bbalansag.online/api/submitDocument', {
-            method:'POST',
-            headers:{
-                'content-type': 'application/json',
-                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify(
-                { 
-                    documentId,
-                    wholeDataImage 
-                }
-            )
-        });
+        // const response =  await fetch('https://www.bbalansag.online/api/send-document', {
+        //     method:'POST',
+        //     headers:{
+        //         'content-type': 'application/json',
+        //         'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+        //         'Authorization': 'Bearer ' + token
+        //     },
+        //     body: JSON.stringify(
+        //         { 
+        //             file 
+        //         }
+        //     )
+        // });
+
+        // const responseData = await response.json();
+
+        console.log(JSON.stringify(
+            { 
+                file 
+            }
+        ))
     }
 } 
 
