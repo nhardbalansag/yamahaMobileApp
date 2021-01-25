@@ -142,12 +142,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].first_name ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.first_name)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.first_name ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.first_name ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].first_name)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -171,12 +171,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].middle_name ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.middle_name)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.middle_name ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.middle_name ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].middle_name)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -199,12 +199,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit  == CustomerInformation[0].last_name ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.last_name)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.last_name ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.last_name ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].last_name)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -228,12 +228,12 @@ const AccountScreen = () =>{
                                 CustomerInformation[0].verified != 1 ?
                                     isEdit == CustomerInformation[0].email ?
                                         <TouchableOpacity onPress={()=> alertMessage( Tokendata, dataname.email)} style={{ paddingHorizontal:20 }}>
-                                            <Icon name="check" size={20} color={colors.dangerColor} />
+                                            <Icon name="check" size={20} color={colors.successColor} />
                                         </TouchableOpacity>
                                     :
-                                    isEdit == dataname.email ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                    isEdit == dataname.email ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                         <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].email)} style={{ paddingHorizontal:20 }}>
-                                            <Icon name="create" size={20}  color={colors.dangerColor} />
+                                            <Icon name="create" size={20}  color={colors.darkColor} />
                                         </TouchableOpacity>
                                 :
                                     <Icon name="verified-user" size={20} style={{ paddingHorizontal:20 }} color={colors.successColor} />
@@ -258,12 +258,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].contact_number ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.contact_number)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.contact_number ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.contact_number ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].contact_number)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -286,12 +286,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].home_address ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.home_address)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.home_address ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.home_address ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].home_address)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -314,12 +314,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].city ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.city)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.city ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.city ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].city)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -342,12 +342,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].country_region ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.country_region)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.country_region ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.country_region ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].country_region)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -370,12 +370,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].postal ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.postal)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.postal ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.postal ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].postal)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -398,12 +398,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].state_province ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.state_province)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.state_province ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.state_province ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].state_province)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -426,12 +426,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].street_address ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.street_address)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.street_address ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.street_address ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].street_address)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -454,12 +454,12 @@ const AccountScreen = () =>{
                             {
                                 isEdit == CustomerInformation[0].password ?
                                     <TouchableOpacity onPress={()=> alertMessage(Tokendata, dataname.password)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="check" size={20} color={colors.dangerColor} />
+                                        <Icon name="check" size={20} color={colors.successColor} />
                                     </TouchableOpacity>
                                 :
-                                isEdit == dataname.password ? <ActivityIndicator size="small" color={colors.dangerColor}/> :
+                                isEdit == dataname.password ? <ActivityIndicator size="small" color={colors.darkColor}/> :
                                     <TouchableOpacity onPress={()=> warningEdit(CustomerInformation[0].password)} style={{ paddingHorizontal:20 }}>
-                                        <Icon name="create" size={20} color={colors.dangerColor} />
+                                        <Icon name="create" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                             }
                         </Right>
@@ -476,7 +476,7 @@ const AccountScreen = () =>{
                     <View style={{ marginHorizontal:'5%' }}>
                         <View style={{ flexDirection:'row', justifyContent: 'center', alignItems:'center'}}>
                             <View style={{ justifyContent: 'center', alignItems:'center'}}>
-                                <Text style={{ color:colors.dangerColor, textTransform: 'capitalize', fontSize:20}}>
+                                <Text style={{ color:colors.darkColor, textTransform: 'capitalize', fontSize:20}}>
                                     {CustomerInformation[0].first_name} {CustomerInformation[0].last_name}
                                 </Text>
                                 <Text style={{ color:colors.primaryColor, fontSize:15 }}>{CustomerInformation[0].email}</Text>
@@ -495,15 +495,15 @@ const AccountScreen = () =>{
                         </View>
                         <View style={{ marginVertical:10 }}>
                             <View style={{ flexDirection:'row', justifyContent: 'flex-start', alignItems:'center', marginBottom:5}}>
-                                <Icon name="mail-outline" size={20} color={colors.dangerColor} />
+                                <Icon name="mail-outline" size={20} color={colors.darkColor} />
                                 <Text style={{ color:colors.disableColor, marginLeft: 5 }}>{CustomerInformation[0].email}</Text>
                             </View>
                             <View style={{ flexDirection:'row', justifyContent: 'flex-start', alignItems:'center', marginBottom:5}}>
-                                <Icon name="smartphone" size={20} color={colors.dangerColor} />
+                                <Icon name="smartphone" size={20} color={colors.darkColor} />
                                 <Text style={{ color:colors.disableColor, marginLeft: 5 }}>{CustomerInformation[0].contact_number}</Text>
                             </View>
                             <View style={{ flexDirection:'row', justifyContent: 'flex-start', alignItems:'center', marginBottom:5}}>
-                                <Icon name="location-on" size={20} color={colors.dangerColor} />
+                                <Icon name="location-on" size={20} color={colors.darkColor} />
                                 <Text style={{ color:colors.disableColor, marginLeft: 5 }}>
                                     {CustomerInformation[0].home_address} , 
                                     {CustomerInformation[0].city} , 

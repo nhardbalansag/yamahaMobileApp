@@ -200,8 +200,11 @@ const ViewOneProductInformation = ({navigation}) => {
                         <Icon name="local-offer" size={20} color={colors.starColor} />
                     </View>
                     <View style={{ flexDirection:'row', justifyContent: 'space-around'}}>
-                        <TouchableOpacity onPress={() => alertMessage(ProductInformation.id)} style={{ padding:10 }}>
-                            <Icon name="forward-to-inbox" size={30} color={colors.dangerColor} />
+                        <TouchableOpacity 
+                        onPress={() => alertMessage(ProductInformation.id)} 
+                        style={[{paddingHorizontal:10, flexDirection:'row', paddingVertical:15, borderWidth:1, borderColor:colors.primaryColor,  justifyContent:'center', alignItems:'center', borderRadius:50}]}>
+                            <Text style={[{fontWeight:'bold', marginRight:5}]}>Send Inquiry</Text>
+                            <Icon name="mail" size={20} color={colors.darkColor} />
                         </TouchableOpacity>
                         {
                             loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
@@ -213,8 +216,9 @@ const ViewOneProductInformation = ({navigation}) => {
                                                 ProductInformation.product_category_id
                                             )
                                         } 
-                                        style={{ padding:10 }}>
-                                        <Icon name="folder-shared" size={30} color={colors.dangerColor} />
+                                        style={[{paddingHorizontal:10, paddingVertical:15, borderWidth:1, borderColor:colors.primaryColor,  justifyContent:'center', alignItems:'center', flexDirection:'row', borderRadius:50}]}>
+                                       <Text style={[{fontWeight:'bold', marginRight:5}]}>Set up Credentials</Text>
+                                        <Icon name="folder" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                                 :
                                     <TouchableOpacity 
@@ -224,13 +228,11 @@ const ViewOneProductInformation = ({navigation}) => {
                                                 ProductInformation.product_category_id
                                             )
                                         } 
-                                        style={{ padding:10 }}>
-                                        <Icon name="add-shopping-cart" size={30} color={colors.dangerColor} />
+                                        style={[{paddingHorizontal:10, paddingVertical:15, borderWidth:1, borderColor:colors.primaryColor,  justifyContent:'center', alignItems:'center', flexDirection:'row', borderRadius:50}]}>
+                                        <Text style={[{fontWeight:'bold', marginRight:5}]}>Buy Product</Text>
+                                        <Icon name="shopping-bag" size={20} color={colors.darkColor} />
                                     </TouchableOpacity>
                         }
-                        <TouchableOpacity onPress={() => backtoLanding()} style={{ padding:10 }}>
-                            <Icon name="arrow-back" size={30} color={colors.dangerColor} />
-                        </TouchableOpacity>
                     </View>
                     <View>
                         <Text style={{ fontWeight:'bold', fontSize:18 }}>{ProductInformation.title}</Text>

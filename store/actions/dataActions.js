@@ -8,10 +8,10 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const VIEW_ONE_PRODUCT = 'VIEW_ONE_PRODUCT';
 export const LANDING = 'LANDING';
 
-export const viewAllProducts = () => {
+export const viewAllProducts = (limit) => {
     return async (dispatch, getState) => {
         const loadedProduct = [];
-        const  response = await fetch('https://www.bbalansag.online/api', {
+        const  response = await fetch('https://www.bbalansag.online/api/' + limit, {
             headers:{
                 'Content-type': 'application/json',
                 'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
@@ -47,6 +47,7 @@ export const viewAllProducts = () => {
                     products: loadedProduct,
                     screen_access:ScreenAccess.homeScreenLandingTab, 
                     ProductCount:Object.keys(responseData).length,
+                    allProductsData:responseData,
                     APIToken: getState().products.Tokendata
                 }
             );
@@ -83,7 +84,6 @@ export const ViewOneProductInformation = (id, token) =>{
         dispatch(
             {
                 type:VIEW_ONE_PRODUCT, 
-                screen_access:ScreenAccess.homeScreenProductStack,
                 ProductInformation:responseData.data.product[0],
                 ProductSpecification:loadedSpecification,
                 ProductinquiriesCount:responseData.data.inquiriesCount,

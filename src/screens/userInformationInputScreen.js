@@ -139,13 +139,11 @@ const PersonalInformnationScreen = ({navigation}) =>{
                     </Item>
                     <Text style={styles.errormessage}>{registerstatusResponse['postal']}</Text>
                     <TitleComponent subtext="security credential"/>
-                    <Item stackedLabel>
-                        <Label style={styles.capitalize}>password</Label>
-                        <PasswordInputText
-                            value={password}
-                            onChangeText={(password) => setpassword(password)}
-                        />
-                    </Item>
+                    <PasswordInputText
+                        style={[{marginHorizontal:20}]}
+                        value={password}
+                        onChangeText={(password) => setpassword(password)}
+                    />
                     <Text style={styles.errormessage}>{registerstatusResponse['password']}</Text>
 
                     {

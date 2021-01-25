@@ -144,8 +144,7 @@ const styles = StyleSheet.create({
           width:"99%"
       },
       productContainerViewOne:{
-        flex:1,
-        marginBottom:20
+        flex:1
     },
       productViewImage:{
         width:"30%",
