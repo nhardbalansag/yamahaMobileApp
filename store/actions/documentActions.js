@@ -16,6 +16,9 @@ export const viewAllDocumentCategory = () =>{
             }
         });
         const responseData = await response.json();
+
+        
+        console.log(responseData)
         const loadedDocumentCategory = [];
         for(const key in responseData){
             loadedDocumentCategory.push(
@@ -39,27 +42,27 @@ export const viewAllDocumentCategory = () =>{
 export const sendDocument = (file, documentId, token) => {
     
     return async (dispatch, getState) =>{
-        // const response =  await fetch('https://www.bbalansag.online/api/send-document', {
-        //     method:'POST',
-        //     headers:{
-        //         'content-type': 'application/json',
-        //         'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
-        //         'Authorization': 'Bearer ' + token
-        //     },
-        //     body: JSON.stringify(
-        //         { 
-        //             file 
-        //         }
-        //     )
-        // });
+        const response =  await fetch('https://www.bbalansag.online/api/send-document', {
+            method:'POST',
+            headers:{
+                'content-type': 'multipart/form-data',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(
+                { 
+                    file 
+                }
+            )
+        });
 
-        // const responseData = await response.json();
-
-        console.log(JSON.stringify(
-            { 
-                file 
-            }
-        ))
+        const responseData = await response.json();
+console.log(responseData)
+        // console.log(JSON.stringify(
+        //     { 
+        //         file 
+        //     }
+        // ))
     }
 } 
 

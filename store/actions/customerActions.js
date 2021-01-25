@@ -66,9 +66,9 @@ export const confirmEmail =(token) =>{
     }
 }
 
-export const processingOrderScreen = (orderstatus, token) =>{
+export const processingOrderScreen = (orderstatus, token, limit) =>{
     return async (dispatch, getState) => {
-        const response = await fetch('https://www.bbalansag.online/api/getOrder', {
+        const response = await fetch('https://www.bbalansag.online/api/getOrder/' + limit, {
             method: 'POST',
             headers:{
                 'Content-type': 'application/json',
@@ -99,8 +99,8 @@ export const processingOrderScreen = (orderstatus, token) =>{
         dispatch(
             {
                 type:PROCESSING_ORDER_SCREEN, 
-                screen_access:ScreenAccess.processingOrderScreen,
                 transactionData:transactionData,
+                filterType:orderstatus,
                 transactionCountByStatus:responseData.transactionCount[0].transactionCount
             }
         );

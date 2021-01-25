@@ -29,56 +29,107 @@ import * as Customer from '../../store/actions/customerActions';
 import SearchBar from "react-native-dynamic-search-bar";
 import Carousel from 'react-native-snap-carousel';
 
-const MyAccountLandingScreen = () =>{
+const MyAccountLandingScreen = ({navigation}) =>{
 
-    const allproducts = useSelector(state => state.products.allproducts);
     const Tokendata = useSelector(state => state.products.Tokendata);
-    const ProductCount = useSelector(state => state.products.ProductCount);
     const dispatch = useDispatch();
+
     const [tokendataState, settokendataState] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
     const [Startrefreshing, setStartRefreshing] = useState(true);
+    const [loadMoreBool, setLoadmoreBool] = useState(false);
+    const [limit, setLimit] = useState(10);
+    const [allProducts, setallProducts] = useState();
+    const [allData, setAllData] = useState();
+    const [count, setCount] = useState();
+    const [total, setTotal] = useState();
 
-    const viewallproducts = async () => {
+    const viewallproducts = async (limit) => {
         setRefreshing(true)
         try {
-            await dispatch(PRODUCTS.viewAllProducts());
+             const response = await fetch('https://www.bbalansag.online/api/' + limit, {
+                headers:{
+                    'Content-type': 'application/json',
+                    'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                    'Authorization': 'Bearer ' + Tokendata
+                }
+            });
+            const responseData = await response.json();
+            setallProducts(responseData.data)
+            setAllData(responseData)
+            setCount(responseData.data.length)
+            setTotal(responseData.total)
         } catch (error) {
             alertMessage(error.message);
         }
         setRefreshing(false)
         setStartRefreshing(false)
+        setLoadmoreBool(false)
     }
 
     const viewProductInformation = async (id) => {
         try {
             await dispatch(PRODUCTS.ViewOneProductInformation(id, tokendataState));
+            navigation.navigate('Product')
         } catch (error) {
             alertMessage(error.message);
         }
     }
 
-    const getCountData = async () => {
-        try {
-            await dispatch(Customer.getCount());
-        } catch (error) {
-            alertMessage(error.message);
-        }
+    const refreshPage = () =>{
+        viewallproducts(limit)
     }
-   
+
     useEffect(() => {
-        viewallproducts();
+        setLoadmoreBool(true)
+        viewallproducts(limit);
         settokendataState(Tokendata);
-        getCountData();
-    }, [dispatch]); 
+    }, [limit]); 
 
     const alertMessage = (message) => {
+        setRefreshing(false)
         Alert.alert(
             "An error occured",
             message,
             [ { text: "OKAY"}],
             { cancelable: false }
           );
+    }
+
+    const loadmore = () =>{
+        return(
+                total > count
+                ? 
+                    <View style={[{flex:1, flexDirection:'row', justifyContent:'center', marginVertical:20}]}>
+                        <TouchableOpacity 
+                            onPress={() =>  setLimit(count + 2)}
+                            style={[{
+                                backgroundColor:colors.primaryColor,
+                                paddingVertical:10,
+                                paddingHorizontal:10,
+                                borderRadius:10
+                            }]}>
+                            <View style={[{flexDirection:'row', justifyContent:'center', alignItems:'center'}]}>
+                                <Text
+                                    style={[{
+                                        color:'white',
+                                        fontSize:15,
+                                        marginRight:5
+                                    }]}
+                                >
+                                    Load more
+                                </Text>
+                                {
+                                    !loadMoreBool 
+                                    ? <Icon name="cached" size={20} color={colors.lightColor} />
+                                    : <Text> <ActivityIndicator size="small" color={colors.lightColor}/> </Text>
+                                }
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                : 
+                    <></>
+        )
     }
 
     const renderProductItem = ({item}) =>{
@@ -107,13 +158,15 @@ const MyAccountLandingScreen = () =>{
 
      const headerHome = () =>{
          return(
-             <View>
+             <View style={[{
+                 marginTop:10
+             }]}>
                 <ImageBackground source={require('../assets/images/unsplash1.jpg')} style={{width:"100%", height: 150 }} resizeMode={'cover'}>
                     <View style={{ backgroundColor: 'rgba(52, 52, 52, 0.4)', height:"100%", flex:1, alignItems:'center', textAlign:'center', justifyContent:'center' }}>
                         <Text style={{ color:'white', fontSize:20, padding:10, width:'100%', backgroundColor: 'rgba( 255, 255, 255, 0.3 )'}}>All Products</Text>
                     </View>
                 </ImageBackground>
-                <Text style={{color:colors.darkColor, padding:5, fontWeight:'bold'  }}>{ProductCount} Items</Text>
+                <Text style={{color:colors.darkColor, padding:5, fontWeight:'bold'  }}>{count} Items</Text>
              </View>
          );
      }
@@ -138,14 +191,16 @@ const MyAccountLandingScreen = () =>{
                                 onPress={() => alert("onPress")}
                                 />
                             </View>
+                            
                             <FlatList 
                                 keyExtractor={item => item.id.toString()} 
-                                data={allproducts} 
-                                ListHeaderComponent={headerHome()}  
+                                data={allProducts} 
                                 renderItem={renderProductItem} 
+                                ListFooterComponent={loadmore()}
+                                ListHeaderComponent={headerHome}
                                 numColumns={2}
                                 refreshControl={
-                                    <RefreshControl refreshing={refreshing} onRefresh={viewallproducts} />
+                                    <RefreshControl refreshing={refreshing} onRefresh={refreshPage} />
                                 }
                             />
                         </>

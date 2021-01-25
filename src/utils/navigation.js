@@ -62,8 +62,8 @@ const Account = () =>{
         }
       }}
   >
-      <Tab.Screen name="Home" component={MyAccountLandingScreen} />
-      <Tab.Screen name="Orders" component={OrderScreen} />
+      <Tab.Screen name="Home" component={ProductsViewNavigation} />
+      <Tab.Screen name="Orders" component={getProcessing} />
       <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );
@@ -80,7 +80,11 @@ const EnterCredentialNavigation = () => {
 
 const getProcessing = () => {
   return(
-    <ProcessingOrderScreen/>
+    <Stack.Navigator>
+      <Stack.Screen name="OrderStatus" component={OrderScreen} options={{ title: 'Order Status' }}/>
+      <Stack.Screen name="Processing" component={ProcessingOrderScreen} options={{ title: 'Processing' }}/>
+      <Stack.Screen name="Product" component={ViewOneProductInformation} options={{ title: 'Product Information' }}/>
+    </Stack.Navigator>
   );
 }
 
@@ -99,6 +103,7 @@ const gotoConfirmEmailScreen = () => {
 const ProductsViewNavigation = () => {
   return (
       <Stack.Navigator>
+        <Stack.Screen name="Home" component={MyAccountLandingScreen} options={{ title: 'Home' }}/>
           <Stack.Screen 
             name="Product" 
             component={ViewOneProductInformation} 

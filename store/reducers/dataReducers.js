@@ -34,7 +34,9 @@ const initialState = {
     transactionCount: null,
     transactionData: [],
     orderDataByStatus: [],
-    transactionCountByStatus:null
+    transactionCountByStatus:null,
+    allProductsData:null,
+    filterType:null
 };
 
 export default (state = initialState, action) => {
@@ -45,7 +47,8 @@ export default (state = initialState, action) => {
                 allproducts: action.products,
                 Tokendata: action.APIToken,
                 screenAccess: action.screen_access,
-                ProductCount: action.ProductCount
+                ProductCount: action.ProductCount,
+                allProductsData: action.allProductsData
             }
 
         case REGISTER_CUSTOMER :
@@ -71,7 +74,6 @@ export default (state = initialState, action) => {
         case VIEW_ONE_PRODUCT :
             return{
                 ...state,
-                screenAccess: action.screen_access,
                 ProductInformation: action.ProductInformation,
                 ProductSpecification: action.ProductSpecification,
                 ProductinquiriesCount: action.ProductinquiriesCount,
@@ -94,8 +96,8 @@ export default (state = initialState, action) => {
         case PROCESSING_ORDER_SCREEN :
             return{
                 ...state,
-                screenAccess: action.screen_access,
                 orderDataByStatus: action.transactionData,
+                filterType:action.filterType,
                 transactionCountByStatus: action.transactionCountByStatus
             }
         case CONFIRM_EMAIL :
