@@ -30,9 +30,9 @@ import {
     useSelector
 } from 'react-redux';
 
+
 import * as PRODUCTS from '../../store/actions/dataActions';
 import * as Customer from '../../store/actions/customerActions'; 
-import * as Document from '../../store/actions/documentActions'; 
 
 const ViewOneProductInformation = ({navigation}) => {
 

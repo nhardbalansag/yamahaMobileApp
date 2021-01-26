@@ -67,7 +67,9 @@ const styles = StyleSheet.create({
       },
       GeneralButton:{
         backgroundColor: colors.primaryColor,
-        padding: 12
+        padding: 12,
+        width:200,
+        borderRadius:10
       },
       GeneralButtonText:{
         color: colors.lightColor,
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
           flex:1,
           justifyContent:'center',
           alignItems:'center',
-          width:"99%"
+          marginHorizontal:5
       },
       productContainerViewOne:{
         flex:1

@@ -28,8 +28,8 @@ const LoginScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
 
-    const [email, setemail] = useState('nhardbalansag@gmail.com');
-    const [password, setpassword] = useState('capstone');
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
     const [loadingstate, setloadingstate] = useState(false);
   
     const errordata = useSelector(state => state.products.errorData);
@@ -76,15 +76,15 @@ const LoginScreen = ({navigation}) =>{
                 />
                 {errorbool && <Text style={styles.errormessage}>{errortype == 'validation' ? errordata[0].password : errordata}</Text>}
             </View>
-            <View style={[ styles.justifyCenter]}>
-                {
-                    loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
-                    <TouchableOpacity onPress={()=>login()} style={styles.GeneralButton}>
-                        <View>
-                            <Text style={styles.GeneralButtonText}>Login</Text>
-                        </View>
-                    </TouchableOpacity>
-                }
+            <View style={[ styles.justifyCenter, {alignItems:'center'}]}>
+                <TouchableOpacity onPress={()=>login()} style={styles.GeneralButton}>
+                    <View style={[{flexDirection:'row', justifyContent:'center'}]}>
+                        <Text style={[{marginRight:5}, styles.GeneralButtonText]}>Login</Text>
+                        {
+                            loadingstate ? <ActivityIndicator size="small" color={colors.lightColor}/> : <></>
+                        }
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('UserInformation')} style={styles.signupButton}>
                     <View>
                         <Text style={styles.signUpText}>sign up an account</Text>

@@ -40,9 +40,33 @@ const MyAccountLandingScreen = ({navigation}) =>{
     const [loadMoreBool, setLoadmoreBool] = useState(false);
     const [limit, setLimit] = useState(10);
     const [allProducts, setallProducts] = useState();
-    const [allData, setAllData] = useState();
     const [count, setCount] = useState();
     const [total, setTotal] = useState();
+    const [filterList, setfilterList] = useState();
+
+
+    const searchProducts = async () =>{
+        setStartRefreshing(true)
+        try {
+            const response = await fetch('https://www.bbalansag.online/api/search/product/' + filterList, {
+               headers:{
+                   'Content-type': 'application/json',
+                   'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                   'Authorization': 'Bearer ' + Tokendata
+               }
+           });
+           const responseData = await response.json();
+           setallProducts(responseData)
+           setCount(responseData.length)
+           setTotal(responseData.length)
+       } catch (error) {
+           alertMessage(error.message);
+       }
+       setStartRefreshing(false)
+       setRefreshing(false)
+       setStartRefreshing(false)
+       setLoadmoreBool(false)
+    }
 
     const viewallproducts = async (limit) => {
         setRefreshing(true)
@@ -56,7 +80,6 @@ const MyAccountLandingScreen = ({navigation}) =>{
             });
             const responseData = await response.json();
             setallProducts(responseData.data)
-            setAllData(responseData)
             setCount(responseData.data.length)
             setTotal(responseData.total)
         } catch (error) {
@@ -134,8 +157,8 @@ const MyAccountLandingScreen = ({navigation}) =>{
 
     const renderProductItem = ({item}) =>{
             return(
-                <TouchableOpacity key={item.id} onPress={() => viewProductInformation(item.id)}>
-                    <View style={{ width:200, flexDirection:"column",  marginHorizontal:3, marginVertical:10, padding:5, borderRadius:5, backgroundColor:'white'}}>
+                <TouchableOpacity style={[{width:200}]} key={item.id} onPress={() => viewProductInformation(item.id)}>
+                    <View style={{flexDirection:"column",  marginHorizontal:3, marginVertical:10, padding:5, borderRadius:5, backgroundColor:'white'}}>
                         <View>
                             <Image 
                                 style={{width:"100%", height: 100, borderRadius: 20}}
@@ -161,12 +184,28 @@ const MyAccountLandingScreen = ({navigation}) =>{
              <View style={[{
                  marginTop:10
              }]}>
-                <ImageBackground source={require('../assets/images/unsplash1.jpg')} style={{width:"100%", height: 150 }} resizeMode={'cover'}>
-                    <View style={{ backgroundColor: 'rgba(52, 52, 52, 0.4)', height:"100%", flex:1, alignItems:'center', textAlign:'center', justifyContent:'center' }}>
-                        <Text style={{ color:'white', fontSize:20, padding:10, width:'100%', backgroundColor: 'rgba( 255, 255, 255, 0.3 )'}}>All Products</Text>
-                    </View>
-                </ImageBackground>
-                <Text style={{color:colors.darkColor, padding:5, fontWeight:'bold'  }}>{count} Items</Text>
+                 {
+                     count == 1
+                     ?
+                        <></>
+                    :
+                    (
+                        count == 0 
+                        ? 
+                            <View>
+                                <Text>no items available, hold and pull down to refresh</Text>
+                            </View>
+                        :
+                            <>
+                                <ImageBackground source={require('../assets/images/slide1.png')} style={{width:"100%", height: 150 }} resizeMode={'cover'}>
+                                    <View style={{ backgroundColor: 'rgba(52, 52, 52, 0.4)', height:"100%", flex:1, alignItems:'center', textAlign:'center', justifyContent:'center' }}>
+                                        <Text style={{ color:'white', fontSize:20, padding:10, width:'100%', backgroundColor: 'rgba( 255, 255, 255, 0.3 )'}}>All Products</Text>
+                                    </View>
+                                </ImageBackground>
+                                <Text style={{color:colors.darkColor, padding:5, fontWeight:'bold'  }}>{count} Items</Text>
+                            </>
+                    )
+                 }
              </View>
          );
      }
@@ -181,14 +220,15 @@ const MyAccountLandingScreen = ({navigation}) =>{
                                 <SearchBar
                                 fontColor="#c6c6c6"
                                 iconColor="#c6c6c6"
+
                                 shadowColor="#282828"
                                 cancelIconColor="#c6c6c6"
                                 backgroundColor="white"
                                 placeholder="Search here"
-                                // onChangeText={(text) => this.filterList(text)}
-                                onSearchPress={() => console.log("Search Icon is pressed")}
-                                // onClearPress={() => this.filterList("")}
-                                onPress={() => alert("onPress")}
+                                onChangeText={(text) => setfilterList(text)}
+                                onSearchPress={() => searchProducts()}
+                                onClearPress={() => setfilterList("")}
+                                onPress={() =>  searchProducts()}
                                 />
                             </View>
                             
