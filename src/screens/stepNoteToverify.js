@@ -43,11 +43,13 @@ const StepNoteToVerify = ({navigation}) =>{
                 </View>
             </View>
             <View>
-                <TouchableOpacity onPress={() => navigation.navigate('SendDocument')} style={styles.GeneralButton}>
-                    <View>
-                        <Text style={styles.GeneralButtonText}>Next</Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={[ styles.justifyCenter, {alignItems:'center', marginBottom:10}]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DocumentListChoices')} style={styles.GeneralButton}>
+                        <View>
+                            <Text style={styles.GeneralButtonText}>Next</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );

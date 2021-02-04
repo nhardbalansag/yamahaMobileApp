@@ -183,12 +183,12 @@ const ViewOneProductInformation = ({navigation}) => {
     const rederProductInformation = () =>{
         return (
             <View>
-                <ImageBackground source={{uri: 'https://bbalansag.online/storage/' + ProductInformation.photo_path}} style={{width:"100%", height: 250 }} resizeMode={'contain'}>
+                <ImageBackground source={{uri: 'http://bbalansag.online/storage/' + ProductInformation.photo_path}} style={{width:"100%", height: 250 }} resizeMode={'contain'}>
                     <View style={{ backgroundColor: 'rgba(52, 52, 52, 0.4)', height:"100%", flex:1, alignItems:'center', textAlign:'center', justifyContent:'flex-end' }}>
                         <Text style={{ color:'white', fontSize:20, padding:10, width:'100%', backgroundColor: 'rgba( 255, 255, 255, 0.3 )'}}>{ProductInformation.title}</Text>
                         <Image 
                             style={{width:"100%", height: 100, borderRadius: 20, margin:5}}
-                            source={{uri: 'https://bbalansag.online/storage/' + ProductInformation.photo_path}}
+                            source={{uri: 'http://bbalansag.online/storage/' + ProductInformation.photo_path}}
                             resizeMode={'contain'} // cover or contain its upto you view look
                         />
                     </View>

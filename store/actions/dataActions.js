@@ -11,7 +11,7 @@ export const LANDING = 'LANDING';
 export const viewAllProducts = (limit) => {
     return async (dispatch, getState) => {
         const loadedProduct = [];
-        const  response = await fetch('https://www.bbalansag.online/api/' + limit, {
+        const  response = await fetch('http://www.bbalansag.online/api/' + limit, {
             headers:{
                 'Content-type': 'application/json',
                 'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
@@ -58,7 +58,7 @@ export const viewAllProducts = (limit) => {
 export const ViewOneProductInformation = (id, token) =>{
     return async (dispatch, getState) => {
         
-        const  response = await fetch('https://www.bbalansag.online/api/view/product', {
+        const  response = await fetch('http://www.bbalansag.online/api/view/product', {
             method: 'POST',
             headers:{
                 'Content-type': 'application/json',

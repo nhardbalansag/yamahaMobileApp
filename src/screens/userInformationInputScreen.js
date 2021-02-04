@@ -1,5 +1,5 @@
 import React,  {useState} from 'react';
-import {TouchableOpacity, View, Text, Alert, ActivityIndicator} from 'react-native';
+import {TouchableOpacity, View, Text, Alert, ActivityIndicator, ImageBackground} from 'react-native';
 import { Container, Content, Form, Item, Input, Label } from 'native-base';
 import { 
     useDispatch,
@@ -73,6 +73,8 @@ const PersonalInformnationScreen = ({navigation}) =>{
     return(
         <Container>
             <Content>
+                <ImageBackground source={require('../assets/images/M.png')} style={{width:"100%", height: 150 }} resizeMode={'cover'}>
+                </ImageBackground>
                 <Form>
                     <TitleComponent subtext="contact information"/>
                     <Item stackedLabel>
@@ -148,11 +150,13 @@ const PersonalInformnationScreen = ({navigation}) =>{
 
                     {
                         loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
-                        <TouchableOpacity onPress={() => registerState()} style={[styles.GeneralButton, styles.marginVertical, styles.marginHorizantal]}>
-                            <View>
-                                <Text style={styles.GeneralButtonText}>sign up</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <View style={[ styles.justifyCenter, {alignItems:'center'}]}>
+                            <TouchableOpacity onPress={() => registerState()} style={styles.GeneralButton}>
+                                <View>
+                                    <Text style={styles.GeneralButtonText}>sign up</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     }
                     <TouchableOpacity onPress={() => navigation.navigate('PersonalInformation')} style={[styles.signupButton, styles.marginVertical]}>
                         <View>
@@ -162,7 +166,6 @@ const PersonalInformnationScreen = ({navigation}) =>{
                 </Form>
             </Content>
         </Container>
-
     );
 }
 

@@ -16,7 +16,7 @@ export const CONFIRM_EMAIL = 'CONFIRM_EMAIL';
 
 export const confirmVerification = (verification, token) =>{
     return async (dispatch, getState) => {
-        const response = await fetch('https://www.bbalansag.online/api/confirmVerification', {
+        const response = await fetch('http://www.bbalansag.online/api/confirmVerification', {
             method: 'POST',
             headers:{
                 'Content-type': 'application/json',
@@ -52,7 +52,7 @@ export const gotoCofirmEmailScreen = () =>{
 
 export const confirmEmail =(token) =>{
     return async (dispatch) =>{
-        const response = await fetch('https://www.bbalansag.online/api/confirmEmail', {
+        const response = await fetch('http://www.bbalansag.online/api/confirmEmail', {
             method: 'POST',
             headers:{
                 'Content-type': 'application/json',
@@ -68,7 +68,7 @@ export const confirmEmail =(token) =>{
 
 export const processingOrderScreen = (orderstatus, token, limit) =>{
     return async (dispatch, getState) => {
-        const response = await fetch('https://www.bbalansag.online/api/getOrder/' + limit, {
+        const response = await fetch('http://www.bbalansag.online/api/getOrder/' + limit, {
             method: 'POST',
             headers:{
                 'Content-type': 'application/json',
@@ -123,7 +123,7 @@ export const registerCustomer = (
     email, 
     password) =>{
     return async dispatch =>{
-        const response = await fetch('https://www.bbalansag.online/api/register', {
+        const response = await fetch('http://www.bbalansag.online/api/register', {
             method: 'POST',
             headers:{
                 'Content-type': 'application/json',
@@ -200,7 +200,7 @@ export const registerCustomer = (
 
 export const loginCustomer = (email, password) => {
     return async dispatch => {
-        const response = await fetch('https://www.bbalansag.online/api/login', {
+        const response = await fetch('http://www.bbalansag.online/api/login', {
             method:'POST',
             headers:{
                 'Content-type': 'application/json',
@@ -272,7 +272,7 @@ export const sendInquiry = (id) =>{
     return async (dispatch, getState) => {
         let verified = getState().products.CustomerInformation[0].verified;
         const productId = id;
-        const response = await fetch('https://www.bbalansag.online/api/sendMessage/inquiry', {
+        const response = await fetch('http://www.bbalansag.online/api/sendMessage/inquiry', {
             method:'POST',
             headers:{
                 'Content-type': 'application/json',
@@ -301,7 +301,7 @@ export const sendInquiry = (id) =>{
 
 export const editCustomerInformation = (data, token, type) => {
     return async (dispatch) =>{
-        const response = await fetch('https://www.bbalansag.online/api/credentials/edit', {
+        const response = await fetch('http://www.bbalansag.online/api/credentials/edit', {
             method:'POST',
             headers:{
                 'Content-type': 'application/json',
@@ -326,7 +326,7 @@ export const getCount = () => {
     return async (dispatch, getState) =>{
         const token = getState().products.Tokendata;
 
-        const response =  await fetch('https://www.bbalansag.online/api/getCount', {
+        const response =  await fetch('http://www.bbalansag.online/api/getCount', {
             method:'POST',
             headers:{
                 'content-type': 'application/json',
