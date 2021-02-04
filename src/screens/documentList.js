@@ -27,25 +27,28 @@ const DocumentList = ({navigation}) =>{
 
     const documentCategory = useSelector(state => state.documents.documentCategory);
     const dispatch = useDispatch();
-    
+    // const [documentList, setDocumentList] = useState();
+
     const renderDocumentCategory = async () =>{
         try {
-            await dispatch(Documents.viewAllDocumentCategory());
+            const  response = await fetch('http://www.bbalansag.online/api/viewAllDocumentCategory/view/all', {
+                method: 'GET',
+                headers:{
+                    'Content-type': 'application/json',
+                    'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                    'Authorization': 'Bearer ' + getState().products.Tokendata, 
+                }
+            });
+            const responseData = await response.json();
+            setDocumentList(responseData);
         } catch (error) {
-            Alert.alert(
-                "Status",
-                error.message,
-                [
-                  { text: "OKAY" }
-                ],
-                { cancelable: false }
-              );
+           
         }
     }
 
     useState(() =>{
         renderDocumentCategory();
-    }, [dispatch]);
+    }, []);
 
     const renderProductItem = ({item}) =>{
         return(

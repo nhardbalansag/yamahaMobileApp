@@ -48,7 +48,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
     const searchProducts = async () =>{
         setStartRefreshing(true)
         try {
-            const response = await fetch('https://www.bbalansag.online/api/search/product/' + filterList, {
+            const response = await fetch('http://www.bbalansag.online/api/search/product/' + filterList, {
                headers:{
                    'Content-type': 'application/json',
                    'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
@@ -71,7 +71,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
     const viewallproducts = async (limit) => {
         setRefreshing(true)
         try {
-             const response = await fetch('https://www.bbalansag.online/api/' + limit, {
+             const response = await fetch('http://www.bbalansag.online/api/' + limit, {
                 headers:{
                     'Content-type': 'application/json',
                     'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
@@ -162,7 +162,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
                         <View>
                             <Image 
                                 style={{width:"100%", height: 100, borderRadius: 20}}
-                                source={{uri: 'https://bbalansag.online/storage/' + item.photo_path}}
+                                source={{uri: 'http://bbalansag.online/storage/' + item.photo_path}}
                                 resizeMode={'contain'} // cover or contain its upto you view look
                             />
                         </View>

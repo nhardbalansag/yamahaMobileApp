@@ -6,7 +6,8 @@ import {
     Text, 
     TextInput, 
     Alert, 
-    ActivityIndicator
+    ActivityIndicator,
+    ImageBackground
 } from 'react-native';
 
 import {
@@ -28,8 +29,8 @@ const LoginScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
 
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
+    const [email, setemail] = useState('nhardbalansag@gmail.com');
+    const [password, setpassword] = useState('capstone');
     const [loadingstate, setloadingstate] = useState(false);
   
     const errordata = useSelector(state => state.products.errorData);
@@ -61,6 +62,8 @@ const LoginScreen = ({navigation}) =>{
             <View style={styles.inputGap}>
                 <TitleComponent subtext="login your credentials"/>
             </View>
+            <ImageBackground source={require('../assets/images/M.png')} style={{width:"100%", height: 150 }} resizeMode={'cover'}>
+            </ImageBackground>
             <View style={styles.inputGap}>
                 <TextInput
                     style={styles.inputForm}

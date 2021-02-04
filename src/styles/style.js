@@ -23,12 +23,6 @@ successColor: successColor
 
 
 const styles = StyleSheet.create({
-
-    splashlogo:{
-        width: 200,
-        height: 58
-      },
-
       container:{
         flex: 1,
         justifyContent:'center',

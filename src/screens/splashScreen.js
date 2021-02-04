@@ -8,8 +8,8 @@ const SplashScreen = () => {
         <Container>
             <View style={styles.container}>
                 <Image
-                style={[styles.splashlogo]}
-                source={require('../assets/images/Yamaha-logo.png')}
+                source={require('../assets/images/M.png')}
+                resizeMode={'cover'}
                 />
             </View>
             <View style={[ styles.justifyCenter, styles.alignCenter] }>

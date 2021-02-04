@@ -61,7 +61,7 @@ const toDeliverOrderScreen = () =>{
                 <View style={styles.productViewImage}>
                     <Image 
                         style={{width:"100%", height: 100, borderRadius: 20}}
-                        source={{uri: 'https://bbalansag.online/storage/' + item.photo_path}}
+                        source={{uri: 'http://bbalansag.online/storage/' + item.photo_path}}
                         resizeMode={'contain'} // cover or contain its upto you view look
                     />
                 </View>

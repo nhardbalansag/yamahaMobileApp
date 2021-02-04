@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Text,
     SafeAreaView,
@@ -28,26 +28,30 @@ import * as Documents from '../../store/actions/documentActions';
 
 const DocumentListChoices = ({navigation}) =>{
 
-    const documentCategory = useSelector(state => state.documents.documentCategory);
+    const [documentList, setDocumentList] = useState();
     const dispatch = useDispatch();
+
+    const Tokendata = useSelector(state => state.products.Tokendata);
+
     const renderDocumentCategory = async () =>{
         try {
-            await dispatch(Documents.viewAllDocumentCategory());
+            const  response = await fetch('http://www.bbalansag.online/api/viewAllDocumentCategory/view/all', {
+                headers:{
+                    'Content-type': 'application/json',
+                    'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                    'Authorization': 'Bearer ' + Tokendata
+                }
+            });
+            const responseData = await response.json();
+            setDocumentList(responseData);
         } catch (error) {
-            Alert.alert(
-                "Status",
-                error.message,
-                [
-                  { text: "OKAY" }
-                ],
-                { cancelable: false }
-              );
+            console.log(error)
         }
     }
 
-    useState(() =>{
-        renderDocumentCategory();
-    }, [dispatch]);
+    useEffect(() =>{
+        renderDocumentCategory()
+    }, []);
 
     const choice = async (documentId) =>{
         try {
@@ -81,7 +85,7 @@ const DocumentListChoices = ({navigation}) =>{
 
     return(
         <SafeAreaView style={[{backgroundColor:colors.lightColor}]}>
-            <FlatList keyExtractor={item => item.id.toString()} data={documentCategory} renderItem={renderProductItem} />
+            <FlatList keyExtractor={item => item.id.toString()} data={documentList} renderItem={renderProductItem} />
         </SafeAreaView>
     );
 }
