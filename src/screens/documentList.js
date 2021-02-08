@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Text,
     SafeAreaView,
-    FlatList
+    FlatList,
+    RefreshControl,
+    ActivityIndicator
 } from 'react-native';
 
 import {
@@ -13,58 +15,83 @@ import {
 import {
     List, 
     ListItem, 
-    Body 
 } from 'native-base';
 
 import { 
-    useDispatch,
     useSelector
 } from 'react-redux';
-
-import * as Documents from '../../store/actions/documentActions'; 
+import { stylescopy } from '../styles/copyStyle';
 
 const DocumentList = ({navigation}) =>{
 
-    const documentCategory = useSelector(state => state.documents.documentCategory);
-    const dispatch = useDispatch();
-    // const [documentList, setDocumentList] = useState();
+    const Tokendata = useSelector(state => state.products.Tokendata);
+    const [docCategory, setDocCategory] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const renderDocumentCategory = async () =>{
+        setRefreshing(true)
         try {
             const  response = await fetch('http://www.bbalansag.online/api/viewAllDocumentCategory/view/all', {
                 method: 'GET',
                 headers:{
                     'Content-type': 'application/json',
                     'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
-                    'Authorization': 'Bearer ' + getState().products.Tokendata, 
+                    'Authorization': 'Bearer ' + Tokendata
                 }
             });
             const responseData = await response.json();
-            setDocumentList(responseData);
+            setDocCategory(responseData);
         } catch (error) {
-           
+            alertMessage(error.message)
         }
+        setRefreshing(false)
     }
 
-    useState(() =>{
-        renderDocumentCategory();
+    useEffect(() =>{
+        renderDocumentCategory()
     }, []);
+
+    const alertMessage = (message) => {
+        Alert.alert(
+            "An error occured",
+            message,
+            [ { text: "OKAY"}],
+            { cancelable: false }
+        );
+    }
 
     const renderProductItem = ({item}) =>{
         return(
             <List>
                 <ListItem>
-                    <Body>
                         <Text style={{ textTransform:'capitalize', fontSize:18, color:colors.disableColor }}>{item.title}</Text>
-                    </Body>
                 </ListItem>
             </List>
         );
-    }; 
+    }
 
     return(
-        <SafeAreaView style={[styles.productContainer, {backgroundColor:colors.lightColor}]}>
-            <FlatList keyExtractor={item => item.id.toString()} data={documentCategory} renderItem={renderProductItem} />
+        <SafeAreaView style={[stylescopy.pY2, stylescopy.h100, {backgroundColor:colors.lightColor}]}>
+            {
+                refreshing 
+                ?
+                    <>
+                        <ActivityIndicator size="large" color={colors.primaryColor}/> 
+                    </>
+                :
+                    <>
+                        <FlatList 
+                            keyExtractor={item => item.id.toString()} 
+                            data={docCategory} 
+                            renderItem={renderProductItem} 
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing} onRefresh={renderDocumentCategory} />
+                            }
+                        />
+                    </>
+
+            }
+            
         </SafeAreaView>
     );
 }

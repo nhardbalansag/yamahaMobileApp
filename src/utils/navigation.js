@@ -16,6 +16,8 @@ import StepNoteToVerify from '../screens/stepNoteToverify';
 import DocumentList from '../screens/documentList';
 import SendDocument from '../screens/sendDocument';
 import DocumentListChoices from '../screens/documentListChoices';
+import AppliedDocuments from '../screens/appliedDocuments';
+import Reservations from '../screens/reservation';
 
 import ScreenAccess from '../screenAccess/screenAccess';
 
@@ -42,7 +44,13 @@ const Account = () =>{
           iconName = 'shopping-bag';
         }else if (route.name === 'Account') {
           iconName = 'account-circle';
+        }else if (route.name === 'Application') {
+          iconName = 'description';
+        }else if (route.name === 'Reservations') {
+          iconName = 'event-available';
         }
+        
+
 
         // You can return any component that you like here!
         return <Icon name={iconName} size={size} color={color} />;
@@ -65,6 +73,8 @@ const Account = () =>{
       <Tab.Screen name="Home" component={ProductsViewNavigation} />
       <Tab.Screen name="Orders" component={getProcessing} />
       <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="Reservations" component={reservationsScreen} />
+      <Tab.Screen name="Application" component={documentPassedList} />
     </Tab.Navigator>
   );
 }
@@ -78,11 +88,30 @@ const EnterCredentialNavigation = () => {
     );
 }
 
+
+const documentPassedList = () => {
+  return (
+      <Stack.Navigator>
+          <Stack.Screen name="AppliedDocuments" component={AppliedDocuments} options={{ title: 'Applied Documents' }}/>
+      </Stack.Navigator>
+  );
+}
+
+
+const reservationsScreen = () => {
+  return (
+      <Stack.Navigator>
+          <Stack.Screen name="Reservations" component={Reservations} options={{ title: 'My Reservations' }}/>
+      </Stack.Navigator>
+  );
+}
+
+
 const getProcessing = () => {
   return(
     <Stack.Navigator>
       <Stack.Screen name="OrderStatus" component={OrderScreen} options={{ title: 'Order Status' }}/>
-      <Stack.Screen name="Processing" component={ProcessingOrderScreen} options={{ title: 'Processing' }}/>
+      <Stack.Screen name="Processing" component={ProcessingOrderScreen} options={{ title: 'Orders' }}/>
       <Stack.Screen name="Product" component={ViewOneProductInformation} options={{ title: 'Product Information' }}/>
     </Stack.Navigator>
   );

@@ -81,27 +81,12 @@ export const processingOrderScreen = (orderstatus, token, limit) =>{
         });
 
         const responseData = await response.json();
-        const transactionData = [];
-
-        for (const key in responseData.transactionData){
-            transactionData.push(
-                new OrderDataByStatus(
-                    responseData.transactionData[key].id, 
-                    responseData.transactionData[key].purchaseAmount,
-                    responseData.transactionData[key].photo_path,
-                    responseData.transactionData[key].title,
-                    responseData.transactionData[key].description,
-                    responseData.transactionData[key].price,
-                    responseData.transactionData[key].transactionStatus
-                )
-            )
-        }
+        
         dispatch(
             {
                 type:PROCESSING_ORDER_SCREEN, 
-                transactionData:transactionData,
-                filterType:orderstatus,
-                transactionCountByStatus:responseData.transactionCount[0].transactionCount
+                transactionData:responseData,
+                filterType:orderstatus
             }
         );
     }

@@ -28,7 +28,7 @@ import {
 
 import * as Documents from '../../store/actions/documentActions'; 
 
-const DocumentListChoices = ({navigation}) =>{
+const Reservations = ({navigation}) =>{
 
     const [documentList, setDocumentList] = useState();
     const [refreshing, setRefreshing] = useState(false);
@@ -113,4 +113,4 @@ const DocumentListChoices = ({navigation}) =>{
     );
 }
 
-export default DocumentListChoices;
+export default Reservations;

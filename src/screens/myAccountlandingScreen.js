@@ -56,9 +56,9 @@ const MyAccountLandingScreen = ({navigation}) =>{
                }
            });
            const responseData = await response.json();
-           setallProducts(responseData)
-           setCount(responseData.length)
-           setTotal(responseData.length)
+           setallProducts(responseData.data)
+           setCount(responseData.data.length)
+           setTotal(responseData.total)
        } catch (error) {
            alertMessage(error.message);
        }
@@ -157,7 +157,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
 
     const renderProductItem = ({item}) =>{
             return(
-                <TouchableOpacity style={[{width:200}]} key={item.id} onPress={() => viewProductInformation(item.id)}>
+                <TouchableOpacity style={[{width:"50%", paddingHorizontal:5}]} key={item.id} onPress={() => viewProductInformation(item.id)}>
                     <View style={{flexDirection:"column",  marginHorizontal:3, marginVertical:10, padding:5, borderRadius:5, backgroundColor:'white'}}>
                         <View>
                             <Image 
@@ -193,7 +193,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
                         count == 0 
                         ? 
                             <View>
-                                <Text>no items available, hold and pull down to refresh</Text>
+                                <Text style={[{textAlign:'center'}]}>no items available, hold and pull down to refresh</Text>
                             </View>
                         :
                             <>
@@ -211,7 +211,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
      }
 
     return(
-        <SafeAreaView style={styles.productContainer}>
+        <SafeAreaView style={[stylescopy.mB5]}>
             {
                 !Startrefreshing
                     ?
@@ -227,7 +227,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
                                 placeholder="Search here"
                                 onChangeText={(text) => setfilterList(text)}
                                 onSearchPress={() => searchProducts()}
-                                onClearPress={() => setfilterList("")}
+                                onClearPress={() => setfilterList(false)}
                                 onPress={() =>  searchProducts()}
                                 />
                             </View>
