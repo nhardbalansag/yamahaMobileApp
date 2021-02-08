@@ -67,9 +67,6 @@ const confirmEmaiScreen = () =>{
                     <Text style={[stylescopy.textPrimary, stylescopy.font15  ]}>Cancel</Text>
                 </TouchableOpacity>
             </View>
-            <View>
-                <ImageBackground source={require('../assets/images/M.png')} style={{width:"100%", height: 150 }} resizeMode={'cover'}></ImageBackground>
-            </View>
             <View style={styles.container}>
                 <View style={[{justifyContent:'center', alignItems:'center'}]}>
                         <TextInput

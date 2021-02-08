@@ -36,6 +36,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const AppliedDocuments = ({navigation}) =>{
 
     const [documentList, setDocumentList] = useState();
+    const [documentListTotal, setDocumentListTotal] = useState();
     const Tokendata = useSelector(state => state.products.Tokendata);
     const [refreshing, setRefreshing] = useState(true);
     const [docId, setDocId] = useState();
@@ -73,7 +74,8 @@ const AppliedDocuments = ({navigation}) =>{
                 }
             });
             const responseData = await response.json();
-            setDocumentList(responseData);
+            setDocumentList(responseData.data);
+            setDocumentListTotal(responseData.total)
         } catch (error) {
             alertMessage(error.message)
         }
@@ -115,7 +117,7 @@ const AppliedDocuments = ({navigation}) =>{
         } catch (error) {
             alertMessage(error.message);
         }
-    }
+    }   
 
     const openFile = async () =>{
         try {
@@ -209,7 +211,7 @@ const AppliedDocuments = ({navigation}) =>{
                         <>
                             <View>
                                 <Text style={[stylescopy.textCenter, stylescopy.font15]}>
-                                    You have submitted {documentList.length ? documentList.length : 0}/{total} requirement(s)
+                                    You have submitted {documentListTotal}/{total} requirement(s)
                                 </Text>
                             </View>
                         </>
