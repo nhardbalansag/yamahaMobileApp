@@ -7,7 +7,8 @@ import {
     TextInput, 
     Alert, 
     ActivityIndicator,
-    SafeAreaView
+    SafeAreaView,
+    ImageBackground
 } from 'react-native';
 
 import {
@@ -23,6 +24,8 @@ import {
 import * as Customer from '../../store/actions/customerActions'; 
 import * as PRODUCTS from '../../store/actions/dataActions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import {stylescopy, colorscopy} from '../styles/copyStyle';
 
 const confirmEmaiScreen = () =>{
     const dispatch = useDispatch();
@@ -61,10 +64,12 @@ const confirmEmaiScreen = () =>{
         <SafeAreaView style={[styles.productContainer, {backgroundColor:colors.lightColor}]}>
             <View style={{ flexDirection:'row', justifyContent: 'flex-end'}}>
                 <TouchableOpacity onPress={() => backtoLanding()} style={{ padding:10 }}>
-                    <Text style={{ color:colors.dangerColor }}>Cancel</Text>
+                    <Text style={[stylescopy.textPrimary, stylescopy.font15  ]}>Cancel</Text>
                 </TouchableOpacity>
             </View>
-        
+            <View>
+                <ImageBackground source={require('../assets/images/M.png')} style={{width:"100%", height: 150 }} resizeMode={'cover'}></ImageBackground>
+            </View>
             <View style={styles.container}>
                 <View style={[{justifyContent:'center', alignItems:'center'}]}>
                         <TextInput
@@ -72,9 +77,9 @@ const confirmEmaiScreen = () =>{
                             keyboardType ="numeric"
                             onChangeText = {text => setVerification(text)}
                         />
-                        <Text style={{ textAlign:'center', color:colors.disableColor, fontSize:20, marginBottom:10 }}>Verification code</Text>
+                        <Text style={{ textAlign:'right', color:colors.disableColor, fontSize:20, marginBottom:10 }}>Verification code</Text>
                         {
-                            loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
+                            loadingstate ? <ActivityIndicator size="large" color={[colorscopy.primaryColor]}/> :
                             <TouchableOpacity onPress={()=>comnfirmVerification(verification, Tokendata)} style={styles.GeneralButton}>
                                 <View>
                                     <Text style={styles.GeneralButtonText}>Confirm</Text>

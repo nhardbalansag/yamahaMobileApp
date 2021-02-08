@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
     FlatList, 
@@ -7,7 +7,8 @@ import {
     Text,
     SafeAreaView,
     Alert,
-    TouchableOpacity
+    TouchableOpacity,
+    RefreshControl
 } from 'react-native';
 
 import { 
@@ -24,7 +25,33 @@ const toDeliverOrderScreen = () =>{
     
     const allTransactionData = useSelector(state => state.products.transactionData);
     const transactionCount = useSelector(state => state.products.transactionCount);
+    const Tokendata = useSelector(state => state.products.Tokendata);
     const dispatch = useDispatch();
+    const [refreshing, setRefreshing] = useState(false);
+    const [limit, setLimit] = useState(1);
+
+    const getOrders = async (limit, orderstatus) =>{
+        setRefreshing(true)
+        try {
+            const response = await fetch('http://www.bbalansag.online/api/getOrder/' + limit, {
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json',
+                'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                'Authorization': 'Bearer ' + Tokendata
+            },
+            body: JSON.stringify({
+                orderstatus
+            })
+        });
+
+        const responseData = await response.json();
+        console.warn(responseData)
+        } catch (error) {
+            
+        }
+        setRefreshing(false);
+    }
 
     const getCountData = async () => {
         try {
@@ -33,10 +60,11 @@ const toDeliverOrderScreen = () =>{
             alertMessage(error.message);
         }
     }
-   
+   console.warn(allTransactionData)
     useEffect(() => {
+        getOrders()
         getCountData();
-    }, [dispatch]); 
+    }, []); 
 
     const alertMessage = (message) => {
         Alert.alert(
@@ -91,7 +119,14 @@ const toDeliverOrderScreen = () =>{
                         <Icon name="arrow-back" size={30} color={colors.dangerColor} />
                     </TouchableOpacity>
                 </View>
-                <FlatList keyExtractor={item => item.id.toString()} data={allTransactionData} renderItem={renderProductItem} />
+                {/* <FlatList 
+                    keyExtractor={item => item.id.toString()} 
+                    data={allTransactionData} 
+                    renderItem={renderProductItem} 
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={getOrders} />
+                    }
+                /> */}
             </View>
         </SafeAreaView>
        

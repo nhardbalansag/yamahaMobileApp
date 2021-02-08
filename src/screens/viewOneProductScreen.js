@@ -30,6 +30,7 @@ import {
     useSelector
 } from 'react-redux';
 
+import {stylescopy, colorscopy} from '../styles/copyStyle';
 
 import * as PRODUCTS from '../../store/actions/dataActions';
 import * as Customer from '../../store/actions/customerActions'; 
@@ -124,10 +125,10 @@ const ViewOneProductInformation = ({navigation}) => {
         }
     }
 
-    const gotoConfirmEmail = async (email, id, token, first_name, last_name, middle_name) =>{
+    const gotoConfirmEmail = async (token) =>{
         try {
             setloadingstate(true);
-            await dispatch(Customer.confirmEmail(email, id, token, first_name, last_name, middle_name));
+            await dispatch(Customer.confirmEmail(token));
             setloadingstate(false);
         } catch (error) {
             if(error.message === "true" ){
@@ -165,6 +166,7 @@ const ViewOneProductInformation = ({navigation}) => {
     }
 
     const checkemail = (token, productCategoryId) =>{
+       
         if(CustomerInformation[0].verified === 1){
             productCategoryId  == 3 ? console.warn("order here") : navigation.navigate('ApplyScreenStart');
         }else{
@@ -193,13 +195,12 @@ const ViewOneProductInformation = ({navigation}) => {
                         />
                     </View>
                 </ImageBackground>
-                <View style={{ paddingHorizontal:"5%" }}>
-                    <View style={{ flexDirection:'row', justifyContent: 'center', alignItems:'center'}}>
-                        <Text>₱</Text>
-                        <Text style={{ fontWeight:'bold', fontSize:20 }}>{ProductInformation.price}</Text>
+                <View style={[{paddingHorizontal:"5%"}]}>
+                    <View style={[stylescopy.mY2, stylescopy.backgroundPrimary, stylescopy.pY1, stylescopy.flexRow, stylescopy.justifyCenter, stylescopy.alignCenter, stylescopy.rounded]}>
+                        <Text style={[stylescopy.textWhite, { fontWeight:'bold', fontSize:20 }]}>₱{ProductInformation.price}</Text>
                         <Icon name="local-offer" size={20} color={colors.starColor} />
                     </View>
-                    <View style={{ flexDirection:'row', justifyContent: 'space-around'}}>
+                    <View style={[stylescopy.mB2,{ flexDirection:'row', justifyContent: 'space-around'}]}>
                         <TouchableOpacity 
                         onPress={() => alertMessage(ProductInformation.id)} 
                         style={[{paddingHorizontal:10, flexDirection:'row', paddingVertical:15, borderWidth:1, borderColor:colors.primaryColor,  justifyContent:'center', alignItems:'center', borderRadius:50}]}>
@@ -207,7 +208,7 @@ const ViewOneProductInformation = ({navigation}) => {
                             <Icon name="mail" size={20} color={colors.darkColor} />
                         </TouchableOpacity>
                         {
-                            loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
+                            loadingstate ? <ActivityIndicator size="large" color={colorscopy.primaryColor}/> :
                                 ProductInformation.product_category_id == 1 ?
                                     <TouchableOpacity 
                                         onPress={
@@ -235,19 +236,19 @@ const ViewOneProductInformation = ({navigation}) => {
                         }
                     </View>
                     <View>
-                        <Text style={{ fontWeight:'bold', fontSize:18 }}>{ProductInformation.title}</Text>
-                        <View style={{ flexDirection:'row' }}>
+                        <Text style={[stylescopy.mB1, { fontWeight:'bold', fontSize:18 }]}>{ProductInformation.title}</Text>
+                        <View style={[{ flexDirection:'row' }]}>
                             <Icon name="star-rate" size={20} color={colors.starColor} />
                             <Text>Rate: </Text>
                             <Text style={{ color:colors.successColor, fontWeight:'bold', fontSize:16 }}>{ProductPercentage}%</Text>
                         </View>
-                        <View style={{ flexDirection:'row' }}>
+                        <View style={[stylescopy.mB1,{ flexDirection:'row' }]}>
                             <Icon name="chat" size={20} color={colors.starColor} />
                             <Text>Inquiries: </Text>
                             <Text style={{ color:colors.successColor, fontWeight:'bold', fontSize:16 }}>{ProductinquiriesCount}</Text>
                         </View>
                     </View>
-                    <View>
+                    <View style={[stylescopy.mB1]}>
                         <Text style={{ color:colors.disableColor }}>{ProductInformation.description}</Text>
                     </View>
                     <Text style={{ fontSize:18 }}>Specifications:</Text>
@@ -258,7 +259,12 @@ const ViewOneProductInformation = ({navigation}) => {
 
     return(
         <SafeAreaView style={styles.productContainerViewOne}>
-            <FlatList keyExtractor={item => item.id.toString()} data={ProductSpecification} ListHeaderComponent={rederProductInformation()} renderItem={renderProductItem} />
+            <FlatList 
+            keyExtractor={item => item.id.toString()} 
+            data={ProductSpecification} 
+            ListHeaderComponent={rederProductInformation()} 
+            renderItem={renderProductItem} 
+            />
         </SafeAreaView>
     );
 }

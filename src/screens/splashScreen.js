@@ -8,8 +8,9 @@ const SplashScreen = () => {
         <Container>
             <View style={styles.container}>
                 <Image
-                source={require('../assets/images/M.png')}
-                resizeMode={'cover'}
+                    source={require('../assets/images/M.png')}
+                    resizeMode={'cover'}
+                    style={{width:"100%", height: 150, paddingHorizontal:10 }} 
                 />
             </View>
             <View style={[ styles.justifyCenter, styles.alignCenter] }>

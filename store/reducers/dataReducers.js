@@ -34,7 +34,6 @@ const initialState = {
     transactionCount: null,
     transactionData: [],
     orderDataByStatus: [],
-    transactionCountByStatus:null,
     allProductsData:null,
     filterType:null
 };
@@ -97,8 +96,7 @@ export default (state = initialState, action) => {
             return{
                 ...state,
                 orderDataByStatus: action.transactionData,
-                filterType:action.filterType,
-                transactionCountByStatus: action.transactionCountByStatus
+                filterType:action.filterType
             }
         case CONFIRM_EMAIL :
             return{

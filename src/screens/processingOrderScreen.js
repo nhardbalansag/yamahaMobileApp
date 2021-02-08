@@ -18,7 +18,7 @@ import {
 } from 'react-redux';
 
 import {styles, colors} from '../styles/style';
-import {stylesCopy, stylescopy} from '../styles/copyStyle';
+import {colorscopy, stylesCopy, stylescopy} from '../styles/copyStyle';
 import * as PRODUCTS from '../../store/actions/dataActions';
 import * as Customer from '../../store/actions/customerActions'; 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -26,7 +26,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const ProcessingOrderScreen = ({navigation}) =>{
     
     const orderDataByStatus = useSelector(state => state.products.orderDataByStatus);
-    const transactionCountByStatus = useSelector(state => state.products.transactionCountByStatus);
 
     const [limit, setLimit] = useState(5)
     const [loadMoreBool, setLoadmoreBool] = useState(false);
@@ -85,7 +84,7 @@ const ProcessingOrderScreen = ({navigation}) =>{
                             <Icon name="local-offer" size={20} color={colors.starColor} />
                         </View>
                         <View>
-                            <Text>Status: {item.transactionStatus}</Text>
+                            <Text style={[{color:item.transactionStatus == 'processing' ? colorscopy.blue100 : (item.transactionStatus == 'deliver' ? colorscopy.primaryColor : colorscopy.successColor) }]}>Status: {item.transactionStatus == 'processing' ? 'To Process' : (item.transactionStatus == 'deliver' ? 'To Deliver' : 'Complete')}</Text>
                         </View>
                     </View>
                 </View>
@@ -95,11 +94,11 @@ const ProcessingOrderScreen = ({navigation}) =>{
 
      const loadmore = () =>{
         return(
-                transactionCountByStatus > orderDataByStatus.length
+            orderDataByStatus.total > orderDataByStatus.data.length
                 ? 
                     <View style={[{flex:1, flexDirection:'row', justifyContent:'center', marginVertical:20}]}>
                         <TouchableOpacity 
-                            onPress={() =>  setLimit(orderDataByStatus.length + 1)}
+                            onPress={() =>  setLimit(orderDataByStatus.data.length + 1)}
                             style={[{
                                 backgroundColor:colors.primaryColor,
                                 paddingVertical:10,
@@ -132,7 +131,7 @@ const ProcessingOrderScreen = ({navigation}) =>{
     return(
         <SafeAreaView style={[styles.productContainerViewOne, {backgroundColor:colors.lightColor}]}>
             { 
-                transactionCountByStatus <= 0 ? 
+                orderDataByStatus.total <= 0 ? 
                     <View style={[{flex:1, justifyContent:'center'}]}>
                         <View style={[{justifyContent:'center', alignItems:'center'}]}>
                             <Icon name="remove-shopping-cart" size={50} style={stylescopy.textGray400} />
@@ -142,9 +141,9 @@ const ProcessingOrderScreen = ({navigation}) =>{
                 :
                     <View>
                         <FlatList 
-                            keyExtractor={item => item.id.toString()} 
+                            keyExtractor={item => item.transactionId.toString()} 
                             ListFooterComponent={loadmore()}
-                            data={orderDataByStatus} renderItem={renderProductItem} 
+                            data={orderDataByStatus.data} renderItem={renderProductItem} 
                             refreshControl={
                                 <RefreshControl refreshing={refreshing} onRefresh={refreshPage} />
                             }

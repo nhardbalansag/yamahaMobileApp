@@ -20,7 +20,7 @@ import * as Customer from '../../store/actions/customerActions';
 const orderStatus = {
     toProcess: 'processing',
     toDeliver: 'deliver',
-    complete: 'complete'
+    complete: 'done'
 };
 
 const OrderScreen = ({navigation}) =>{
