@@ -38,6 +38,8 @@ import * as Customer from '../../store/actions/customerActions';
 
 import { SocialIcon } from 'react-native-elements'
 
+import PayPal from 'react-native-paypal-gateway';
+
 const ViewOneProductInformation = ({navigation}) => {
 
     const ProductInformation = useSelector(state => state.products.ProductInformation);
@@ -168,10 +170,42 @@ const ViewOneProductInformation = ({navigation}) => {
           );
     }
 
+
+    const sendPayment = async (product_id, amount) =>{
+        try {
+            const  response = await fetch('http://www.bbalansag.online/api/customer/payment/parts/checkout', {
+                method:'POST',
+                headers:{
+                    'Content-type': 'application/json',
+                    'KEY': '$2y$10$Claj2RctAH3V4HRtSx17b.Q0WTh2STQyusvNZeCNo3UfSRakzStlC',
+                    'Authorization': 'Bearer ' + Tokendata
+                },
+                body: JSON.stringify({
+                    product_id,
+                    amount
+                })
+            });
+            const responseData = await response.json();
+            errorAlert(responseData)
+        } catch (error) {
+            errorAlert(error.message)
+        }
+    }
+
+    const renderPaypal = () =>{
+        PayPal.initialize(PayPal.SANDBOX, "ARZLAD9HtYUoSG_-oc4dwGlf8p7fiqnX6fDcmo0sGrc_REVZ5OznxQv9AosAX8p_4sKYzL3JAYarpHkA");
+        PayPal.pay({
+          price: ProductInformation.price.toString(),
+          currency: 'PHP',
+          description: ProductInformation.title,
+        }).then(confirm => confirm.response.state == 'approved' ? sendPayment(ProductInformation.id, ProductInformation.price) : errorAlert(confirm.response.state))
+          .catch(error => console.log(error));
+    }
+
     const checkemail = (token, productCategoryId) =>{
        
         if(CustomerInformation[0].verified === 1){
-            productCategoryId  == 3 ? console.warn("order here") : navigation.navigate('ApplyScreenStart');
+            productCategoryId  == 3 ? renderPaypal() : navigation.navigate('ApplyScreenStart');
         }else{
             Alert.alert(
                 "Notice",

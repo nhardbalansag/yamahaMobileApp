@@ -29,8 +29,8 @@ const LoginScreen = ({navigation}) =>{
 
     const dispatch = useDispatch();
 
-    const [email, setemail] = useState('nhardbalansag@gmail.com');
-    const [password, setpassword] = useState('capstone');
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
     const [loadingstate, setloadingstate] = useState(false);
   
     const errordata = useSelector(state => state.products.errorData);
