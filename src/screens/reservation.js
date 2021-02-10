@@ -97,7 +97,7 @@ const Reservations = ({navigation}) =>{
 
     const alertMessage = (message) => {
         Alert.alert(
-            "An error occured",
+            "Status",
             message,
             [ { text: "OKAY"}],
             { cancelable: false }
