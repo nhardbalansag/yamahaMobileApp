@@ -10,7 +10,8 @@ import {
     Alert,
     ActivityIndicator,
     RefreshControl,
-    Linking
+    Linking,
+    Image
 } from 'react-native';
 
 import { 
@@ -29,9 +30,6 @@ import SearchBar from "react-native-dynamic-search-bar";
 import Carousel from 'react-native-snap-carousel';
 
 import { SocialIcon } from 'react-native-elements'
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Icon } from 'react-native-elements'
-import { Image } from 'react-native-elements';
 import { Avatar, Badge, withBadge } from 'react-native-elements'
 const MyAccountLandingScreen = ({navigation}) =>{
 
@@ -167,7 +165,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
                             <Image
                                 source={{uri: 'http://bbalansag.online/storage/' + item.photo_path}}
                                 style={{width:"100%", height: 100}}
-                                PlaceholderContent={<ActivityIndicator />}
+                                PlaceholderContent={<ActivityIndicator size="small" color={colors.lightColor}/>}
                             />
                         </View>
                         <View style={[{flexDirection:'column', justifyContent:'space-around', alignItems:'center', height:120}]}>
