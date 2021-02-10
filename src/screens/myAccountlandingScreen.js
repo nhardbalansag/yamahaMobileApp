@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 
 import {
     FlatList, 
-    Image,
     View,
     Text,
     SafeAreaView,
@@ -10,7 +9,9 @@ import {
     TouchableOpacity,
     Alert,
     ActivityIndicator,
-    RefreshControl
+    RefreshControl,
+    Linking,
+    Image
 } from 'react-native';
 
 import { 
@@ -18,10 +19,9 @@ import {
     useDispatch
 } from 'react-redux';
 
-import { Container, Header, Left, Body, Right, Button } from 'native-base';
 import {styles, colors} from '../styles/style';
 import {stylescopy, colorscopy} from '../styles/copyStyle';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/MaterialIcons';
 
 import * as PRODUCTS from '../../store/actions/dataActions';
 import * as Customer from '../../store/actions/customerActions'; 
@@ -29,6 +29,8 @@ import * as Customer from '../../store/actions/customerActions';
 import SearchBar from "react-native-dynamic-search-bar";
 import Carousel from 'react-native-snap-carousel';
 
+import { SocialIcon } from 'react-native-elements'
+import { Avatar, Badge, withBadge } from 'react-native-elements'
 const MyAccountLandingScreen = ({navigation}) =>{
 
     const Tokendata = useSelector(state => state.products.Tokendata);
@@ -144,7 +146,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
                                 </Text>
                                 {
                                     !loadMoreBool 
-                                    ? <Icon name="cached" size={20} color={colors.lightColor} />
+                                    ? <Icons name="cached" size={20} color={colors.lightColor} />
                                     : <Text> <ActivityIndicator size="small" color={colors.lightColor}/> </Text>
                                 }
                             </View>
@@ -160,10 +162,10 @@ const MyAccountLandingScreen = ({navigation}) =>{
                 <TouchableOpacity style={[{width:"50%", paddingHorizontal:5}]} key={item.id} onPress={() => viewProductInformation(item.id)}>
                     <View style={{flexDirection:"column",  marginHorizontal:3, marginVertical:10, padding:5, borderRadius:5, backgroundColor:'white'}}>
                         <View>
-                            <Image 
-                                style={{width:"100%", height: 100, borderRadius: 20}}
+                            <Image
                                 source={{uri: 'http://bbalansag.online/storage/' + item.photo_path}}
-                                resizeMode={'contain'} // cover or contain its upto you view look
+                                style={{width:"100%", height: 100}}
+                                PlaceholderContent={<ActivityIndicator size="small" color={colors.lightColor}/>}
                             />
                         </View>
                         <View style={[{flexDirection:'column', justifyContent:'space-around', alignItems:'center', height:120}]}>
@@ -171,7 +173,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
                             <Text style={styles.productDescription} numberOfLines={3}>{item.description}</Text>
                             <View style={{flexDirection:'row' }}>
                                 <Text style={styles.productPrice} >Price: ₱{item.price}</Text>
-                                <Icon name="local-offer" size={20} color={colors.starColor} />
+                                <Icons name="local-offer" size={20} color={colors.starColor} />
                             </View>
                         </View>
                     </View>
@@ -197,12 +199,33 @@ const MyAccountLandingScreen = ({navigation}) =>{
                             </View>
                         :
                             <>
+                               
                                 <ImageBackground source={require('../assets/images/slide1.png')} style={{width:"100%", height: 150 }} resizeMode={'cover'}>
                                     <View style={{ backgroundColor: 'rgba(52, 52, 52, 0.4)', height:"100%", flex:1, alignItems:'center', textAlign:'center', justifyContent:'center' }}>
                                         <Text style={{ color:'white', fontSize:20, padding:10, width:'100%', backgroundColor: 'rgba( 255, 255, 255, 0.3 )'}}>All Products</Text>
                                     </View>
                                 </ImageBackground>
-                                <Text style={{color:colors.darkColor, padding:5, fontWeight:'bold'  }}>{count} Items</Text>
+                                <View style={[stylescopy.mB1]}>
+                                    <TouchableOpacity onPress={() => Linking.openURL('fb://page/105158801438012')}>
+                                        <SocialIcon
+                                            title='Visit Facebook Page'
+                                            button
+                                            type='facebook'
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => Linking.openURL('http://m.me/105158801438012')}>
+                                        <SocialIcon
+                                            title='Direct facebook Messenger'
+                                            light
+                                            button
+                                            type='facebook'
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={[stylescopy.flexRow, stylescopy.alignCenter, stylescopy.m1]}>
+                                    <Badge value={count} Items status="success" /> 
+                                    <Text style={[{marginLeft:5}]}>Items</Text>
+                                </View>
                             </>
                     )
                  }
@@ -212,6 +235,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
 
     return(
         <SafeAreaView style={[stylescopy.mB5]}>
+            
             {
                 !Startrefreshing
                     ?
@@ -231,7 +255,7 @@ const MyAccountLandingScreen = ({navigation}) =>{
                                 onPress={() =>  searchProducts()}
                                 />
                             </View>
-                            
+
                             <FlatList 
                                 keyExtractor={item => item.id.toString()} 
                                 data={allProducts} 

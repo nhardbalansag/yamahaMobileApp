@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     SafeAreaView,
     Alert,
-    ActivityIndicator
+    ActivityIndicator,
+    Linking
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -34,6 +35,8 @@ import {stylescopy, colorscopy} from '../styles/copyStyle';
 
 import * as PRODUCTS from '../../store/actions/dataActions';
 import * as Customer from '../../store/actions/customerActions'; 
+
+import { SocialIcon } from 'react-native-elements'
 
 const ViewOneProductInformation = ({navigation}) => {
 
@@ -199,6 +202,23 @@ const ViewOneProductInformation = ({navigation}) => {
                     <View style={[stylescopy.mY2, stylescopy.backgroundPrimary, stylescopy.pY1, stylescopy.flexRow, stylescopy.justifyCenter, stylescopy.alignCenter, stylescopy.rounded]}>
                         <Text style={[stylescopy.textWhite, { fontWeight:'bold', fontSize:20 }]}>₱{ProductInformation.price}</Text>
                         <Icon name="local-offer" size={20} color={colors.starColor} />
+                    </View>
+                    <View style={[stylescopy.mB1]}>
+                        <TouchableOpacity onPress={() => Linking.openURL('fb://page/105158801438012')}>
+                            <SocialIcon
+                                title='Visit Facebook Page'
+                                button
+                                type='facebook'
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => Linking.openURL('http://m.me/105158801438012')}>
+                            <SocialIcon
+                                title='Direct facebook Messenger'
+                                light
+                                button
+                                type='facebook'
+                            />
+                        </TouchableOpacity>
                     </View>
                     <View style={[stylescopy.mB2,{ flexDirection:'row', justifyContent: 'space-around'}]}>
                         <TouchableOpacity 

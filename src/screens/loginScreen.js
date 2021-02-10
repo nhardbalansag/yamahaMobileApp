@@ -52,7 +52,7 @@ const LoginScreen = ({navigation}) =>{
             "Status",
             message == "login Success" ? "login Success" : "Login failed",
             message == "login Success" ? [ { text: "OKAY"}] : [ { text: "OKAY", onPress: () => setloadingstate(false)}]
-          );
+        );
     }
 
     return(

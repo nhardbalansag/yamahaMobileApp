@@ -15,6 +15,21 @@ import PasswordInputText from 'react-native-hide-show-password-input';
 
 const PersonalInformnationScreen = ({navigation}) =>{
 
+    const [first_name, setfirst_name] = useState('');
+    const [last_name, setlast_name] = useState('');
+    const [middle_name, setmiddle_name] = useState('');
+    const [home_address, sethome_address] = useState('');
+    const [street_address, setstreet_address] = useState('');
+    const [country_region, setcountry_region] = useState('');
+    const [contact_number, setcontact_number] = useState('');
+    const [city, setcity] = useState('');
+    const [state_province, setstate_province] = useState('');
+    const [postal, setpostal] = useState('');
+    const [role, setrole] = useState('customer');
+    const [verified, setverified] = useState(0);
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
+
     const dispatch = useDispatch();
     const [loadingstate, setloadingstate] = useState(false);
     const registerstatusResponse = useSelector(state => state.products.statusResponse);
@@ -54,21 +69,6 @@ const PersonalInformnationScreen = ({navigation}) =>{
             message == "login Success" ? [ { text: "OKAY"}] : [ { text: "OKAY", onPress: () => setloadingstate(false)}]
           );
     }
-
-    const [first_name, setfirst_name] = useState('');
-    const [last_name, setlast_name] = useState('');
-    const [middle_name, setmiddle_name] = useState('');
-    const [home_address, sethome_address] = useState('');
-    const [street_address, setstreet_address] = useState('');
-    const [country_region, setcountry_region] = useState('');
-    const [contact_number, setcontact_number] = useState('');
-    const [city, setcity] = useState('');
-    const [state_province, setstate_province] = useState('');
-    const [postal, setpostal] = useState('');
-    const [role, setrole] = useState('customer');
-    const [verified, setverified] = useState(0);
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
 
     return(
         <Container>
@@ -149,7 +149,7 @@ const PersonalInformnationScreen = ({navigation}) =>{
                     <Text style={styles.errormessage}>{registerstatusResponse['password']}</Text>
 
                     {
-                        loadingstate ? <ActivityIndicator size="large" color={colors.dangerColor}/> :
+                        loadingstate ? <ActivityIndicator size="large" color={colors.primaryColor}/> :
                         <View style={[ styles.justifyCenter, {alignItems:'center'}]}>
                             <TouchableOpacity onPress={() => registerState()} style={styles.GeneralButton}>
                                 <View>
